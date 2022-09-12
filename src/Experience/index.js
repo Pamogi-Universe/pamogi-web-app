@@ -6,6 +6,7 @@ import Resources from './utils/Resources';
 import Sizes from "./utils/Sizes"
 import Time from "./utils/Time";
 import World from './World';
+import Raycaster from './World/Raycaster';
 
 let instance = null
 
@@ -25,6 +26,7 @@ export default class Experience {
     this.camera = new Camera();
     this.renderer = new Renderer();
     this.world = new World();
+    this.raycaster = new Raycaster();
 
     // methods
     this.sizes.on("resize", () => this.resize());
@@ -40,5 +42,13 @@ export default class Experience {
   update() {
     this.camera.update()
     this.renderer.update();
+
+    this.raycaster.instance.setFromCamera(this.raycaster.mouse, this.camera.instance)
+
+    if (this.world.loaded) {
+      const intersects = this.raycaster.instance.intersectObjects(this.world.objects.arr)
+      this.raycaster.update(intersects)
+      // console.log(intersects.length)
+    }
   }
 }

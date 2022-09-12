@@ -26,7 +26,6 @@ export default class TransformControl {
 
   setControls() {
     window.addEventListener('keydown', (event) => {
-      console.log(event.code, event.keyCode);
       switch (event.code) {
         case 'KeyQ': // Q
           this.controls.setSpace(this.controls.space === 'local' ? 'world' : 'local');
@@ -81,5 +80,15 @@ export default class TransformControl {
           break;
       }
     })
+
+    window.addEventListener('keyup', (event) => {
+      switch (event.code) {
+        case 'ShiftLeft': // Shift
+          this.controls.setTranslationSnap(null);
+          this.controls.setRotationSnap(null);
+          this.controls.setScaleSnap(null);
+          break;
+      }
+    });
   }
 }
