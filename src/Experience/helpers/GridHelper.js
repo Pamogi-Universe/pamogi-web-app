@@ -4,8 +4,8 @@ import Experience from '..';
 export default class GridHelper {
   constructor(size, divisions) {
     // setup
-    this.experience = new Experience();
-    this.scene = this.experience.scene;
+    const experience = new Experience();
+    this.scene = experience.scene;
     this.size = size;
     this.divisions = divisions;
 

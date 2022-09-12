@@ -5,10 +5,10 @@ import Experience from ".";
 export default class Camera {
   constructor() {
     // setup
-    this.experience = new Experience();
-    this.sizes = this.experience.sizes;
-    this.scene = this.experience.scene;
-    this.canvas = this.experience.canvas;
+    const experience = new Experience();
+    this.sizes = experience.sizes;
+    this.scene = experience.scene;
+    this.canvas = experience.canvas;
 
     // methods
     this.setInstance();

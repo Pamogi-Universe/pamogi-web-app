@@ -3,9 +3,9 @@ import Experience from "..";
 
 export default class Cube {
   constructor() {
-    this.experience = new Experience();
-    this.scene = this.experience.scene;
-    this.resources = this.experience.resources;
+    const experience = new Experience();
+    this.scene = experience.scene;
+    this.resources = experience.resources;
 
     this.createGeometry();
     this.setTexture();

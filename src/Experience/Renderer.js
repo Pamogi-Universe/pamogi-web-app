@@ -4,11 +4,11 @@ import Experience from ".";
 export default class Renderer {
   constructor() {
     // setup
-    this.experience = new Experience();
-    this.sizes = this.experience.sizes;
-    this.scene = this.experience.scene;
-    this.canvas = this.experience.canvas;
-    this.camera = this.experience.camera;
+    const experience = new Experience();
+    this.sizes = experience.sizes;
+    this.scene = experience.scene;
+    this.canvas = experience.canvas;
+    this.camera = experience.camera;
 
     // methods
     this.setInstance();
