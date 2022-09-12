@@ -28,17 +28,17 @@ export default class Resources extends EventEmitter {
   startLoading() {
     for (const source of this.sources) {
       if (source.type === "gltfModel") {
-        this.loaders.gltfLoader.load(source.path, (file) => this.sourceLoaded(source.type, file));
+        this.loaders.gltfLoader.load(source.path, (file) => this.sourceLoaded(source, file));
       } else if (source.type === 'texture') {
-        this.loaders.textureLoader.load(source.path, (file) => this.sourceLoaded(source.type, file));
+        this.loaders.textureLoader.load(source.path, (file) => this.sourceLoaded(source, file));
       } else if (source.type === 'cubeTexture') {
-        this.loaders.cubeTextureLoader.load(source.path, (file) => this.sourceLoaded(source.type, file));
+        this.loaders.cubeTextureLoader.load(source.path, (file) => this.sourceLoaded(source, file));
       }
     }
   }
 
   sourceLoaded(source, file) {
-    this.items[source] = file;
+    this.items[source.name] = file;
     this.loaded++;
     if (this.loaded === this.toLoad) this.trigger("ready");
   }
