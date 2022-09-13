@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
+import { DragControls } from "three/examples/jsm/controls/DragControls";
 import Experience from '..';
 
 export default class TransformControl {
@@ -18,13 +19,29 @@ export default class TransformControl {
   // Events
   // initialize transform controller
   setInstance() {
-    this.controls = new TransformControls(this.camera.instance, this.canvas);
-    this.controls.addEventListener('dragging-changed', (event) => {
-      this.raycaster.selectedElement.body.position.copy(this.raycaster.selectedElement.mesh.position)
-      console.log({ body: this.raycaster.selectedElement.body.position, mesh: this.raycaster.selectedElement.mesh.position });
-      this.camera.controls.enabled = !event.value
+    // this.controls = new TransformControls(this.camera.instance, this.canvas);
+    // this.controls.addEventListener('dragging-changed', (event) => {
+    //   this.raycaster.selectedElement.body.position.copy(this.raycaster.selectedElement.mesh.position)
+    //   console.log({ body: this.raycaster.selectedElement.body.position, mesh: this.raycaster.selectedElement.mesh.position });
+    //   this.camera.controls.enabled = !event.value
+    // });
+    // this.scene.add(this.controls);
+
+
+
+    this.draggingId = -1;
+    this.dragControls = new DragControls(this.world.objects.meshes, this.camera.instance, this.canvas);
+    this.dragControls.addEventListener("dragstart", (event) => {
+      event.object.material.opacity = 0.33;
+      this.draggingId = event.object.id;
+      console.log(event)
+      this.camera.controls.enabled = false;
     });
-    this.scene.add(this.controls);
+    this.dragControls.addEventListener("dragend", (event) => {
+      event.object.material.opacity = 1;
+      this.draggingId = -1;
+      this.camera.controls.enabled = true;
+    });
   }
 
   // set control on an element

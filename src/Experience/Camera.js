@@ -32,6 +32,7 @@ export default class Camera {
     this.controls.minDistance = 5;
     this.controls.maxDistance = 50;
     this.controls.enablePan = false;
+    this.controls.screenSpacePanning = true;
   }
 
   resize() {
