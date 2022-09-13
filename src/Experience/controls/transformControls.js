@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
-import { DragControls } from "three/examples/jsm/controls/DragControls";
 import Experience from '..';
 
 export default class TransformControl {
@@ -19,29 +18,15 @@ export default class TransformControl {
   // Events
   // initialize transform controller
   setInstance() {
-    // this.controls = new TransformControls(this.camera.instance, this.canvas);
-    // this.controls.addEventListener('dragging-changed', (event) => {
-    //   this.raycaster.selectedElement.body.position.copy(this.raycaster.selectedElement.mesh.position)
-    //   console.log({ body: this.raycaster.selectedElement.body.position, mesh: this.raycaster.selectedElement.mesh.position });
-    //   this.camera.controls.enabled = !event.value
-    // });
-    // this.scene.add(this.controls);
-
-
-
-    this.draggingId = -1;
-    this.dragControls = new DragControls(this.world.objects.meshes, this.camera.instance, this.canvas);
-    this.dragControls.addEventListener("dragstart", (event) => {
-      event.object.material.opacity = 0.33;
-      this.draggingId = event.object.id;
-      console.log(event)
-      this.camera.controls.enabled = false;
+    this.controls = new TransformControls(this.camera.instance, this.canvas);
+    this.controls.addEventListener('dragging-changed', (event) => {
+      if (this.raycaster.selectedElement.mesh.position.y <= this.raycaster.selectedElement.mesh.scale.y / 2) {
+        this.raycaster.selectedElement.mesh.position.y = this.raycaster.selectedElement.mesh.scale.y / 2
+      }
+      this.raycaster.selectedElement.body.position.copy(this.raycaster.selectedElement.mesh.position)
+      this.camera.controls.enabled = !event.value
     });
-    this.dragControls.addEventListener("dragend", (event) => {
-      event.object.material.opacity = 1;
-      this.draggingId = -1;
-      this.camera.controls.enabled = true;
-    });
+    this.scene.add(this.controls);
   }
 
   // set control on an element
@@ -58,9 +43,9 @@ export default class TransformControl {
           break;
 
         case 'ShiftLeft': // Shift
-          this.controls.setTranslationSnap(100);
-          this.controls.setRotationSnap(THREE.MathUtils.degToRad(15));
-          this.controls.setScaleSnap(0.25);
+          this.controls.setTranslationSnap(0.25);
+          this.controls.setRotationSnap(THREE.MathUtils.degToRad(2));
+          this.controls.setScaleSnap(0.1);
           break;
 
         case 'KeyW': // W

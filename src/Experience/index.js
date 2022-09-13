@@ -54,8 +54,8 @@ export default class Experience {
     this.raycaster.update();
     this.cannonDebugger.update()
 
-    if (this.world.loaded) {
-      this.world.update();
-    }
+    // if (this.world.loaded) {
+    //   this.world.update();
+    // }
   }
 }
