@@ -4,17 +4,19 @@ import Experience from '..';
 
 export default class TransformControl {
   constructor() {
+    // Setup
     const experience = new Experience();
     this.scene = experience.scene;
     this.camera = experience.camera;
     this.canvas = experience.canvas;
     this.world = experience.world;
     this.raycaster = experience.raycaster;
-
     this.setInstance();
     this.setControls();
   }
 
+  // Events
+  // initialize transform controller
   setInstance() {
     this.controls = new TransformControls(this.camera.instance, this.canvas);
     this.controls.addEventListener('dragging-changed', (event) => {
@@ -25,10 +27,12 @@ export default class TransformControl {
     this.scene.add(this.controls);
   }
 
+  // set control on an element
   addElements(element) {
     this.controls.attach(element)
   }
 
+  // create control system
   setControls() {
     window.addEventListener('keydown', (event) => {
       switch (event.code) {

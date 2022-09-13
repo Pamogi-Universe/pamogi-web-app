@@ -1,5 +1,3 @@
-import * as THREE from 'three';
-import * as CANNON from "cannon-es";
 import Experience from "..";
 import TransformControl from "../controls/transformControls"
 import Cube from './Cube';
@@ -8,7 +6,7 @@ import Floor from "./Floor";
 
 export default class World {
   constructor() {
-    // setup
+    // Setup
     const experience = new Experience();
     this.scene = experience.scene;
     this.physics = experience.physics;
@@ -17,11 +15,11 @@ export default class World {
     this.floor = new Floor();
     this.objects = { meshes: [], arr: [] };
     this.loaded = false;
-
-    // method
     this.render();
   }
 
+  // Events
+  // renders the world
   render() {
     this.resources.on("ready", () => {
       this.loaded = true;
@@ -32,12 +30,14 @@ export default class World {
     })
   }
 
+  // pushes all the 3d objects to array
   pushToObject(key, value) {
     this.objects[key] = value;
     this.objects.meshes.push(value.mesh);
     this.objects.arr.push(value);
   }
 
+  // updates mesh position on the basis of body position
   update() {
     const objects = { ...this.objects };
     delete objects['meshes'];

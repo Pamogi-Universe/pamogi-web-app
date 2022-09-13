@@ -6,18 +6,16 @@ export default class Resources extends EventEmitter {
   constructor(sources) {
     super();
 
-    // setup
+    // Setup
     this.sources = sources;
     this.items = {};
     this.toLoad = this.sources.length;
     this.loaded = 0;
-
-    // methods
     this.setLoaders();
     this.startLoading();
   }
 
-  // events
+  // Events
   setLoaders() {
     this.loaders = {}
     this.loaders.gltfLoader = new GLTFLoader();

@@ -3,6 +3,7 @@ import Experience from '..';
 
 export default class Raycaster {
   constructor() {
+    // Setup
     const experience = new Experience();
     this.sizes = experience.sizes;
     this.resources = experience.resources;
@@ -10,10 +11,11 @@ export default class Raycaster {
     this.world = experience.world
     this.currentIntersect = null;
     this.selectedElement = null;
-
     this.setInstance();
   }
 
+  // Events
+  // initialize raycaster
   setInstance() {
     this.instance = new THREE.Raycaster();
 
@@ -25,6 +27,7 @@ export default class Raycaster {
     })
   }
 
+  // update on every frame
   update() {
     this.instance.setFromCamera(this.mouse, this.camera)
 

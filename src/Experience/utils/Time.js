@@ -4,17 +4,15 @@ export default class Time extends EventEmitter {
   constructor() {
     super();
 
-    // setup
+    // Setup
     this.start = Date.now();
     this.current = this.start;
     this.elapsed = 0;
     this.delta = 16;
-
-    // methods
     window.requestAnimationFrame(() => this.tick())
   }
 
-  // events
+  // Events
   tick() {
     const currentTime = Date.now()
     this.delta = currentTime - this.current;

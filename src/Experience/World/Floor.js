@@ -4,18 +4,19 @@ import Experience from '..';
 
 export default class Floor {
   constructor() {
+    // Setup
     const experience = new Experience()
-
     this.createFloorPhysics(experience.physics);
     this.createFloorMesh(experience.scene);
   }
 
+  // Events
+  // floor mesh
   createFloorMesh(scene) {
     this.mesh = new THREE.Mesh(
       new THREE.PlaneGeometry(10, 10),
       new THREE.MeshStandardMaterial({
         color: '#777777',
-        // side: THREE.DoubleSide
       })
     )
     this.mesh.receiveShadow = true
@@ -25,6 +26,7 @@ export default class Floor {
     scene.add(this.mesh)
   }
 
+  // floor body
   createFloorPhysics(physics) {
     this.body = new CANNON.Body({
       shape: new CANNON.Plane(),

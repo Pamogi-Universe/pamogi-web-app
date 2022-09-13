@@ -14,16 +14,14 @@ let instance = null
 
 export default class Experience {
   constructor(canvas) {
+    // rerender the same instance of experience
     if (instance) return instance;
     instance = this;
-
     window.experience = this;
 
-    // option
-    this.canvas = document.querySelector(canvas);
-
-    // setup
+    // Setup
     this.stats = Stats()
+    this.canvas = document.querySelector(canvas);
     document.body.appendChild(this.stats.dom)
     this.sizes = new Sizes();
     this.time = new Time();
@@ -36,18 +34,18 @@ export default class Experience {
     this.renderer = new Renderer();
     this.world = new World();
     this.raycaster = new Raycaster();
-
-    // methods
     this.sizes.on("resize", () => this.resize());
     this.time.on("tick", () => this.update())
   }
 
-  // events
+  // Events
+  // on screen resize
   resize() {
     this.camera.resize()
     this.renderer.resize()
   }
 
+  // on every frame change
   update() {
     this.stats.update()
     this.view.update()
