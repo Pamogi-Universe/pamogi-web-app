@@ -6,9 +6,10 @@ export default class Raycaster {
     const experience = new Experience();
     this.sizes = experience.sizes;
     this.resources = experience.resources;
+    this.camera = experience.camera.instance;
     this.world = experience.world
     this.currentIntersect = null;
-    console.log(experience);
+    this.selectedElement = null;
 
     this.setInstance();
   }
@@ -22,40 +23,33 @@ export default class Raycaster {
       this.mouse.x = event.clientX / this.sizes.width * 2 - 1
       this.mouse.y = - (event.clientY / this.sizes.height) * 2 + 1
     })
-
-    window.addEventListener('click', () => {
-      // if (currentIntersect) {
-      //   switch (currentIntersect.object) {
-      //     case object1:
-      //       console.log('click on object 1')
-      //       break
-
-      //     case object2:
-      //       console.log('click on object 2')
-      //       break
-
-      //     case object3:
-      //       console.log('click on object 3')
-      //       break
-      //   }
-      // }
-    })
   }
 
-  update(intersects) {
-    if (intersects.length) {
-      // if (!this.currentIntersect) console.log('mouse enter')
-      this.currentIntersect = intersects[0];
-      window.addEventListener('click', () => {
-        if (this.currentIntersect) {
-          const current = this.world.objects.arr.filter(val => this.currentIntersect.object.uuid === val.uuid)[0]
-          this.world.transformControl.addElements(current)
-        }
-      })
-    }
-    else {
-      // if (this.currentIntersect) console.log('mouse leave')
-      this.currentIntersect = null
+  update() {
+    this.instance.setFromCamera(this.mouse, this.camera)
+
+    if (this.world.loaded) {
+      const intersects = this.instance.intersectObjects(this.world.objects.meshes)
+      if (intersects.length) {
+        // if (!this.currentIntersect) console.log('mouse enter')
+        this.currentIntersect = intersects[0];
+        window.addEventListener('click', () => {
+          if (this.currentIntersect) {
+            const current = this.world.objects.meshes.filter(val => this.currentIntersect.object.uuid === val.uuid)[0];
+
+            this.world.objects.arr.forEach(val => {
+              if (val.mesh === current) {
+                this.selectedElement = val;
+              }
+            })
+            this.world.transformControl?.addElements(current)
+          }
+        })
+      }
+      else {
+        // if (this.currentIntersect) console.log('mouse leave')
+        this.currentIntersect = null
+      }
     }
   }
 }

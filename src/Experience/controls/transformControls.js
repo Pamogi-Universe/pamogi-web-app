@@ -9,6 +9,7 @@ export default class TransformControl {
     this.camera = experience.camera;
     this.canvas = experience.canvas;
     this.world = experience.world;
+    this.raycaster = experience.raycaster;
 
     this.setInstance();
     this.setControls();
@@ -16,7 +17,11 @@ export default class TransformControl {
 
   setInstance() {
     this.controls = new TransformControls(this.camera.instance, this.canvas);
-    this.controls.addEventListener('dragging-changed', (event) => this.camera.controls.enabled = !event.value);
+    this.controls.addEventListener('dragging-changed', (event) => {
+      this.raycaster.selectedElement.body.position.copy(this.raycaster.selectedElement.mesh.position)
+      console.log({ body: this.raycaster.selectedElement.body.position, mesh: this.raycaster.selectedElement.mesh.position });
+      this.camera.controls.enabled = !event.value
+    });
     this.scene.add(this.controls);
   }
 

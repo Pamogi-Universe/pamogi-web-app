@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import Camera from './Camera';
 import Renderer from './Renderer';
 import sources from './sources';
@@ -8,6 +7,8 @@ import Time from "./utils/Time";
 import World from './World';
 import Raycaster from './World/Raycaster';
 import View from "./View";
+import Stats from 'three/examples/jsm/libs/stats.module'
+import CannonDebugger from 'cannon-es-debugger'
 
 let instance = null
 
@@ -16,15 +17,20 @@ export default class Experience {
     if (instance) return instance;
     instance = this;
 
+    window.experience = this;
+
     // option
     this.canvas = document.querySelector(canvas);
 
     // setup
-    const view = new View();
+    this.stats = Stats()
+    document.body.appendChild(this.stats.dom)
     this.sizes = new Sizes();
     this.time = new Time();
-    this.scene = view.scene;
-    this.physics = view.physics;
+    this.view = new View();
+    this.scene = this.view.scene;
+    this.physics = this.view.physics;
+    this.cannonDebugger = new CannonDebugger(this.scene, this.physics)
     this.resources = new Resources(sources);
     this.camera = new Camera();
     this.renderer = new Renderer();
@@ -43,14 +49,15 @@ export default class Experience {
   }
 
   update() {
-    this.camera.update()
+    this.stats.update()
+    this.view.update()
+    this.camera.update();
     this.renderer.update();
-
-    this.raycaster.instance.setFromCamera(this.raycaster.mouse, this.camera.instance)
+    this.raycaster.update();
+    this.cannonDebugger.update()
 
     if (this.world.loaded) {
-      const intersects = this.raycaster.instance.intersectObjects(this.world.objects.arr)
-      this.raycaster.update(intersects)
+      this.world.update();
     }
   }
 }

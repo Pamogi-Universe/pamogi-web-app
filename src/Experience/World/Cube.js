@@ -5,50 +5,40 @@ import Experience from "..";
 export default class Cube {
   constructor(position = [0, 0, 0], width, height, depth) {
     // options
-    this.options = { position, width, height, depth }
+    this.options = { position: { x: position[0], y: position[1], z: position[2] }, width, height, depth }
 
     // setup
     const experience = new Experience();
+    this.scene = experience.scene;
+    this.physics = experience.physics;
 
     // methods
-    this.geometry([width, height, depth]);
-    this.setTexture(experience.resources);
-    this.createMesh(experience.scene, position, this.geometry([width, height, depth]), this.createMaterial());
-    this.createPhysics(experience.physics, position)
+    this.instantiate(this.options.width, this.options.height, this.options.depth, this.options.position)
   }
 
   // events
-  geometry(props) {
-    return new THREE.BoxGeometry(...props)
-  }
+  instantiate(width, height, depth, position) {
+    const boxGeometry = new THREE.BoxGeometry(1, 1, 1)
+    const boxMaterial = new THREE.MeshStandardMaterial({
+      metalness: 0.3,
+      roughness: 0.4,
+    })
+    // Three.js mesh
+    this.mesh = new THREE.Mesh(boxGeometry, boxMaterial)
+    this.mesh.scale.set(width, height, depth)
+    this.mesh.castShadow = true
+    this.mesh.position.set(position.x, position.y, position.z)
+    this.scene.add(this.mesh)
 
-  setTexture(resources) {
-    this.options.textures = {
-      map: resources.items.crateColor,
-      normalMap: resources.items.crateNormal,
-      displacementMap: resources.items.crateHeight,
-      displacementScale: 1,
-      transparent: true,
-    }
-  }
+    // Cannon.js body
+    const shape = new CANNON.Box(new CANNON.Vec3(width * 0.5, height * 0.5, depth * 0.5))
 
-  createMaterial() {
-    return new THREE.MeshStandardMaterial({ ...this.options.textures })
-  }
-
-  createMesh(scene, position, geometry, material) {
-    this.mesh = new THREE.Mesh(geometry, material)
-    this.mesh.position.set(...position)
-    scene.add(this.mesh)
-  }
-
-  createPhysics(physics, position) {
     this.body = new CANNON.Body({
       mass: 1,
       position: new CANNON.Vec3(0, 3, 0),
-      shape: new CANNON.Box(new CANNON.Vec3(this.width * 0.5, this.height * 0.5, this.depth * 0.5)),
+      shape: shape,
     })
-    this.body.position.set(...position)
-    physics.addBody(this.body)
+    this.body.position.set(position.x, position.y, position.z)
+    this.physics.addBody(this.body)
   }
 }
