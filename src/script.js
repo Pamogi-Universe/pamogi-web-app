@@ -3,4 +3,4 @@ import './style.css'
 
 const experience = new Experience("#webgl")
 
-// console.log(experience)
+console.log(experience)

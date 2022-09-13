@@ -1,47 +1,54 @@
 import * as THREE from 'three';
+import * as CANNON from "cannon-es";
 import Experience from "..";
 
 export default class Cube {
-  constructor(position = [0, 0, 0]) {
-    this.position = position
+  constructor(position = [0, 0, 0], width, height, depth) {
+    // options
+    this.options = { position, width, height, depth }
+
+    // setup
     const experience = new Experience();
-    this.scene = experience.scene;
-    this.resources = experience.resources;
-    // this.transformControl = experience.transformControl
 
-    this.createGeometry();
-    this.setTexture();
-    this.createMaterial();
-    this.createMesh();
-    // this.enableTransformControls()
+    // methods
+    this.geometry([width, height, depth]);
+    this.setTexture(experience.resources);
+    this.createMesh(experience.scene, position, this.geometry([width, height, depth]), this.createMaterial());
+    this.createPhysics(experience.physics, position)
   }
 
-  createGeometry() {
-    this.geometry = new THREE.BoxGeometry(200, 200, 200)
+  // events
+  geometry(props) {
+    return new THREE.BoxGeometry(...props)
   }
 
-  setTexture() {
-    this.textures = {
-      map: this.resources.items.crateColor,
-      // aoMap: this.resources.items.crateAmbientOcclusion,
-      normalMap: this.resources.items.crateNormal,
-      displacementMap: this.resources.items.crateHeight,
+  setTexture(resources) {
+    this.options.textures = {
+      map: resources.items.crateColor,
+      normalMap: resources.items.crateNormal,
+      displacementMap: resources.items.crateHeight,
       displacementScale: 1,
       transparent: true,
     }
   }
 
   createMaterial() {
-    this.material = new THREE.MeshStandardMaterial({ ...this.textures })
+    return new THREE.MeshStandardMaterial({ ...this.options.textures })
   }
 
-  createMesh() {
-    this.mesh = new THREE.Mesh(this.geometry, this.material)
-    this.mesh.position.set(...this.position)
-    this.scene.add(this.mesh)
+  createMesh(scene, position, geometry, material) {
+    this.mesh = new THREE.Mesh(geometry, material)
+    this.mesh.position.set(...position)
+    scene.add(this.mesh)
   }
 
-  // enableTransformControls() {
-  //   this.transformControl.controls.attach(this.mesh)
-  // }
+  createPhysics(physics, position) {
+    this.body = new CANNON.Body({
+      mass: 1,
+      position: new CANNON.Vec3(0, 3, 0),
+      shape: new CANNON.Box(new CANNON.Vec3(this.width * 0.5, this.height * 0.5, this.depth * 0.5)),
+    })
+    this.body.position.set(...position)
+    physics.addBody(this.body)
+  }
 }
