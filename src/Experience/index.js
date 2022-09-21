@@ -38,7 +38,18 @@ export default class Experience {
     this.raycaster = new Raycaster();
     this.debug = new Debug();
     this.sizes.on("resize", () => this.resize());
-    this.time.on("tick", () => this.update())
+    this.time.on("tick", () => this.update());
+    this.toggleView();
+  }
+
+  toggleView() {
+    document.getElementById("visualizer").addEventListener("change", (e) => {
+      this.viewOnly = e.target.checked;
+      document.body.classList.toggle("view-only");
+      this.world.transformControl.controls.detach()
+      this.world.transformControl.toggle(this.viewOnly)
+      console.log(this.world.transformControl.controls)
+    })
   }
 
   // Events

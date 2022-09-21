@@ -4,11 +4,11 @@ import Experience from '..';
 export default class Raycaster {
   constructor() {
     // Setup
-    const experience = new Experience();
-    this.sizes = experience.sizes;
-    this.resources = experience.resources;
-    this.camera = experience.camera.instance;
-    this.world = experience.world
+    this.experience = new Experience();
+    this.sizes = this.experience.sizes;
+    this.resources = this.experience.resources;
+    this.camera = this.experience.camera.instance;
+    this.world = this.experience.world;
     this.currentIntersect = null;
     this.selectedElement = null;
     this.setInstance();
@@ -29,6 +29,7 @@ export default class Raycaster {
 
   // update on every frame
   update() {
+    this.viewOnly = this.experience.viewOnly;
     this.instance.setFromCamera(this.mouse, this.camera)
 
     if (this.world.loaded) {
@@ -45,9 +46,12 @@ export default class Raycaster {
                 this.selectedElement = val;
               }
             })
-            this.world.transformControl?.addElements(current)
-            current.isCurrent = true
-            this.world.objects.current = this.world.objects.arr.filter(val => val.mesh.isCurrent)[0];
+            if (!this.viewOnly) {
+              console.log(this.viewOnly)
+              this.world.transformControl?.addElements(current)
+              current.isCurrent = true
+              this.world.objects.current = this.world.objects.arr.filter(val => val.mesh.isCurrent)[0];
+            }
           }
         })
       }

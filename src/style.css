@@ -15,6 +15,10 @@ body {
   font-size: 1.6rem;
 }
 
+body.view-only :is(.object__opener, .object__wrapper, .lil-gui, .stat) {
+  display: none;
+}
+
 #webgl {
   display: block;
   outline: none;

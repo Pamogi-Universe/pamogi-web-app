@@ -27,6 +27,7 @@ export default class TransformControl {
       this.camera.controls.enabled = !event.value
     });
     this.scene.add(this.controls);
+    this.controls.enabled = false
   }
 
   // set control on an element
