@@ -22,8 +22,8 @@ export default class Experience {
 
     // Setup
     this.stats = Stats()
-    this.debug = new Debug();
     this.canvas = document.querySelector(canvas);
+    this.stats.dom.classList.add("stat")
     document.body.appendChild(this.stats.dom);
     this.sizes = new Sizes();
     this.time = new Time();
@@ -36,6 +36,7 @@ export default class Experience {
     this.renderer = new Renderer();
     this.world = new World();
     this.raycaster = new Raycaster();
+    this.debug = new Debug();
     this.sizes.on("resize", () => this.resize());
     this.time.on("tick", () => this.update())
   }

@@ -24,6 +24,46 @@ img {
   max-width: 100%;
 }
 
+/* stats */
+.stat {
+  inset-inline: auto 27.5rem !important;
+}
+
+/* visualizer */
+#visualizer {
+  display: none;
+}
+
+.visualizer {
+  position: fixed;
+  inset: 1rem auto auto 1rem;
+  display: block;
+  width: 3rem;
+  aspect-ratio: 1 / 1;
+  background-color: rgba(0, 0, 0, 0.55);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.visualizer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url(../static/svg/eye.svg);
+  background-size: 1.5rem;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#visualizer:checked+.visualizer::after {
+  content: "";
+  position: absolute;
+  width: 59%;
+  border-top: 0.1rem solid #fff;
+  transform: rotate(-45deg);
+  inset: 49% auto auto 21%;
+}
+
 /* object */
 
 .object__toggle {
@@ -85,7 +125,7 @@ img {
   padding: var(--space);
   opacity: 0;
   visibility: hidden;
-  transform: translateX(calc((-1 *  (100% + var(--inset)))));
+  transform: translateX(calc((-1 * (100% + var(--inset)))));
   transition: all 0.5s;
 }
 

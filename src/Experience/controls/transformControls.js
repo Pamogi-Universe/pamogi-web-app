@@ -34,6 +34,14 @@ export default class TransformControl {
     this.controls.attach(element)
   }
 
+  detach() {
+    this.controls.detach();
+  }
+
+  toggle(viewOnly) {
+    this.controls.enabled = !viewOnly;
+  }
+
   // create control system
   setControls() {
     window.addEventListener('keydown', (event) => {
