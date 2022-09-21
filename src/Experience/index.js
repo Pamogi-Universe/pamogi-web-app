@@ -48,7 +48,6 @@ export default class Experience {
       document.body.classList.toggle("view-only");
       this.world.transformControl.controls.detach()
       this.world.transformControl.toggle(this.viewOnly)
-      console.log(this.world.transformControl.controls)
     })
   }
 

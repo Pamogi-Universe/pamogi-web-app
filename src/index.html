@@ -11,12 +11,13 @@
   <canvas id="webgl"></canvas>
   <main id="root">
 
+    <!-- visualizer -->
     <input type="checkbox" name="visualizer" id="visualizer">
     <label class="visualizer" for="visualizer" title="Toggle View/Edit"></label>
 
+    <!-- object toggler -->
     <input class="object__toggle" type="checkbox" name="object-toggler" id="object-toggler">
     <label class="object__opener object--abs" for="object-toggler"></label>
-
     <aside class="object__wrapper object--abs">
       <h2 class="obect__heading" data-limit=" (3)">
         Objects
@@ -39,6 +40,95 @@
         </div>
       </div>
     </aside>
+
+    <!-- shortcut toggler -->
+    <input class="shortcut__toggle" type="checkbox" name="shortcut-toggler" id="shortcut-toggler">
+    <label class="shortcut__opener" for="shortcut-toggler">?</label>
+
+    <div class="shortcut__modal">
+      <label class="shortcut__modal-overlay" for="shortcut-toggler"></label>
+      <div class="shortcut__modal-wrapper">
+        <h2 class="shortcut__heading">
+          Keyboard Shortcuts
+
+          <label class="shortcut__closer" for="shortcut-toggler"></label>
+        </h2>
+
+        <div class="shortcut__body">
+          <div class="shortcut__item">
+            Toggle transform controls
+
+            <span class="shortcut__key">W</span>
+          </div>
+
+          <div class="shortcut__item">
+            Toggle rotate controls
+
+            <span class="shortcut__key">E</span>
+          </div>
+
+          <div class="shortcut__item">
+            Toggle scale controls
+
+            <span class="shortcut__key">R</span>
+          </div>
+
+          <div class="shortcut__item">
+            Snap to grid
+
+            <span class="shortcut__key">Shift</span>
+          </div>
+
+          <div class="shortcut__item">
+            Delete object
+
+            <span class="shortcut__key">D</span>
+          </div>
+
+          <div class="shortcut__item">
+            Increase control size
+
+            <span class="shortcut__key">+</span>
+          </div>
+
+          <div class="shortcut__item">
+            Decrease control size
+
+            <span class="shortcut__key">-</span>
+          </div>
+
+          <div class="shortcut__item">
+            Toggle X control
+
+            <span class="shortcut__key">X</span>
+          </div>
+
+          <div class="shortcut__item">
+            Toggle Y control
+
+            <span class="shortcut__key">Y</span>
+          </div>
+
+          <div class="shortcut__item">
+            Toggle Z control
+
+            <span class="shortcut__key">Z</span>
+          </div>
+
+          <div class="shortcut__item">
+            Enable/disable controls
+
+            <span class="shortcut__key">Spacebar</span>
+          </div>
+
+          <div class="shortcut__item">
+            Reset current transform
+
+            <span class="shortcut__key">Esc</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
 </body>

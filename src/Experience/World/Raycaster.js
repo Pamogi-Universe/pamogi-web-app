@@ -6,6 +6,7 @@ export default class Raycaster {
     // Setup
     this.experience = new Experience();
     this.sizes = this.experience.sizes;
+    this.canvas = this.experience.canvas;
     this.resources = this.experience.resources;
     this.camera = this.experience.camera.instance;
     this.world = this.experience.world;
@@ -36,7 +37,7 @@ export default class Raycaster {
       const intersects = this.instance.intersectObjects(this.world.objects.meshes)
       if (intersects.length) {
         this.currentIntersect = intersects[0];
-        window.addEventListener('click', () => {
+        this.canvas.addEventListener('click', () => {
           if (this.currentIntersect) {
             const current = this.world.objects.meshes.filter(val => this.currentIntersect.object.uuid === val.uuid)[0];
 
