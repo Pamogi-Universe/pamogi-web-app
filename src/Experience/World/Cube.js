@@ -5,11 +5,22 @@ import Experience from "..";
 export default class Cube {
   constructor(position = [0, 0, 0], width, height, depth) {
     // params
-    this.options = { position: { x: position[0], y: position[1], z: position[2] }, width, height, depth }
+    this.options = {
+      width,
+      height,
+      depth,
+      position: {
+        x: position[0],
+        y: position[1],
+        z: position[2]
+      }
+    }
 
     // Setup
     const experience = new Experience();
-    this.instantiate(this.options.width, this.options.height, this.options.depth, this.options.position, experience.scene, experience.physics)
+    this.instantiate(...Object.values(this.options), experience.scene, experience.physics)
+
+    this.destroy()
   }
 
   // Events
@@ -36,5 +47,13 @@ export default class Cube {
     })
     this.body.position.set(position.x, position.y, position.z)
     physics.addBody(this.body)
+  }
+
+  destroy() {
+    // this.mesh.geometry.dispose()
+    // for (const key in this.mesh.material) {
+    //   const value = this.mesh.material[key]
+    //   console.log(key, value)
+    // }
   }
 }

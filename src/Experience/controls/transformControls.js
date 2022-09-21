@@ -48,6 +48,10 @@ export default class TransformControl {
           this.controls.setScaleSnap(0.1);
           break;
 
+        case 'KeyD':
+          console.log(this.controls)
+          break;
+
         case 'KeyW': // W
           this.controls.setMode('translate');
           break;

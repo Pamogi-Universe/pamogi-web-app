@@ -14,9 +14,9 @@ export default class Floor {
   // floor mesh
   createFloorMesh(scene) {
     this.mesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(10, 10),
+      new THREE.PlaneGeometry(200, 200),
       new THREE.MeshStandardMaterial({
-        color: '#777777',
+        color: '#222222',
       })
     )
     this.mesh.receiveShadow = true

@@ -34,23 +34,24 @@ export default class Raycaster {
     if (this.world.loaded) {
       const intersects = this.instance.intersectObjects(this.world.objects.meshes)
       if (intersects.length) {
-        // if (!this.currentIntersect) console.log('mouse enter')
         this.currentIntersect = intersects[0];
         window.addEventListener('click', () => {
           if (this.currentIntersect) {
             const current = this.world.objects.meshes.filter(val => this.currentIntersect.object.uuid === val.uuid)[0];
 
-            this.world.objects.arr.forEach(val => {
+            this.world.objects.arr.map(val => {
+              val.mesh.isCurrent = false;
               if (val.mesh === current) {
                 this.selectedElement = val;
               }
             })
             this.world.transformControl?.addElements(current)
+            current.isCurrent = true
+            this.world.objects.current = this.world.objects.arr.filter(val => val.mesh.isCurrent)[0];
           }
         })
       }
       else {
-        // if (this.currentIntersect) console.log('mouse leave')
         this.currentIntersect = null
       }
     }

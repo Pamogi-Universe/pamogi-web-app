@@ -9,6 +9,7 @@ import Raycaster from './World/Raycaster';
 import View from "./View";
 import Stats from 'three/examples/jsm/libs/stats.module'
 import CannonDebugger from 'cannon-es-debugger'
+import Debug from './utils/Debug';
 
 let instance = null
 
@@ -21,8 +22,9 @@ export default class Experience {
 
     // Setup
     this.stats = Stats()
+    this.debug = new Debug();
     this.canvas = document.querySelector(canvas);
-    document.body.appendChild(this.stats.dom)
+    document.body.appendChild(this.stats.dom);
     this.sizes = new Sizes();
     this.time = new Time();
     this.view = new View();
