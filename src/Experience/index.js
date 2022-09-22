@@ -42,6 +42,8 @@ export default class Experience {
     this.toggleView();
   }
 
+  // Events
+  // toggle view only/edit mode
   toggleView() {
     document.getElementById("visualizer").addEventListener("change", (e) => {
       this.viewOnly = e.target.checked;
@@ -51,7 +53,6 @@ export default class Experience {
     })
   }
 
-  // Events
   // on screen resize
   resize() {
     this.camera.resize()

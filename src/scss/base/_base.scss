@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-family);
+  font-size: 62.5%;
+  background-color: $clr-base;
+}
+
+body {
+  font-size: rem(16);
+}
+
+// body.view-only :is(.object__opener, .object__wrapper, .lil-gui, .stat, .shortcut__toggle, .shortcut__opener) {
+//   display: none;
+// }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img,
+svg,
+video,
+iframe,
+object {
+  max-width: 100%;
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: var(--font-family);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+#webgl {
+  @extend %d-block;
+  outline: none;
+}

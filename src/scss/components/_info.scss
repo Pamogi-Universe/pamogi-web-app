@@ -1,0 +1,29 @@
+.info {
+  // @extend %d-none;
+  @include position(false, auto rem(10) rem(10) auto, $position: fixed);
+  width: rem(300);
+  padding: rem(20);
+  color: $white;
+  background-color: $clr-base;
+  border: rem(1) solid $clr-border;
+  border-radius: rem(10);
+  transition: all 0.5s;
+
+  @include view-only;
+
+  &--border {
+    margin-block-end: rem(15);
+    padding-block-end: rem(15);
+    border-block-end: rem(1) solid $clr-border;
+  }
+
+  &__title {
+    @extend %fw-600;
+  }
+
+  &__description {
+    font-size: rem(14);
+    @extend %fw-200;
+    line-height: 1.6;
+  }
+}

@@ -1,0 +1,40 @@
+%absolute {
+  position: absolute;
+}
+
+%fixed {
+  position: fixed;
+}
+
+%d {
+  &-none {
+    display: none;
+  }
+
+  &-block {
+    display: block;
+  }
+}
+
+%round {
+  border-radius: 50%;
+}
+
+%square {
+  width: var(--square);
+  aspect-ratio: 1 / 1;
+}
+
+%pointer {
+  cursor: pointer;
+}
+
+%text {
+  &-uppercase {
+    text-transform: uppercase;
+  }
+
+  &-center {
+    text-align: center;
+  }
+}

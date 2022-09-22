@@ -5,8 +5,7 @@ import Experience from '.';
 export default class View {
   constructor() {
     // Setup
-    const experience = new Experience();
-    this.delta = experience.time.delta
+    this.delta = new Experience().time.delta
     this.addScene();
     this.addPhysics();
   }
