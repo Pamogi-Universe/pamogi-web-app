@@ -15,6 +15,8 @@
   }
 
   &__opener {
+    --img: url(../static/img/object.png);
+    --mask-size: contain;
     @extend %d-block;
     @include square(50);
     @extend %pointer;
@@ -34,14 +36,14 @@
     }
 
     &::after {
-      -webkit-mask-size: contain;
-      mask-size: contain;
+      -webkit-mask-size: var(--mask-size);
+      mask-size: var(--mask-size);
       -webkit-mask-position: center;
       mask-position: center;
       -webkit-mask-repeat: no-repeat;
       mask-repeat: no-repeat;
-      mask-image: url(../static/img/object.png);
-      -webkit-mask-image: url(../static/img/object.png);
+      mask-image: var(--img);
+      -webkit-mask-image: var(--img);
       background-color: $white;
     }
 

@@ -86,16 +86,18 @@
   }
 
   &__key {
+    display: inline-block;
+    @extend %d-block;
+    min-width: rem(15);
+    padding: rem(5) rem(6);
+    line-height: 1;
+    @extend %text-uppercase;
+    @extend %text-center;
+    border: rem(1) solid var(--clr);
+    border-radius: rem(5);
+
     &:first-child {
-      @extend %d-block;
-      min-width: rem(15);
       margin-left: auto;
-      padding: rem(5) rem(6);
-      line-height: 1;
-      @extend %text-uppercase;
-      @extend %text-center;
-      border: rem(1) solid var(--clr);
-      border-radius: rem(5);
     }
   }
 }

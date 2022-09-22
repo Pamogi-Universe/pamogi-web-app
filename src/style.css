@@ -40,32 +40,32 @@ button {
 #webgl {
   outline: none; }
 
-.visualizer, .visualizer::before, #visualizer:checked + .visualizer::after, .object__opener::before, .object__opener::after {
+.visualizer, .visualizer::before, #visualizer:checked + .visualizer::after, .object__opener::before, .info__opener::before, .object__opener::after, .info__opener::after, .info__opener {
   position: absolute; }
 
-.object--abs, .shortcut__opener, .shortcut__modal, .shortcut__modal-overlay, .info {
+.object--abs, .shortcut__opener, .shortcut__modal, .shortcut__modal-overlay, .info__wrapper {
   position: fixed; }
 
-body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, body.view-only .object__opener, body.view-only .object__wrapper, .shortcut__toggle, body.view-only .shortcut__opener, body.view-only .shortcut__modal, body.view-only .info {
+body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, body.view-only .object__opener, body.view-only .info__opener, body.view-only .object__wrapper, .shortcut__toggle, body.view-only .shortcut__opener, body.view-only .shortcut__modal, body.view-only .info, .info__toggle {
   display: none; }
 
-#webgl, .visualizer, .object__opener, .object__closer, .shortcut__closer, .object__img, .shortcut__key:first-child {
+#webgl, .visualizer, .object__opener, .info__opener, .object__closer, .shortcut__closer, .object__img, .shortcut__key, .info__btn {
   display: block; }
 
-.visualizer, .object__opener::before, .shortcut__opener {
+.visualizer, .object__opener::before, .info__opener::before, .shortcut__opener {
   border-radius: 50%; }
 
-.visualizer, .object__opener, .object__closer, .shortcut__closer, .shortcut__opener {
+.visualizer, .object__opener, .info__opener, .object__closer, .shortcut__closer, .shortcut__opener {
   width: var(--square);
   aspect-ratio: 1 / 1; }
 
-.visualizer, .object__opener, .object__closer, .shortcut__closer, .shortcut__opener {
+.visualizer, .object__opener, .info__opener, .object__closer, .shortcut__closer, .shortcut__opener, .info__btn {
   cursor: pointer; }
 
-.shortcut__key:first-child {
+.shortcut__key, .info__btn {
   text-transform: uppercase; }
 
-.shortcut__key:first-child {
+.shortcut__key, .info__btn {
   text-align: center; }
 
 .shortcut__opener, .info__description {
@@ -109,26 +109,28 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
   --inset: 1rem;
   inset: auto auto var(--inset) var(--inset); }
 
-.object__opener {
+.object__opener, .info__opener {
+  --img: url(../static/img/object.png);
+  --mask-size: contain;
   --square: 5rem; }
-  .object__opener::before, .object__opener::after {
+  .object__opener::before, .info__opener::before, .object__opener::after, .info__opener::after {
     content: "";
     inset: 0;
     transition: all 0.5s;
     backface-visibility: visible; }
-  .object__opener::before {
+  .object__opener::before, .info__opener::before {
     background-color: #000000; }
-  .object__opener::after {
-    -webkit-mask-size: contain;
-    mask-size: contain;
+  .object__opener::after, .info__opener::after {
+    -webkit-mask-size: var(--mask-size);
+    mask-size: var(--mask-size);
     -webkit-mask-position: center;
     mask-position: center;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-    mask-image: url(../static/img/object.png);
-    -webkit-mask-image: url(../static/img/object.png);
+    mask-image: var(--img);
+    -webkit-mask-image: var(--img);
     background-color: #ffffff; }
-  .object__opener:hover::after, .object__opener:hover::before {
+  .object__opener:hover::after, .info__opener:hover::after, .object__opener:hover::before, .info__opener:hover::before {
     transform: rotateY(180deg); }
 
 .object__wrapper {
@@ -237,15 +239,18 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
 .shortcut__item:not(:last-child) {
   margin-block-end: 2rem; }
 
-.shortcut__key:first-child {
+.shortcut__key, .info__btn {
+  display: inline-block;
   min-width: 1.5rem;
-  margin-left: auto;
   padding: 0.5rem 0.6rem;
   line-height: 1;
   border: 0.1rem solid var(--clr);
   border-radius: 0.5rem; }
+  .shortcut__key:first-child, .info__btn:first-child {
+    margin-left: auto; }
 
-.info {
+.info__wrapper {
+  --clr: rgb(202, 201, 201);
   inset: auto 1rem 1rem auto;
   width: 30rem;
   padding: 2rem;
@@ -253,11 +258,41 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
   background-color: #1e1a20;
   border: 0.1rem solid #616161;
   border-radius: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(calc(100% + 1rem));
   transition: all 0.5s; }
-  .info--border {
-    margin-block-end: 1.5rem;
-    padding-block-end: 1.5rem;
-    border-block-end: 0.1rem solid #616161; }
-  .info__description {
-    font-size: 1.4rem;
-    line-height: 1.6; }
+
+.info__toggle:checked ~ .info__wrapper {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0); }
+
+.info__opener {
+  --img: url(../static/svg/info.svg);
+  --mask-size: 2rem;
+  inset: auto 1rem 1rem auto; }
+  .info__opener:hover::before, .info__opener:hover::after {
+    transform: rotate(360deg); }
+
+.info--border {
+  margin-block-end: 1.5rem;
+  padding-block-end: 1.5rem;
+  border-block-end: 0.1rem solid #616161; }
+
+.info__description {
+  font-size: 1.4rem;
+  line-height: 1.6; }
+
+.info__btn {
+  padding: 0.8rem 2rem;
+  font-size: 1.4rem;
+  transition: all 0.2s; }
+  .info__btn:hover {
+    color: #1e1a20;
+    background-color: var(--clr); }
+
+.info__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem; }

@@ -1,15 +1,47 @@
 .info {
-  // @extend %d-none;
-  @include position(false, auto rem(10) rem(10) auto, $position: fixed);
-  width: rem(300);
-  padding: rem(20);
-  color: $white;
-  background-color: $clr-base;
-  border: rem(1) solid $clr-border;
-  border-radius: rem(10);
-  transition: all 0.5s;
+  &__wrapper {
+    --clr: rgb(202, 201, 201);
+    @include position(false, auto rem(10) rem(10) auto, $position: fixed);
+    width: rem(300);
+    padding: rem(20);
+    color: $white;
+    background-color: $clr-base;
+    border: rem(1) solid $clr-border;
+    border-radius: rem(10);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(calc(100% + #{rem(10)}));
+    transition: all 0.5s;
+  }
 
   @include view-only;
+
+  &__toggle {
+    @extend %d-none;
+
+    &:checked~.info__wrapper {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+  }
+
+  &__opener {
+    --img: url(../static/svg/info.svg);
+    --mask-size: #{rem(20)};
+    @extend .object__opener;
+    @include position(false, auto rem(10) rem(10) auto);
+
+    @include view-only;
+
+    &:hover {
+
+      &::before,
+      &::after {
+        transform: rotate(360deg);
+      }
+    }
+  }
 
   &--border {
     margin-block-end: rem(15);
@@ -25,5 +57,22 @@
     font-size: rem(14);
     @extend %fw-200;
     line-height: 1.6;
+  }
+
+  &__btn {
+    @extend .shortcut__key;
+    padding: rem(8) rem(20);
+    font-size: rem(14);
+    @extend %pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      color: $clr-base;
+      background-color: var(--clr);
+    }
+  }
+
+  &__footer {
+    @include flex($justify-content: flex-end, $gap: rem(10))
   }
 }

@@ -131,7 +131,10 @@
       </div>
     </div>
 
-    <div class="info">
+    <input class="info__toggle" type="checkbox" name="info-toggler" id="info-toggler">
+    <label class="info__opener" for="info-toggler"></label>
+
+    <div class="info__wrapper">
       <h3 class="info__title info--border">
         <span>This is an info title</span>
       </h3>
@@ -139,8 +142,9 @@
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quod quo dolores praesentium facere veritatis est.
       </p>
 
-      <div class="">
-        <label class="info__closer" for="info-toggler"></label>
+      <div class="info__footer">
+        <label class="info__btn" for="info-editor">Edit</label>
+        <label class="info__btn" for="info-toggler">Close</label>
       </div>
     </div>
   </main>
