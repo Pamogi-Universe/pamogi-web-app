@@ -35,23 +35,29 @@ export default class Raycaster {
 
     if (this.world.loaded) {
       const intersects = this.instance.intersectObjects(this.world.objects.meshes)
+
       if (intersects.length) {
         this.currentIntersect = intersects[0];
         this.canvas.addEventListener('click', () => {
           if (this.currentIntersect) {
-            const current = this.world.objects.meshes.filter(val => this.currentIntersect.object.uuid === val.uuid)[0];
+            const current = this.world.objects.meshes.filter((val, id) => {
+              const intersectID = this.currentIntersect.object.parent.type === "Scene" ? this.currentIntersect.object.uuid : this.currentIntersect.object.parent.uuid
+              return intersectID === val.uuid
+            })[0];
 
-            this.world.objects.arr.map(val => {
-              val.mesh.isCurrent = false;
-              if (val.mesh === current) {
+            this.world.objects.arr.forEach(val => {
+              val.isCurrent = false;
+              if (val === current) {
                 this.selectedElement = val;
               }
             })
+
+            // console.log(current.name)
+
             if (!this.viewOnly) {
-              console.log(this.viewOnly)
               this.world.transformControl?.addElements(current)
               current.isCurrent = true
-              this.world.objects.current = this.world.objects.arr.filter(val => val.mesh.isCurrent)[0];
+              this.world.objects.current = this.world.objects.arr.filter(val => val.isCurrent)[0];
             }
           }
         })

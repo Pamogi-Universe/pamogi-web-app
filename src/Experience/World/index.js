@@ -1,21 +1,19 @@
 import Experience from "..";
 import TransformControl from "../controls/transformControls"
-import Cube from './Cube';
 import Environment from "./Environment";
 import Floor from "./Floor";
-import GridHelper from "../helpers/GridHelper"
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import random from "../utils/randomKey";
 
 export default class World {
   constructor() {
     // Setup
     const experience = new Experience();
     this.scene = experience.scene;
-    this.physics = experience.physics;
     this.resources = experience.resources;
-    this.helper = {
-      // grid: new GridHelper(10, 10);
-    }
+    this.helpers = {}
     this.floor = new Floor();
+    this.gltfLoader = new GLTFLoader();
     this.objects = { meshes: [], arr: [] };
     this.loaded = false;
     this.render();
@@ -28,27 +26,30 @@ export default class World {
       this.loaded = true;
       this.environment = new Environment();
       this.transformControl = new TransformControl();
-      this.pushToObject("cube1", new Cube([0, 2, 0], 1, 1.5, 2));
-      this.pushToObject("cube2", new Cube([-3, 2, 1], 2, 2, 2));
     })
   }
 
   // pushes all the 3d objects to array
   pushToObject(key, value) {
     this.objects[key] = value;
-    this.objects.meshes.push(value.mesh);
+    this.objects.meshes.push(value);
     this.objects.arr.push(value);
   }
 
   // updates mesh position on the basis of body position
-  update() {
-    const objects = { ...this.objects };
-    delete objects['meshes'];
-    delete objects['arr'];
+  update() { }
 
-    for (const object in objects) {
-      objects[object].mesh.position.copy(objects[object].body.position)
-      objects[object].mesh.quaternion.copy(objects[object].body.quaternion)
+  loadModal(name, url) {
+    if (!this.objects[name]) {
+      this.gltfLoader.load(url, (gltf) => {
+        this.pushToObject(`${name}-${random()}`, gltf.scene.children[0]);
+        this.scene.add(gltf.scene.children[0])
+      })
+    } else {
+      const clone = this.objects[name].clone();
+      clone.position.set(0,0,0);
+      this.pushToObject(`${name}-${random()}`, clone);
+      this.scene.add(clone)
     }
   }
 }

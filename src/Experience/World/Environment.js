@@ -21,7 +21,7 @@ export default class Environment {
 
   // environment brightness
   setEnvLight() {
-    this.envLight = new THREE.AmbientLight(0xffffff, 0.3);
+    this.envLight = new THREE.AmbientLight(0xffffff, 0.9);
     this.scene.add(this.envLight);
   }
 }

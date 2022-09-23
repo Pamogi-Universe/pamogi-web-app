@@ -46,7 +46,7 @@ button {
 .object--abs, .shortcut__opener, .shortcut__modal, .shortcut__modal-overlay, .info__wrapper {
   position: fixed; }
 
-body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, body.view-only .object__opener, body.view-only .info__opener, body.view-only .object__wrapper, .shortcut__toggle, body.view-only .shortcut__opener, body.view-only .shortcut__modal, body.view-only .info, .info__toggle {
+body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, body.view-only .object__opener, body.view-only .info__opener, body.view-only .object__wrapper, .shortcut__toggle, body.view-only .shortcut__opener, body.view-only .shortcut__modal, body.view-only .info__wrapper, .info__toggle {
   display: none; }
 
 #webgl, .visualizer, .object__opener, .info__opener, .object__closer, .shortcut__closer, .object__img, .shortcut__key, .info__btn {
@@ -175,7 +175,8 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
     width: 0; }
 
 .object__img {
-  border-radius: var(--space); }
+  border-radius: var(--space);
+  background-color: #393939; }
 
 .object__item:not(:last-child) {
   margin-block-end: var(--space); }

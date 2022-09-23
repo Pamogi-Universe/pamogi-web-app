@@ -20,14 +20,12 @@ export default class TransformControl {
   setInstance() {
     this.controls = new TransformControls(this.camera.instance, this.canvas);
     this.controls.addEventListener('dragging-changed', (event) => {
-      if (this.raycaster.selectedElement.mesh.position.y <= this.raycaster.selectedElement.mesh.scale.y / 2) {
-        this.raycaster.selectedElement.mesh.position.y = this.raycaster.selectedElement.mesh.scale.y / 2
-      }
-      this.raycaster.selectedElement.body.position.copy(this.raycaster.selectedElement.mesh.position)
+      // if (this.raycaster.selectedElement.position.y <= this.raycaster.selectedElement.scale.y / 2) {
+      //   this.raycaster.selectedElement.position.y = this.raycaster.selectedElement.scale.y / 2
+      // }
       this.camera.controls.enabled = !event.value
     });
     this.scene.add(this.controls);
-    this.controls.enabled = false
   }
 
   // set control on an element

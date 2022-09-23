@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import * as CANNON from "cannon-es";
 import Experience from "..";
 
 export default class Cube {
@@ -37,23 +36,7 @@ export default class Cube {
     this.mesh.castShadow = true
     this.mesh.position.set(position.x, position.y, position.z)
     scene.add(this.mesh)
-
-    // cannon.js body
-    const shape = new CANNON.Box(new CANNON.Vec3(width * 0.5, height * 0.5, depth * 0.5))
-    this.body = new CANNON.Body({
-      mass: 1,
-      position: new CANNON.Vec3(0, 3, 0),
-      shape: shape,
-    })
-    this.body.position.set(position.x, position.y, position.z)
-    physics.addBody(this.body)
   }
 
-  destroy() {
-    // this.mesh.geometry.dispose()
-    // for (const key in this.mesh.material) {
-    //   const value = this.mesh.material[key]
-    //   console.log(key, value)
-    // }
-  }
+  destroy() {}
 }

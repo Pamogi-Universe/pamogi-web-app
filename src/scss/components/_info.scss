@@ -12,9 +12,9 @@
     visibility: hidden;
     transform: translateX(calc(100% + #{rem(10)}));
     transition: all 0.5s;
-  }
 
-  @include view-only;
+    @include view-only;
+  }
 
   &__toggle {
     @extend %d-none;

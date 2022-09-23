@@ -109,6 +109,7 @@
   &__img {
     @extend %d-block;
     border-radius: var(--space);
+    background-color: $clr-black-1;
   }
 
   &__item {
