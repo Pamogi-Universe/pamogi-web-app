@@ -49,25 +49,31 @@ export default class TransformControl {
           this.controls.setSpace(this.controls.space === 'local' ? 'world' : 'local');
           break;
 
-        case 'ShiftLeft': // Shift
+        case 'ControlRight': // ControlRight
+        case 'ControlLeft': // ControlLeft
           this.controls.setTranslationSnap(0.25);
           this.controls.setRotationSnap(THREE.MathUtils.degToRad(2));
           this.controls.setScaleSnap(0.1);
           break;
 
         case 'KeyD':
-          console.log(this.controls)
+          this.world.removeFromObject();
           break;
 
-        case 'KeyW': // W
+        case 'KeyT': // T
           this.controls.setMode('translate');
           break;
 
-        case 'KeyE': // E
+        case 'KeyR': // R
           this.controls.setMode('rotate');
           break;
 
-        case 'KeyR': // R
+        case 'KeyF': // F
+          console.log(this.world.objects.current?.position)
+          this.world.objects.current?.position && this.camera.controls.target.set(...this.world.objects.current.position)
+          break;
+
+        case 'KeyS': // S
           this.controls.setMode('scale');
           break;
 

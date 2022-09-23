@@ -38,7 +38,8 @@ export default class Experience {
     this.time.on("tick", () => this.update());
     this.toggleView();
     this.renderObjects();
-    this.dragEvent()
+    this.dragEvent();
+    this.centralizeCamera();
   }
 
   // Events
@@ -87,6 +88,14 @@ export default class Experience {
         }, 50);
       })
     });
+  }
+
+  centralizeCamera() {
+    window.addEventListener("keydown", (e) => {
+      if(e.shiftKey, e.code === "KeyC") {
+        this.camera.controls.target.set(0, 0, 0)
+      }
+    })
   }
 
   // on screen resize

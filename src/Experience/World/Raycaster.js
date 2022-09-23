@@ -45,7 +45,7 @@ export default class Raycaster {
               return intersectID === val.uuid
             })[0];
 
-            this.world.objects.arr.forEach(val => {
+            this.world.objects.meshes.forEach(val => {
               val.isCurrent = false;
               if (val === current) {
                 this.selectedElement = val;
@@ -57,7 +57,7 @@ export default class Raycaster {
             if (!this.viewOnly) {
               this.world.transformControl?.addElements(current)
               current.isCurrent = true
-              this.world.objects.current = this.world.objects.arr.filter(val => val.isCurrent)[0];
+              this.world.objects.current = this.world.objects.meshes.filter(val => val.isCurrent)[0];
             }
           }
         })

@@ -15,7 +15,7 @@ export default class GridHelper {
 
   // events
   setInstance() {
-    this.instance = new THREE.GridHelper(this.size, this.divisions, 0x888888, 0x444444)
+    this.instance = new THREE.GridHelper(this.size, this.divisions, 0xFF00FF, 0x00FF00)
     this.scene.add(this.instance)
   }
 }

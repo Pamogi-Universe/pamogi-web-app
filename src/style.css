@@ -249,6 +249,8 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
   border-radius: 0.5rem; }
   .shortcut__key:first-child, .info__btn:first-child {
     margin-left: auto; }
+  .shortcut__key:not(:last-child), .info__btn:not(:last-child) {
+    margin-inline-end: 0.5rem; }
 
 .info__wrapper {
   --clr: rgb(202, 201, 201);

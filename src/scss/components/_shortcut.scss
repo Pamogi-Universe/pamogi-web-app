@@ -99,5 +99,9 @@
     &:first-child {
       margin-left: auto;
     }
+
+    &:not(:last-child) {
+      margin-inline-end: rem(5);
+    }
   }
 }
