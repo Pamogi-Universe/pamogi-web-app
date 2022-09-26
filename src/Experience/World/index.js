@@ -4,8 +4,9 @@ import TransformControl from "../controls/transformControls"
 import Environment from "./Environment";
 import Floor from "./Floor";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import random from "../utils/randomKey";
-import GridHelper from '../helpers/GridHelper';
+// import GridHelper from '../helpers/GridHelper';
 
 export default class World {
   constructor() {
@@ -14,10 +15,11 @@ export default class World {
     this.scene = experience.scene;
     this.resources = experience.resources;
     this.helpers = {
-      gridHelper: new GridHelper(10, 10)
+      // gridHelper: new GridHelper(10, 10)
     }
     this.floor = new Floor();
     this.gltfLoader = new GLTFLoader();
+    this.fbxLoader = new FBXLoader();
     this.objects = { meshes: [], arr: [] };
     this.loaded = false;
     this.render();
@@ -41,14 +43,14 @@ export default class World {
   }
 
   removeFromObject() {
-    this.objects.current.geometry.dispose()
+    // this.objects.current.geometry.dispose()
 
-    for (const key in this.objects.current.material) {
-      const val = this.objects.current.material[key]
-      if (val && val.dispose === 'function') {
-        val.dispose();
-      }
-    }
+    // for (const key in this.objects.current.material) {
+    //   const val = this.objects.current.material[key]
+    //   if (val && val.dispose === 'function') {
+    //     val.dispose();
+    //   }
+    // }
 
     this.transformControl.detach();
     this.scene.remove(this.objects.current)
@@ -70,8 +72,13 @@ export default class World {
   loadModal(name, url) {
     if (!this.objects[name]) {
       this.gltfLoader.load(url, (gltf) => {
-        this.pushToObject(`${name}-${random()}`, gltf.scene.children[0]);
-        this.scene.add(gltf.scene.children[0])
+        const object = gltf.scene.children[0];
+
+        const boundingBox = new THREE.Box3().setFromObject(object)
+        const ySize = boundingBox.max.y - boundingBox.min.y
+        object.position.y = ySize / 2;
+        this.pushToObject(`${name}-${random()}`, object);
+        this.scene.add(object)
       })
     } else {
       const clone = this.objects[name].clone();

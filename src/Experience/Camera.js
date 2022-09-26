@@ -16,7 +16,7 @@ export default class Camera {
   // Events
   // initialize camera
   setInstance() {
-    this.instance = new THREE.PerspectiveCamera(75, this.sizes.width / this.sizes.height, 0.01, 100);
+    this.instance = new THREE.PerspectiveCamera(55, this.sizes.width / this.sizes.height, 1, 20000);
     this.instance.position.set(- 3, 6, 6);
     this.instance.lookAt(0, 0, 0);
     this.scene.add(this.instance);
@@ -28,9 +28,9 @@ export default class Camera {
     this.controls.enableDamping = true;
     this.controls.enabled = true;
     this.controls.minPolarAngle = 0;
-    this.controls.maxPolarAngle = Math.PI / 2 - 0.001;
-    this.controls.minDistance = 5;
-    this.controls.maxDistance = 50;
+    this.controls.maxPolarAngle = Math.PI / 2 - 0.1;
+    // this.controls.minDistance = 5;
+    // this.controls.maxDistance = 50;
     // this.controls.enablePan = false;
     this.controls.screenSpacePanning = true;
   }
@@ -42,5 +42,7 @@ export default class Camera {
 
   update() {
     this.controls.update();
+
+    this.controls.target.y = 0;
   }
 }

@@ -76,7 +76,7 @@ export default class Experience {
 
           if (elementMouseIsOver === this.canvas) {
             if (!counter)
-              this.world.loadModal(objects[id].name, objects[id].model)
+              this.world.loadModal(objects[id].name, objects[id].model, objects[id].type)
             counter++
           }
         }
@@ -92,7 +92,7 @@ export default class Experience {
 
   centralizeCamera() {
     window.addEventListener("keydown", (e) => {
-      if(e.shiftKey, e.code === "KeyC") {
+      if(e.shiftKey && e.code === "KeyC") {
         this.camera.controls.target.set(0, 0, 0)
       }
     })

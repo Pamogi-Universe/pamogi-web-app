@@ -2,27 +2,27 @@ const objects = [
   {
     name: "apple",
     url: "/img/apple.png",
-    model: "/models/apple-one.glb"
+    model: "/models/Apple.glb"
   },
   {
     name: "tree",
     url: "/img/tree.png",
-    model: "/models/tree-one.glb"
+    model: "/models/Bush1.glb"
   },
   {
     name: "bush",
     url: "/img/bushes.png",
-    model: "/models/bush-one.glb"
+    model: "/models/Bush2.glb"
   },
   {
     name: "waterfall",
     url: "/img/waterfall.png",
-    model: "/models/waterfall.glb"
+    model: "/models/Tree3.glb"
   },
   {
     name: "cloud",
     url: "/img/cloud.png",
-    model: "/models/clouds.glb"
+    model: "/models/River6.glb"
   }
 ];
 

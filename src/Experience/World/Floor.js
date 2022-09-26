@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Experience from '..';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 export default class Floor {
   constructor() {
@@ -11,14 +12,11 @@ export default class Floor {
   // Events
   // floor mesh
   createFloorMesh(scene) {
-    this.mesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(200, 200),
-      new THREE.MeshStandardMaterial({
-        color: '#222222',
-      })
-    )
-    this.mesh.receiveShadow = true
-    this.mesh.rotation.x = - Math.PI * 0.5
-    scene.add(this.mesh)
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load("/models/Continent.glb", (gltf) => {
+      this.instance = gltf.scene.children[0];
+      // this.instance.scale.set(50, 1, 50);
+      scene.add(this.instance)
+    })
   }
 }

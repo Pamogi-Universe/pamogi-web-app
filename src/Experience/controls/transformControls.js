@@ -56,8 +56,8 @@ export default class TransformControl {
           this.controls.setScaleSnap(0.1);
           break;
 
-        case 'KeyD':
-          this.world.removeFromObject();
+        case 'KeyD': // D
+          this.world.objects.current && this.world.removeFromObject();
           break;
 
         case 'KeyT': // T

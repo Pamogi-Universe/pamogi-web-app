@@ -18,15 +18,12 @@ export default class Renderer {
     this.instance = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: true,
-      physicallyCorrectLights: true,
-      outputEncoding: THREE.sRGBEncoding,
-      toneMapping: THREE.CineonToneMapping,
-      toneMappingExposure: 1.75,
-      shadowMap: {
-        enabled: true,
-        type: THREE.PCFSoftShadowMap
-      }
     });
+    this.instance.physicallyCorrectLights = true;
+    this.instance.toneMapping = THREE.ACESFilmicToneMapping;
+    this.instance.toneMappingExposure = 0.8;
+    this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.instance.shadowMap.enabled = true;
 
     this.sizing();
   }
