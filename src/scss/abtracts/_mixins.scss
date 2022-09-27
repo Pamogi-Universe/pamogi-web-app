@@ -60,5 +60,6 @@
 @mixin view-only {
   body.view-only & {
     @extend %d-none;
+    @content;
   }
 }

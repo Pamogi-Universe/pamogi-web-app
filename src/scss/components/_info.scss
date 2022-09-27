@@ -1,3 +1,7 @@
+#info-toggler {
+  @extend %d-none;
+}
+
 .info {
   &__wrapper {
     --clr: rgb(202, 201, 201);
@@ -12,13 +16,9 @@
     visibility: hidden;
     transform: translateX(calc(100% + #{rem(10)}));
     transition: all 0.5s;
-
-    @include view-only;
   }
 
   &__toggle {
-    @extend %d-none;
-
     &:checked~.info__wrapper {
       opacity: 1;
       visibility: visible;
@@ -32,7 +32,9 @@
     @extend .object__opener;
     @include position(false, auto rem(10) rem(10) auto);
 
-    @include view-only;
+    @include view-only {
+      @extend %d-block;
+    }
 
     &:hover {
 

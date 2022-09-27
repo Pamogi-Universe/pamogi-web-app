@@ -11,7 +11,7 @@ export default class Raycaster {
     this.camera = this.experience.camera.instance;
     this.world = this.experience.world;
     this.currentIntersect = null;
-    this.selectedElement = null;
+    this.outlinePass = this.experience.composer
     this.setInstance();
   }
 
@@ -31,7 +31,7 @@ export default class Raycaster {
   // update on every frame
   update() {
     this.viewOnly = this.experience.viewOnly;
-    this.instance.setFromCamera(this.mouse, this.camera)
+    this.instance.setFromCamera(this.mouse, this.camera);
 
     if (this.world.loaded) {
       const intersects = this.instance.intersectObjects(this.world.objects.meshes)
@@ -45,20 +45,11 @@ export default class Raycaster {
               return intersectID === val.uuid
             })[0];
 
-            this.world.objects.meshes.forEach(val => {
-              val.isCurrent = false;
-              if (val === current) {
-                this.selectedElement = val;
-              }
-            })
-
-            // console.log(current.name)
-
             if (!this.viewOnly) {
-              this.world.transformControl?.addElements(current)
-              current.isCurrent = true
-              this.world.objects.current = this.world.objects.meshes.filter(val => val.isCurrent)[0];
+              this.world.transformControl?.addElements(current);
+              this.world.setCurrentElement(current);
             }
+            this.outlinePass.setCurrentElement(current);
           }
         })
       }

@@ -12,6 +12,7 @@ html {
 
 body {
   font-size: rem(16);
+  overflow: hidden;
 }
 
 // body.view-only :is(.object__opener, .object__wrapper, .lil-gui, .stat, .shortcut__toggle, .shortcut__opener) {

@@ -20,8 +20,8 @@ export default class TransformControl {
   setInstance() {
     this.controls = new TransformControls(this.camera.instance, this.canvas);
     this.controls.addEventListener('dragging-changed', (event) => {
-      // if (this.raycaster.selectedElement.position.y <= this.raycaster.selectedElement.scale.y / 2) {
-      //   this.raycaster.selectedElement.position.y = this.raycaster.selectedElement.scale.y / 2
+      // if (this.world.current.position.y <= this.world.current.scale.y / 2) {
+      //   this.world.current.position.y = this.world.current.scale.y / 2
       // }
       this.camera.controls.enabled = !event.value
     });
@@ -69,7 +69,6 @@ export default class TransformControl {
           break;
 
         case 'KeyF': // F
-          console.log(this.world.objects.current?.position)
           this.world.objects.current?.position && this.camera.controls.target.set(...this.world.objects.current.position)
           break;
 

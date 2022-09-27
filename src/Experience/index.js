@@ -9,7 +9,9 @@ import World from './World';
 import Raycaster from './World/Raycaster';
 import Stats from 'three/examples/jsm/libs/stats.module'
 import Debug from './utils/Debug';
-import objects from './objects';
+import DomEvents from './DomEvents';
+import Points from './Points';
+import Composer from './composer/Composer';
 
 let instance = null
 
@@ -25,6 +27,7 @@ export default class Experience {
     this.canvas = document.querySelector(canvas);
     this.stats.dom.classList.add("stat")
     document.body.appendChild(this.stats.dom);
+    this.points = new Points();
     this.sizes = new Sizes();
     this.time = new Time();
     this.scene = new THREE.Scene();
@@ -32,73 +35,15 @@ export default class Experience {
     this.camera = new Camera();
     this.renderer = new Renderer();
     this.world = new World();
+    this.composer = new Composer();
     this.raycaster = new Raycaster();
     this.debug = new Debug();
     this.sizes.on("resize", () => this.resize());
     this.time.on("tick", () => this.update());
-    this.toggleView();
-    this.renderObjects();
-    this.dragEvent();
-    this.centralizeCamera();
+    this.domEvents = new DomEvents();
   }
 
   // Events
-  // toggle view only/edit mode
-  toggleView() {
-    document.getElementById("visualizer").addEventListener("change", (e) => {
-      this.viewOnly = e.target.checked;
-      document.body.classList.toggle("view-only");
-      this.world.transformControl.controls.detach()
-      this.world.transformControl.toggle(this.viewOnly)
-    })
-  }
-
-  renderObjects() {
-    document.querySelector(".object__list").innerHTML = '';
-    document.querySelector(".object__heading").setAttribute("data-limit", `(${objects.length})`)
-
-    objects.forEach((val, id) => {
-      document.querySelector(".object__list").innerHTML += `
-        <div class="object__item">
-          <img class="object__img" src="${val.url}" alt="${val.name}">
-        </div>
-    `
-    })
-  }
-
-  dragEvent() {
-    let counter = 0;
-    document.querySelectorAll(".object__img").forEach((element, id) => {
-      element.addEventListener("dragend", (e) => {
-
-        const mouseMove = (e) => {
-          const x = e.clientX, y = e.clientY,
-            elementMouseIsOver = document.elementFromPoint(x, y);
-
-          if (elementMouseIsOver === this.canvas) {
-            if (!counter)
-              this.world.loadModal(objects[id].name, objects[id].model, objects[id].type)
-            counter++
-          }
-        }
-
-        window.addEventListener("mousemove", mouseMove);
-        setTimeout(() => {
-          window.removeEventListener("mousemove", mouseMove);
-          counter = 0;
-        }, 50);
-      })
-    });
-  }
-
-  centralizeCamera() {
-    window.addEventListener("keydown", (e) => {
-      if(e.shiftKey && e.code === "KeyC") {
-        this.camera.controls.target.set(0, 0, 0)
-      }
-    })
-  }
-
   // on screen resize
   resize() {
     this.camera.resize()
@@ -107,9 +52,13 @@ export default class Experience {
 
   // on every frame change
   update() {
+    this.viewOnly = this.domEvents.viewOnly;
     this.stats.update()
     this.camera.update();
     this.renderer.update();
     this.raycaster.update();
+    this.points.update(this.camera.instance, this.sizes);
+    this.composer.instance.render();
+    this.domEvents.toggleDetail();
   }
 }

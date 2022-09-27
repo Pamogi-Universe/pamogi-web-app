@@ -42,7 +42,5 @@ export default class Camera {
 
   update() {
     this.controls.update();
-
-    this.controls.target.y = 0;
   }
 }

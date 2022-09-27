@@ -36,7 +36,7 @@ export default class Renderer {
 
   // update on every frame
   update() {
-    this.instance.render(this.scene, this.camera.instance);
+    // this.instance.render(this.scene, this.camera.instance);
   }
 
   // on screen resize

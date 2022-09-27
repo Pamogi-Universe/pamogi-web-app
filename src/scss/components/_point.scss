@@ -1,0 +1,47 @@
+%typography {
+  font-size: rem(14);
+  @extend %fw-200;
+  color: $white;
+  background: rgba($black, 0.467);
+}
+
+.point {
+  @include position(false, 50% auto auto 50%);
+
+  .label,
+  &::before {
+    content: "";
+    @include position(false, rem(-8) auto auto rem(-8), null, rem(8), rem(8));
+    scale: 1;
+    @extend %typography;
+    line-height: rem(20);
+    @extend %text-center;
+    border: rem(2) solid rgba($white, 0.467);
+    @extend %round;
+    @extend %pointer;
+    transition: all 0.3s;
+  }
+
+  &.away .label,
+  &.away::before {
+    scale: 0;
+  }
+
+  .text,
+  &::after {
+    content: attr(data-title);
+    @include position(false, rem(30) auto auto rem(-120), null, rem(200));
+    padding: rem(20);
+    @extend %typography;
+    line-height: 1.5;
+    border-radius: rem(4);
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  &:hover .text,
+  &:hover::after {
+    opacity: 1;
+  }
+}

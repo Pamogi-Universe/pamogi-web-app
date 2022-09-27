@@ -13,7 +13,8 @@ html {
   background-color: #1e1a20; }
 
 body {
-  font-size: 1.6rem; }
+  font-size: 1.6rem;
+  overflow: hidden; }
 
 a {
   text-decoration: none;
@@ -40,35 +41,35 @@ button {
 #webgl {
   outline: none; }
 
-.visualizer, .visualizer::before, #visualizer:checked + .visualizer::after, .object__opener::before, .info__opener::before, .object__opener::after, .info__opener::after, .info__opener {
+.visualizer, .text__editor, .visualizer::before, .text__editor::before, #visualizer:checked + .visualizer::after, #visualizer:checked + .text__editor::after, .object__opener::before, .info__opener::before, .object__opener::after, .info__opener::after, .info__opener, .point, .point .label, .point::before, .point .text, .point::after {
   position: absolute; }
 
 .object--abs, .shortcut__opener, .shortcut__modal, .shortcut__modal-overlay, .info__wrapper {
   position: fixed; }
 
-body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, body.view-only .object__opener, body.view-only .info__opener, body.view-only .object__wrapper, .shortcut__toggle, body.view-only .shortcut__opener, body.view-only .shortcut__modal, body.view-only .info__wrapper, .info__toggle {
+body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, body.view-only .object__opener, body.view-only .info__opener, body.view-only .object__wrapper, .shortcut__toggle, body.view-only .shortcut__opener, body.view-only .shortcut__modal, #info-toggler, #text-editor, #text-editor:checked ~ .points, #text-editor:checked ~ .info__opener, #text-editor:checked ~ .info__wrapper {
   display: none; }
 
-#webgl, .visualizer, .object__opener, .info__opener, .object__closer, .shortcut__closer, .object__img, .shortcut__key, .info__btn {
+#webgl, .visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .object__img, .shortcut__key, .info__btn, body.view-only .info__opener {
   display: block; }
 
-.visualizer, .object__opener::before, .info__opener::before, .shortcut__opener {
+.visualizer, .text__editor, .object__opener::before, .info__opener::before, .shortcut__opener, .point .label, .point::before {
   border-radius: 50%; }
 
-.visualizer, .object__opener, .info__opener, .object__closer, .shortcut__closer, .shortcut__opener {
+.visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .shortcut__opener {
   width: var(--square);
   aspect-ratio: 1 / 1; }
 
-.visualizer, .object__opener, .info__opener, .object__closer, .shortcut__closer, .shortcut__opener, .info__btn {
+.visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .shortcut__opener, .info__btn, .point .label, .point::before {
   cursor: pointer; }
 
 .shortcut__key, .info__btn {
   text-transform: uppercase; }
 
-.shortcut__key, .info__btn {
+.shortcut__key, .info__btn, .point .label, .point::before, .text__editor:before {
   text-align: center; }
 
-.shortcut__opener, .info__description {
+.shortcut__opener, .info__description, .point .label, .point::before, .point .text, .point::after {
   font-weight: 200; }
 
 .object__heading::after {
@@ -81,11 +82,11 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
 .stat {
   inset-inline: auto 27.5rem !important; }
 
-.visualizer {
+.visualizer, .text__editor {
   inset: 1rem auto auto 1rem;
   --square: 3rem;
   background-color: rgba(0, 0, 0, 0.55); }
-  .visualizer::before {
+  .visualizer::before, .text__editor::before {
     content: "";
     inset: 0;
     background-image: url(../static/svg/eye.svg);
@@ -93,7 +94,7 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
     background-repeat: no-repeat;
     background-position: center; }
 
-#visualizer:checked + .visualizer::after {
+#visualizer:checked + .visualizer::after, #visualizer:checked + .text__editor::after {
   content: "";
   inset: 49% auto auto 21%;
   width: 59%;
@@ -300,3 +301,50 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
   display: flex;
   justify-content: flex-end;
   gap: 1rem; }
+
+.point .label, .point::before, .point .text, .point::after {
+  font-size: 1.4rem;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.467); }
+
+.point {
+  inset: 50% auto auto 50%; }
+  .point .label, .point::before {
+    content: "";
+    inset: -0.8rem auto auto -0.8rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    scale: 1;
+    line-height: 2rem;
+    border: 0.2rem solid rgba(255, 255, 255, 0.467);
+    transition: all 0.3s; }
+  .point.away .label, .point.away::before {
+    scale: 0; }
+  .point .text, .point::after {
+    content: attr(data-title);
+    inset: 3rem auto auto -12rem;
+    width: 20rem;
+    padding: 2rem;
+    line-height: 1.5;
+    border-radius: 0.4rem;
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none; }
+  .point:hover .text, .point:hover::after {
+    opacity: 1; }
+
+#text-editor:checked + .text__editor::after {
+  position: absolute;
+  content: "";
+  inset: 49% auto auto 21%;
+  width: 59%;
+  transform: rotate(-45deg);
+  border-top: 0.1rem solid #ffffff; }
+
+.text__editor {
+  inset-inline-start: 5rem; }
+  .text__editor:before {
+    content: "t";
+    line-height: var(--square);
+    color: #ffffff;
+    background: unset; }
