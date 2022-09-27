@@ -55,6 +55,7 @@ export default class Experience {
 
   renderObjects() {
     document.querySelector(".object__list").innerHTML = '';
+    document.querySelector(".object__heading").setAttribute("data-limit", `(${objects.length})`)
 
     objects.forEach((val, id) => {
       document.querySelector(".object__list").innerHTML += `

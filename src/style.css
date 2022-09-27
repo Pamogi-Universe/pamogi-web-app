@@ -175,6 +175,7 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
     width: 0; }
 
 .object__img {
+  width: 100%;
   border-radius: var(--space);
   background-color: #393939; }
 

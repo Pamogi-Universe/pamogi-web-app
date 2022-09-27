@@ -108,6 +108,7 @@
 
   &__img {
     @extend %d-block;
+    width: 100%;
     border-radius: var(--space);
     background-color: $clr-black-1;
   }

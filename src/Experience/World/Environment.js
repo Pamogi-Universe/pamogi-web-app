@@ -11,9 +11,8 @@ export default class Environment {
     this.renderer = experience.renderer.instance
     this.sun = new THREE.Vector3();
     // this.setLight();
-    this.setEnvLight();
+    // this.setEnvLight();
     this.createSky();
-    this.updateSun();
   }
 
   // Events
@@ -27,7 +26,7 @@ export default class Environment {
 
   // environment brightness
   setEnvLight() {
-    this.envLight = new THREE.AmbientLight(0xffffff, 0.1);
+    this.envLight = new THREE.AmbientLight(0xffffff, 1);
     this.scene.add(this.envLight);
   }
 
@@ -41,6 +40,8 @@ export default class Environment {
     skyUniforms['rayleigh'].value = 2;
     skyUniforms['mieCoefficient'].value = 0.005;
     skyUniforms['mieDirectionalG'].value = 0.8;
+
+    this.updateSun();
   }
 
   updateSun() {
