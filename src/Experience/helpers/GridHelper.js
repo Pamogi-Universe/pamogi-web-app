@@ -4,10 +4,10 @@ import Experience from '..';
 export default class GridHelper {
   constructor(size, divisions) {
     // setup
-    const experience = new Experience();
-    this.scene = experience.scene;
-    this.size = size;
-    this.divisions = divisions;
+    this.experience = new Experience();
+    this.experience.scene = experience.scene;
+    this.experience.size = size;
+    this.experience.divisions = divisions;
 
     // methods
     this.setInstance();
@@ -15,7 +15,7 @@ export default class GridHelper {
 
   // events
   setInstance() {
-    this.instance = new THREE.GridHelper(this.size, this.divisions, 0xFF00FF, 0x00FF00)
-    this.scene.add(this.instance)
+    this.instance = new THREE.GridHelper(this.experience.size, this.experience.divisions, 0xFF00FF, 0x00FF00)
+    this.experience.scene.add(this.instance)
   }
 }

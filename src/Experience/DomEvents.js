@@ -4,9 +4,7 @@ import objects from "./objects";
 export default class DomEvents {
   constructor() {
     this.experience = new Experience();
-    this.world = this.experience.world;
-    this.camera = this.experience.camera;
-    this.canvas = this.experience.canvas
+
     this.toggleView();
     this.renderObjects();
     this.dragEvent();
@@ -17,8 +15,8 @@ export default class DomEvents {
     document.getElementById("visualizer").addEventListener("change", (e) => {
       this.viewOnly = e.target.checked;
       document.body.classList.toggle("view-only");
-      this.world.transformControl.controls.detach()
-      this.world.transformControl.toggle(this.viewOnly)
+      this.experience.world.transformControl.controls.detach()
+      this.experience.world.transformControl.toggle(this.viewOnly)
     })
   }
 
@@ -43,9 +41,9 @@ export default class DomEvents {
           const x = e.clientX, y = e.clientY,
             elementMouseIsOver = document.elementFromPoint(x, y);
 
-          if (elementMouseIsOver === this.canvas) {
+          if (elementMouseIsOver === this.experience.canvas) {
             if (!counter)
-              this.world.loadModal(objects[id].name, objects[id].model, objects[id].type)
+              this.experience.world.loadModal(objects[id].name, objects[id].model, objects[id].type)
             counter++
           }
         }
@@ -62,13 +60,13 @@ export default class DomEvents {
   centralizeCamera() {
     window.addEventListener("keydown", (e) => {
       if (e.shiftKey && e.code === "KeyC") {
-        this.camera.controls.target.set(0, 0, 0)
+        this.experience.camera.instance.controls.target.set(0, 0, 0)
       }
     })
   }
 
   toggleDetail() {
-    const display = !document.querySelector("#text-editor").checked && !!this.world.objects.current ? "block" : "none";
+    const display = !document.querySelector("#text-editor").checked && !!this.experience.world.objects.current ? "block" : "none";
     document.querySelector(".info__opener").style.display = display;
   }
 }

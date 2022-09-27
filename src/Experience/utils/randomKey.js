@@ -8,4 +8,4 @@ const random = (length = 8) => {
   }
   return str;
 };
-export default random
+export default random;

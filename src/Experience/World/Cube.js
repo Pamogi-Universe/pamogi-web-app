@@ -16,15 +16,15 @@ export default class Cube {
     }
 
     // Setup
-    const experience = new Experience();
-    this.instantiate(...Object.values(this.options), experience.scene, experience.physics)
+    this.experience = new Experience();
+    this.instantiate(...Object.values(this.options), this.experience.scene)
 
     this.destroy()
   }
 
   // Events
   // create the cube
-  instantiate(width, height, depth, position, scene, physics) {
+  instantiate(width, height, depth, position, scene) {
     const boxGeometry = new THREE.BoxGeometry(1, 1, 1)
     const boxMaterial = new THREE.MeshStandardMaterial({
       metalness: 0.3,

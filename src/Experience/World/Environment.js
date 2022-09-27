@@ -5,10 +5,7 @@ import Experience from "..";
 export default class Environment {
   constructor() {
     // Setup
-    const experience = new Experience();
-    this.scene = experience.scene;
-    this.resources = experience.resources;
-    this.renderer = experience.renderer.instance
+    this.experience = new Experience();
     this.sun = new THREE.Vector3();
     // this.setLight();
     // this.setEnvLight();
@@ -21,19 +18,19 @@ export default class Environment {
     this.light = new THREE.DirectionalLight(0xffffff, 2);
     this.light.position.set(5, 5, 5);
     this.light.castShadow = true;
-    this.scene.add(this.light);
+    this.experience.scene.add(this.light);
   }
 
   // environment brightness
   setEnvLight() {
     this.envLight = new THREE.AmbientLight(0xffffff, 1);
-    this.scene.add(this.envLight);
+    this.experience.scene.add(this.envLight);
   }
 
   createSky() {
     this.sky = new Sky();
     this.sky.scale.setScalar(10000);
-    this.scene.add(this.sky);
+    this.experience.scene.add(this.sky);
 
     const skyUniforms = this.sky.material.uniforms;
     skyUniforms['turbidity'].value = 10;
@@ -46,7 +43,7 @@ export default class Environment {
 
   updateSun() {
     let renderTarget;
-    const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
+    const pmremGenerator = new THREE.PMREMGenerator(this.experience.renderer.instance);
     const phi = THREE.MathUtils.degToRad(90 - 20);
     const theta = THREE.MathUtils.degToRad(180);
 
@@ -55,6 +52,6 @@ export default class Environment {
 
     if (renderTarget !== undefined) renderTarget.dispose();
     renderTarget = pmremGenerator.fromScene(this.sky);
-    this.scene.environment = renderTarget.texture;
+    this.experience.scene.environment = renderTarget.texture;
   }
 }

@@ -4,8 +4,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 export default class Floor {
   constructor() {
     // Setup
-    const experience = new Experience()
-    this.createFloorMesh(experience.scene);
+    this.experience = new Experience()
+    this.createFloorMesh(this.experience.scene);
   }
 
   // Events

@@ -76,48 +76,37 @@ export default class World {
         const boundingBox = new THREE.Box3().setFromObject(object)
         const ySize = boundingBox.max.y - boundingBox.min.y
         object.position.y = ySize / 2;
-        const randomID = `${name}-${random()}`;
-
-        // put on scene
-        // var dist = object.position.clone().sub(this.camera.position).length();
-        // this.raycaster.ray.at(dist, object.position);
-        // console.log(object.position)
 
         this.scene.add(object);
 
         // create point on the model
-        this.points.push({
-          id: randomID,
-          position: object.position,
-          title: "Enter your data",
-          description: ""
-        })
-
-        this.transformControl.addElements(object);
-        this.outlinePass.setCurrentElement(object);
-        this.pushToObject(randomID, object);
-        this.setCurrentElement(object);
+        this.addFocusToElement(name, object)
       })
     } else {
       // clone a 3D model
-      const randomID = `${name}-${random()}`;
       const clone = this.objects[name].clone();
       clone.position.set(0, 0, 0);
       this.scene.add(clone)
 
       // create point on the model
-      this.points.push({
-        id: randomID,
-        position: object.position,
-        title: "Enter your data",
-        description: ""
-      })
-
-      this.transformControl.addElements(clone);
-      this.outlinePass.setCurrentElement(clone);
-      this.pushToObject(randomID, clone);
-      this.setCurrentElement(clone)
+      this.addFocusToElement(name, clone)
     }
+  }
+
+  addFocusToElement(name, obj) {
+    const randomID = `${name}-${random()}`;
+
+    this.points.push({
+      id: randomID,
+      position: obj.position,
+      title: "Enter your data",
+      description: ""
+    })
+
+    this.transformControl.addElements(obj);
+    this.outlinePass.setCurrentElement(obj);
+    this.pushToObject(randomID, obj);
+    this.setCurrentElement(obj)
   }
 
   setCurrentElement(val) {

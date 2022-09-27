@@ -5,12 +5,8 @@ import Experience from '..';
 export default class TransformControl {
   constructor() {
     // Setup
-    const experience = new Experience();
-    this.scene = experience.scene;
-    this.camera = experience.camera;
-    this.canvas = experience.canvas;
-    this.world = experience.world;
-    this.raycaster = experience.raycaster;
+    this.experience = new Experience();
+
     this.setInstance();
     this.setControls();
   }
@@ -18,14 +14,14 @@ export default class TransformControl {
   // Events
   // initialize transform controller
   setInstance() {
-    this.controls = new TransformControls(this.camera.instance, this.canvas);
+    this.controls = new TransformControls(this.experience.camera.instance, this.experience.canvas);
     this.controls.addEventListener('dragging-changed', (event) => {
-      // if (this.world.current.position.y <= this.world.current.scale.y / 2) {
-      //   this.world.current.position.y = this.world.current.scale.y / 2
-      // }
-      this.camera.controls.enabled = !event.value
+      if (this.experience.world.objects.current.position.y <= this.experience.world.objects.current.scale.y / 2) {
+        this.experience.world.objects.current.position.y = this.experience.world.objects.current.scale.y / 2
+      }
+      this.experience.camera.controls.enabled = !event.value
     });
-    this.scene.add(this.controls);
+    this.experience.scene.add(this.controls);
   }
 
   // set control on an element
@@ -57,7 +53,7 @@ export default class TransformControl {
           break;
 
         case 'KeyD': // D
-          this.world.objects.current && this.world.removeFromObject();
+          this.experience.world.objects.current && this.experience.world.removeFromObject();
           break;
 
         case 'KeyT': // T
@@ -69,7 +65,7 @@ export default class TransformControl {
           break;
 
         case 'KeyF': // F
-          this.world.objects.current?.position && this.camera.controls.target.set(...this.world.objects.current.position)
+          this.experience.world.objects.current?.position && this.experience.camera.controls.target.set(...this.experience.world.objects.current.position)
           break;
 
         case 'KeyS': // S
