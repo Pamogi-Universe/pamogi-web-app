@@ -44,29 +44,29 @@ button {
 .visualizer, .text__editor, .visualizer::before, .text__editor::before, #visualizer:checked + .visualizer::after, #visualizer:checked + .text__editor::after, .object__opener::before, .info__opener::before, .object__opener::after, .info__opener::after, .info__opener, .point, .point .label, .point::before, .point .text, .point::after {
   position: absolute; }
 
-.object--abs, .shortcut__opener, .shortcut__modal, .shortcut__modal-overlay, .info__wrapper {
+.object--abs, .shortcut__opener, .shortcut__modal, .info__modal, .shortcut__modal-overlay, .info__modal-overlay, .info__wrapper {
   position: fixed; }
 
-body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, body.view-only .object__opener, body.view-only .info__opener, body.view-only .object__wrapper, .shortcut__toggle, body.view-only .shortcut__opener, body.view-only .shortcut__modal, #info-toggler, #text-editor, #text-editor:checked ~ .points, #text-editor:checked ~ .info__opener, #text-editor:checked ~ .info__wrapper {
+body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, body.view-only .object__opener, body.view-only .info__opener, body.view-only .object__wrapper, .shortcut__toggle, .info__toggle, body.view-only .shortcut__opener, body.view-only .shortcut__modal, body.view-only .info__modal, #info-toggler, #text-editor, #text-editor:checked ~ .points, #text-editor:checked ~ .info__opener, #text-editor:checked ~ .info__wrapper {
   display: none; }
 
-#webgl, .visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .object__img, .shortcut__key, .info__btn, body.view-only .info__opener {
+#webgl, .visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .info__closer, .object__img, .shortcut__key, .info__btn, .info__submit, body.view-only .info__opener, .info__input {
   display: block; }
 
 .visualizer, .text__editor, .object__opener::before, .info__opener::before, .shortcut__opener, .point .label, .point::before {
   border-radius: 50%; }
 
-.visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .shortcut__opener {
+.visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .info__closer, .shortcut__opener {
   width: var(--square);
   aspect-ratio: 1 / 1; }
 
-.visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .shortcut__opener, .info__btn, .point .label, .point::before {
+.visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .info__closer, .shortcut__opener, .info__btn, .info__submit, .point .label, .point::before {
   cursor: pointer; }
 
-.shortcut__key, .info__btn {
+.shortcut__key, .info__btn, .info__submit {
   text-transform: uppercase; }
 
-.shortcut__key, .info__btn, .point .label, .point::before, .text__editor:before {
+.shortcut__key, .info__btn, .info__submit, .point .label, .point::before, .text__editor:before {
   text-align: center; }
 
 .shortcut__opener, .info__description, .point .label, .point::before, .point .text, .point::after {
@@ -161,7 +161,7 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
     line-height: 1;
     margin: auto auto 0.7rem 0.4rem; }
 
-.object__closer, .shortcut__closer {
+.object__closer, .shortcut__closer, .info__closer {
   order: 1;
   --square: 2rem;
   background-image: url(../static/svg/close.svg);
@@ -196,8 +196,8 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
   .shortcut__opener:hover {
     font-size: 2.5rem; }
 
-.shortcut__modal {
-  --clr: rgb(202, 201, 201);
+.shortcut__modal, .info__modal {
+  --clr: #cac9c9;
   inset: 0;
   z-index: 99999;
   display: flex;
@@ -206,9 +206,9 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
   opacity: 0;
   visibility: hidden;
   transition: all 0.2s; }
-  .shortcut__modal-overlay {
+  .shortcut__modal-overlay, .info__modal-overlay {
     inset: 0; }
-  .shortcut__modal-wrapper {
+  .shortcut__modal-wrapper, .info__modal-wrapper {
     width: Min(50rem, 90%);
     margin: auto;
     padding: 2rem;
@@ -219,20 +219,20 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
     transform: translateY(-2rem);
     transition: all 0.5s; }
 
-.shortcut__toggle:checked ~ .shortcut__modal {
+.shortcut__toggle:checked + .shortcut__modal, .info__toggle:checked + .shortcut__modal, .shortcut__toggle:checked + .info__modal, .info__toggle:checked + .info__modal {
   opacity: 1;
   visibility: visible; }
-  .shortcut__toggle:checked ~ .shortcut__modal .shortcut__modal-wrapper {
+  .shortcut__toggle:checked + .shortcut__modal .shortcut__modal-wrapper, .info__toggle:checked + .shortcut__modal .shortcut__modal-wrapper, .shortcut__toggle:checked + .info__modal .shortcut__modal-wrapper, .info__toggle:checked + .info__modal .shortcut__modal-wrapper, .shortcut__toggle:checked + .shortcut__modal .info__modal-wrapper, .info__toggle:checked + .shortcut__modal .info__modal-wrapper, .shortcut__toggle:checked + .info__modal .info__modal-wrapper, .info__toggle:checked + .info__modal .info__modal-wrapper {
     transform: translateY(0); }
 
-.shortcut__heading {
+.shortcut__heading, .info__heading {
   display: flex;
   align-items: center;
   margin-block-end: 2rem;
   padding-block-end: 2rem;
   border-block-end: 0.1rem solid #616161; }
 
-.shortcut__closer {
+.shortcut__closer, .info__closer {
   background-image: url(../static/svg/close-white.svg); }
 
 .shortcut__item {
@@ -242,16 +242,16 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
 .shortcut__item:not(:last-child) {
   margin-block-end: 2rem; }
 
-.shortcut__key, .info__btn {
+.shortcut__key, .info__btn, .info__submit {
   display: inline-block;
   min-width: 1.5rem;
   padding: 0.5rem 0.6rem;
   line-height: 1;
   border: 0.1rem solid var(--clr);
   border-radius: 0.5rem; }
-  .shortcut__key:first-child, .info__btn:first-child {
+  .shortcut__key:first-child, .info__btn:first-child, .info__submit:first-child {
     margin-left: auto; }
-  .shortcut__key:not(:last-child), .info__btn:not(:last-child) {
+  .shortcut__key:not(:last-child), .info__btn:not(:last-child), .info__submit:not(:last-child) {
     margin-inline-end: 0.5rem; }
 
 .info__wrapper {
@@ -289,11 +289,11 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
   font-size: 1.4rem;
   line-height: 1.6; }
 
-.info__btn {
+.info__btn, .info__submit {
   padding: 0.8rem 2rem;
   font-size: 1.4rem;
   transition: all 0.2s; }
-  .info__btn:hover {
+  .info__btn:hover, .info__submit:hover {
     color: #1e1a20;
     background-color: var(--clr); }
 
@@ -302,10 +302,29 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
   justify-content: flex-end;
   gap: 1rem; }
 
+body.view-only .info__modal {
+  display: flex; }
+
+.info__input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  color: #cac9c9;
+  background: transparent;
+  border: 0.1rem solid #616161;
+  border-radius: 0.3rem;
+  resize: none; }
+  .info__input:first-child {
+    margin-bottom: 2rem; }
+
+.info__submit {
+  width: fit-content;
+  margin-block-start: 2rem;
+  margin-inline-start: auto; }
+
 .point .label, .point::before, .point .text, .point::after {
   font-size: 1.4rem;
   color: #ffffff;
-  background: rgba(0, 0, 0, 0.467); }
+  background: #000000; }
 
 .point {
   inset: 50% auto auto 50%; }
@@ -316,12 +335,11 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
     height: 0.8rem;
     scale: 1;
     line-height: 2rem;
-    border: 0.2rem solid rgba(255, 255, 255, 0.467);
+    border: 0.2rem solid #ffffff;
     transition: all 0.3s; }
   .point.away .label, .point.away::before {
     scale: 0; }
   .point .text, .point::after {
-    content: attr(data-title);
     inset: 3rem auto auto -12rem;
     width: 20rem;
     padding: 2rem;
@@ -330,6 +348,8 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
     opacity: 0;
     transition: all 0.3s;
     pointer-events: none; }
+  .point[data-title] .text, .point[data-title]::after {
+    content: attr(data-title); }
   .point:hover .text, .point:hover::after {
     opacity: 1; }
 

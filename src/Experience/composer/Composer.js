@@ -29,4 +29,8 @@ export default class Composer {
 	setCurrentElement(element) {
 		this.outlinePass.selectedObjects = [element];
 	}
+
+	removeCurrentElement() {
+		this.outlinePass.selectedObjects = [];
+	}
 }

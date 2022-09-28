@@ -99,7 +99,7 @@ export default class World {
     this.points.push({
       id: randomID,
       position: obj.position,
-      title: "Enter your data",
+      title: "",
       description: ""
     })
 
@@ -115,4 +115,9 @@ export default class World {
     this.objects.meshes.filter(val => val.isCurrent)
     this.objects.current = this.objects.meshes.filter(val => val.isCurrent)[0];
   }
+
+  removeCurrentElement() {
+    this.objects.current = null
+  }
 }
+

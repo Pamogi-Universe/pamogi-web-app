@@ -77,4 +77,55 @@
   &__footer {
     @include flex($justify-content: flex-end, $gap: rem(10))
   }
+
+  &__toggle {
+    @extend .shortcut__toggle;
+  }
+
+  &__modal {
+    @extend .shortcut__modal;
+
+    @include view-only {
+      display: flex;
+    }
+
+    &-overlay {
+      @extend .shortcut__modal-overlay;
+    }
+
+    &-wrapper {
+      @extend .shortcut__modal-wrapper;
+    }
+  }
+
+  &__heading {
+    @extend .shortcut__heading;
+  }
+
+  &__closer {
+    @extend .shortcut__closer;
+  }
+
+  &__input {
+    @extend %d-block;
+    width: 100%;
+    padding: rem(8) rem(10);
+    color: $dark-text;
+    background: transparent;
+    border: rem(1) solid $clr-border;
+    border-radius: rem(3);
+    resize: none;
+
+    &:first-child {
+      margin-bottom: rem(20);
+    }
+  }
+
+  &__submit {
+    @extend .info__btn;
+    @extend %d-block;
+    width: fit-content;
+    margin-block-start: rem(20);
+    margin-inline-start: auto;
+  }
 }

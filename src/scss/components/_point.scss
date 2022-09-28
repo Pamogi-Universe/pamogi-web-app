@@ -2,7 +2,7 @@
   font-size: rem(14);
   @extend %fw-200;
   color: $white;
-  background: rgba($black, 0.467);
+  background: $black;
 }
 
 .point {
@@ -16,7 +16,7 @@
     @extend %typography;
     line-height: rem(20);
     @extend %text-center;
-    border: rem(2) solid rgba($white, 0.467);
+    border: rem(2) solid $white;
     @extend %round;
     @extend %pointer;
     transition: all 0.3s;
@@ -29,7 +29,6 @@
 
   .text,
   &::after {
-    content: attr(data-title);
     @include position(false, rem(30) auto auto rem(-120), null, rem(200));
     padding: rem(20);
     @extend %typography;
@@ -38,6 +37,13 @@
     opacity: 0;
     transition: all 0.3s;
     pointer-events: none;
+  }
+
+  &[data-title] {
+    & .text,
+    &::after {
+      content: attr(data-title);
+    }
   }
 
   &:hover .text,

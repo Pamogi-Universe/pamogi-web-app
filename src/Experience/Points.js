@@ -5,10 +5,12 @@ export default class Points {
 
   push(val) {
     document.querySelector(".points").innerHTML += `
-      <div class="point point-${val.id}" data-title="${val.title}"></div>`
+      <div class="point point-${val.id}" title="Click to see description"></div>`
     // <span class="label">o</span>
     // <p class="text">${val.title}</p>
     this.instance.push({ ...val, element: `.point-${val.id}` });
+
+    this.click();
   }
 
   delete(object) {
@@ -17,6 +19,23 @@ export default class Points {
       document.querySelector(val.element).remove();
       return "";
     })
+  }
+
+  click() {
+    for (const point of this.instance) {
+      document.querySelector(point.element).addEventListener("click", (e) => {
+        for (const current of this.instance) {
+          current.isCurrent = false;
+        }
+        point.isCurrent = true;
+        this.current = point;
+        this.toggleDetail();
+
+        document.querySelector(".info__toggle").checked = true
+        document.querySelector(".info__title span").textContent = point.title || "Enter your title";
+        document.querySelector(".info__description").textContent = point.description || "Enter your description";
+      })
+    }
   }
 
   update(camera, sizes) {
@@ -35,5 +54,12 @@ export default class Points {
         document.querySelector(point.element).classList.remove("away");
       }
     }
+  }
+
+  toggleDetail() {
+    const pointLength = this.instance.filter(val => val.isCurrent)
+    const classType = !document.getElementById("text-editor").checked && !!pointLength.length ? "add" : "remove";
+    document.querySelector(".info__opener").classList[classType]("active");
+    document.querySelector(".info__wrapper").classList[classType]("active");
   }
 }

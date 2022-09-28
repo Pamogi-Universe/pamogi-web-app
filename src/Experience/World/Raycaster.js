@@ -40,8 +40,8 @@ export default class Raycaster {
 
             if (!this.viewOnly) {
               this.experience.world.transformControl?.addElements(current);
-              this.experience.world.setCurrentElement(current);
             }
+            this.experience.world.setCurrentElement(current);
             this.experience.composer.setCurrentElement(current);
           }
         })

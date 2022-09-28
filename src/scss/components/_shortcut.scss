@@ -24,7 +24,7 @@
   }
 
   &__modal {
-    --clr: rgb(202, 201, 201);
+    --clr: #{$dark-text};
     @include position(false, 0, 99999, $position: fixed);
     @include flex;
     color: var(--clr);
@@ -53,7 +53,7 @@
   }
 
   &__toggle {
-    &:checked~.shortcut__modal {
+    &:checked+.shortcut__modal {
       opacity: 1;
       visibility: visible;
 

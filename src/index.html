@@ -34,8 +34,8 @@
     </aside>
 
     <!-- shortcut toggler -->
-    <input class="shortcut__toggle" type="checkbox" name="shortcut-toggler" id="shortcut-toggler">
     <label class="shortcut__opener" for="shortcut-toggler">?</label>
+    <input class="shortcut__toggle" type="checkbox" name="shortcut-toggler" id="shortcut-toggler">
 
     <div class="shortcut__modal">
       <label class="shortcut__modal-overlay" for="shortcut-toggler"></label>
@@ -140,15 +140,36 @@
 
     <div class="info__wrapper">
       <h3 class="info__title info--border">
-        <span>This is an info title</span>
+        <span>Object title</span>
       </h3>
       <p class="info__description info--border">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quod quo dolores praesentium facere veritatis est.
+        Object description. Select an object to display its title and description here.
       </p>
 
       <div class="info__footer">
-        <label class="info__btn" for="info-editor">Edit</label>
+        <label class="info__btn" for="info-modal">Edit</label>
         <label class="info__btn" for="info-toggler">Close</label>
+      </div>
+    </div>
+
+    <input class="info__toggle" type="checkbox" name="info-modal" id="info-modal">
+
+    <div class="info__modal">
+      <label class="info__modal-overlay" for="info-modal"></label>
+      <div class="info__modal-wrapper">
+        <h2 class="info__heading">
+          Object Description
+
+          <label class="info__closer" for="info-modal"></label>
+        </h2>
+
+        <div class="info__body">
+          <input type="text" class="info__input title" placeholder="Enter title here">
+
+          <textarea cols="30" rows="10" class="info__input description" placeholder="Enter description here..."></textarea>
+
+          <label class="info__submit" id="info-submit" for="info-modal">Save</label>
+        </div>
       </div>
     </div>
 

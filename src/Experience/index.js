@@ -59,6 +59,5 @@ export default class Experience {
     this.raycaster.update();
     this.points.update(this.camera.instance, this.sizes);
     this.composer.instance.render();
-    this.domEvents.toggleDetail();
   }
 }
