@@ -1,3 +1,4 @@
+import gsap from "gsap";
 import Experience from ".";
 import objects from "./objects";
 
@@ -69,8 +70,19 @@ export default class DomEvents {
   centralizeCamera() {
     window.addEventListener("keydown", (e) => {
       if (e.shiftKey && e.code === "KeyC") {
-        this.__experience.camera.controls.target.set(0, 0, 0)
-        this.__experience.camera.instance.position.set(- 3, 6, 6);
+        gsap.to(this.__experience.camera.controls.target, {
+          duration: 1,
+          x: 0,
+          y: 0,
+          z: 0, // maybe adding even more offset depending on your model
+          onUpdate: () => {
+            // this.camera.instance.position.set(center.x, center.y + 5, center.z)
+            // this.camera.instance.lookAt(center);
+            // this.camera.controls.target.set(...center);
+          }
+        });
+        // this.__experience.camera.controls.target.set(0, 0, 0)
+        // this.__experience.camera.instance.position.set(- 3, 6, 6);
       }
     })
   }

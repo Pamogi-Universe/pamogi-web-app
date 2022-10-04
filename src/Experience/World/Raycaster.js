@@ -51,22 +51,6 @@ export default class Raycaster {
             this.__experience.composer.setCurrentElement(current);
           }
         })
-
-        this.__experience.canvas.addEventListener('dblclick', () => {
-          if (this.currentIntersect?.object.name === "Continent") {
-
-            const center = this.currentIntersect.point;
-
-            // this.__experience.camera.controls.target.set(...controlPoint);
-            // gsap.to(this.__experience.camera.instance.position, {
-              // duration: 1,
-              // x: center.x,
-              // y: center.y + 5,
-              // z: center.z, // maybe adding even more offset depending on your model
-              // onUpdate: () => this.__experience.camera.instance.lookAt(center)
-            // });
-          }
-        })
       }
       else {
         this.currentIntersect = null

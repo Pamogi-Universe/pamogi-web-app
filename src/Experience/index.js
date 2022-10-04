@@ -13,6 +13,7 @@ import DomEvents from './DomEvents';
 import Points from './Points';
 import Composer from './composer/Composer';
 import History from './History';
+import gsap from 'gsap';
 
 let instance = null
 
@@ -43,6 +44,43 @@ export default class Experience {
     this.time.on("tick", () => this.update());
     this.domEvents = new DomEvents();
     this.history = new History();
+
+    this.canvas.addEventListener('dblclick', () => {
+      if (this.raycaster.currentIntersect?.object.name === "Continent") {
+
+        const center = this.raycaster.currentIntersect.point;
+
+        let counter = 0;
+
+        if (!counter) {
+          gsap.to(this.camera.controls.target, {
+            duration: 1,
+            x: center.x,
+            y: center.y,
+            z: center.z, // maybe adding even more offset depending on your model
+            onUpdate: () => {
+              // this.camera.instance.position.set(center.x, center.y + 5, center.z)
+              // this.camera.instance.lookAt(center);
+              // this.camera.controls.target.set(...center);
+              counter++;
+            }
+          });
+
+          // gsap.to(this.camera.instance.position, {
+          //   duration: 1,
+          //   x: center.x,
+          //   y: center.y + 5,
+          //   z: center.z, // maybe adding even more offset depending on your model
+          //   onUpdate: () => {
+          //     // this.camera.instance.lookAt(center);
+          //     // this.camera.controls.target.set(...center);
+          //     counter++;
+          //   }
+          // });
+        }
+
+      }
+    })
   }
 
   // Events
