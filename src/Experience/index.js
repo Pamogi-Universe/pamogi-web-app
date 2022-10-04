@@ -12,6 +12,7 @@ import Debug from './utils/Debug';
 import DomEvents from './DomEvents';
 import Points from './Points';
 import Composer from './composer/Composer';
+import History from './History';
 
 let instance = null
 
@@ -41,6 +42,7 @@ export default class Experience {
     this.sizes.on("resize", () => this.resize());
     this.time.on("tick", () => this.update());
     this.domEvents = new DomEvents();
+    this.history = new History();
   }
 
   // Events
@@ -53,11 +55,10 @@ export default class Experience {
   // on every frame change
   update() {
     this.viewOnly = this.domEvents.viewOnly;
-    this.stats.update()
+    this.stats.update();
     this.camera.update();
-    this.renderer.update();
     this.raycaster.update();
     this.points.update(this.camera.instance, this.sizes);
-    this.composer.instance.render();
+    this.composer.update();
   }
 }

@@ -4,7 +4,7 @@ import Experience from ".";
 export default class Renderer {
   constructor() {
     // Setup
-    this.experience = new Experience();
+    this.__experience = new Experience();
     this.setInstance();
   }
 
@@ -12,7 +12,7 @@ export default class Renderer {
   // display the scene
   setInstance() {
     this.instance = new THREE.WebGLRenderer({
-      canvas: this.experience.canvas,
+      canvas: this.__experience.canvas,
       antialias: true,
     });
     this.instance.physicallyCorrectLights = true;
@@ -26,13 +26,13 @@ export default class Renderer {
 
   // set canvas size
   sizing() {
-    this.instance.setSize(this.experience.sizes.width, this.experience.sizes.height)
-    this.instance.setPixelRatio(Math.min(this.experience.sizes.pixelRatio, 2))
+    this.instance.setSize(this.__experience.sizes.width, this.__experience.sizes.height)
+    this.instance.setPixelRatio(Math.min(this.__experience.sizes.pixelRatio, 2))
   }
 
   // update on every frame
   update() {
-    // this.instance.render(this.experience.scene, this.experience.camera.instance);
+    this.instance.render(this.__experience.scene, this.__experience.camera.instance);
   }
 
   // on screen resize

@@ -3,7 +3,8 @@ import objects from "./objects";
 
 export default class DomEvents {
   constructor() {
-    this.experience = new Experience();
+    this.__experience = new Experience();
+    this.viewOnly = false;
 
     this.renderObjects();
     this.dragEvent();
@@ -18,8 +19,8 @@ export default class DomEvents {
   toggleView(e, triggered) {
     this.viewOnly = e.target.checked;
     document.body.classList.toggle("view-only");
-    this.experience.world.transformControl.controls.detach()
-    this.experience.world.transformControl.toggle(this.viewOnly)
+    this.__experience.world.transformControl.controls.detach()
+    this.__experience.world.transformControl.toggle(this.viewOnly)
 
     if (triggered) {
       const textEditor = { target: document.querySelector("#text-editor") }
@@ -49,9 +50,9 @@ export default class DomEvents {
           const x = e.clientX, y = e.clientY,
             elementMouseIsOver = document.elementFromPoint(x, y);
 
-          if (elementMouseIsOver === this.experience.canvas) {
+          if (elementMouseIsOver === this.__experience.canvas) {
             if (!counter)
-              this.experience.world.loadModal(objects[id].name, objects[id].model, objects[id].type)
+              this.__experience.world.loadModal(objects[id].name, objects[id].model, objects[id].type)
             counter++
           }
         }
@@ -68,15 +69,16 @@ export default class DomEvents {
   centralizeCamera() {
     window.addEventListener("keydown", (e) => {
       if (e.shiftKey && e.code === "KeyC") {
-        this.experience.camera.instance.controls.target.set(0, 0, 0)
+        this.__experience.camera.controls.target.set(0, 0, 0)
+        this.__experience.camera.instance.position.set(- 3, 6, 6);
       }
     })
   }
 
   toggleDetail(e, triggered) {
-    if (!e.target.checked) this.experience.points.current = null;
+    if (!e.target.checked) this.__experience.points.current = null;
 
-    this.experience.points.toggleDetail();
+    this.__experience.points.toggleDetail();
 
     if (triggered) {
       const visualizer = { target: document.querySelector("#visualizer") }
@@ -87,14 +89,14 @@ export default class DomEvents {
 
   openEditModal(e) {
     if (e.target.checked) {
-      const point = this.experience.points.current;
+      const point = this.__experience.points.current;
       document.querySelector(".info__input.title").value = point.title;
       document.querySelector(".info__input.description").value = point.description;
     }
   }
 
   saveDetails() {
-    const point = this.experience.points.current;
+    const point = this.__experience.points.current;
 
     point.title = document.querySelector(".info__input.title").value;
     point.description = document.querySelector(".info__input.description").value
@@ -103,7 +105,7 @@ export default class DomEvents {
     document.querySelector(".info__title span").textContent = point.title || "Enter your title";
     document.querySelector(".info__description").textContent = point.description || "Enter your description";
 
-    this.experience.points.instance.map(val => {
+    this.__experience.points.instance.map(val => {
       if (val.id === point.id) {
         val.title = point.title;
         val.description = point.description;

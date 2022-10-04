@@ -16,8 +16,8 @@ export default class Cube {
     }
 
     // Setup
-    this.experience = new Experience();
-    this.instantiate(...Object.values(this.options), this.experience.scene)
+    this.__experience = new Experience();
+    this.instantiate(...Object.values(this.options), this.__experience.scene)
 
     this.destroy()
   }

@@ -6,20 +6,28 @@ import Experience from '..';
 
 export default class Composer {
 	constructor() {
-		this.experience = new Experience();
-		this.instance = new EffectComposer(this.experience.renderer.instance);
+		this.__experience = new Experience();
 
+		this.setInstance(this.__experience.renderer.instance)
 		this.addRenderPass()
 		this.addOuutlinePass()
 	}
 
+	setInstance(renderer) {
+		this.instance = new EffectComposer(renderer);
+	}
+
+	update() {
+		this.instance.render()
+	}
+
 	addRenderPass() {
-		this.renderPass = new RenderPass(this.experience.scene, this.experience.camera.instance);
+		this.renderPass = new RenderPass(this.__experience.scene, this.__experience.camera.instance);
 		this.instance.addPass(this.renderPass);
 	}
 
 	addOuutlinePass() {
-		this.outlinePass = new OutlinePass(new THREE.Vector2(this.experience.sizes.width, this.experience.sizes.height), this.experience.scene, this.experience.camera.instance);
+		this.outlinePass = new OutlinePass(new THREE.Vector2(this.__experience.sizes.width, this.__experience.sizes.height), this.__experience.scene, this.__experience.camera.instance);
 		this.outlinePass.edgeStrength = 2;
 		this.outlinePass.edgeGlow = 0;
 		this.outlinePass.edgeThickness = 0.5;

@@ -5,7 +5,7 @@ import Experience from '..';
 export default class TransformControl {
   constructor() {
     // Setup
-    this.experience = new Experience();
+    this.__experience = new Experience();
 
     this.setInstance();
     this.setControls();
@@ -14,14 +14,14 @@ export default class TransformControl {
   // Events
   // initialize transform controller
   setInstance() {
-    this.controls = new TransformControls(this.experience.camera.instance, this.experience.canvas);
+    this.controls = new TransformControls(this.__experience.camera.instance, this.__experience.canvas);
     this.controls.addEventListener('dragging-changed', (event) => {
-      if (this.experience.world.objects.current.position.y <= this.experience.world.objects.current.scale.y / 2) {
-        this.experience.world.objects.current.position.y = this.experience.world.objects.current.scale.y / 2
-      }
-      this.experience.camera.controls.enabled = !event.value
+      // if (this.__experience.world.objects.current.position.y <= this.__experience.world.objects.current.scale.y / 2) {
+      //   this.__experience.world.objects.current.position.y = this.__experience.world.objects.current.scale.y / 2
+      // }
+      this.__experience.camera.controls.enabled = !event.value
     });
-    this.experience.scene.add(this.controls);
+    this.__experience.scene.add(this.controls);
   }
 
   // set control on an element
@@ -55,8 +55,8 @@ export default class TransformControl {
               break;
 
             case 'KeyD': // D
-              this.experience.world.objects.current && this.experience.world.removeFromObject();
-              this.experience.composer.removeCurrentElement();
+              this.__experience.world.objects.current && this.__experience.world.removeFromObject();
+              this.__experience.composer.removeCurrentElement();
               this.detach();
               break;
 
@@ -69,7 +69,7 @@ export default class TransformControl {
               break;
 
             case 'KeyF': // F
-              this.experience.world.objects.current?.position && this.experience.camera.controls.target.set(...this.experience.world.objects.current.position)
+              this.__experience.world.objects.current?.position && this.__experience.camera.controls.target.set(...this.__experience.world.objects.current.position)
               break;
 
             case 'KeyS': // S
@@ -95,7 +95,8 @@ export default class TransformControl {
               break;
 
             case 'KeyZ': // Z
-              this.controls.showZ = !this.controls.showZ;
+              if (!event.ctrlKey)
+                this.controls.showZ = !this.controls.showZ;
               break;
 
             case 'Space': // Spacebar

@@ -11,11 +11,11 @@ import random from "../utils/randomKey";
 export default class World {
   constructor() {
     // Setup
-    this.experience = new Experience();
-    this.scene = this.experience.scene;
-    this.camera = this.experience.camera.instance;
-    this.resources = this.experience.resources;
-    this.points = this.experience.points;
+    this.__experience = new Experience();
+    this.scene = this.__experience.scene;
+    this.camera = this.__experience.camera.instance;
+    this.resources = this.__experience.resources;
+    this.points = this.__experience.points;
     this.helpers = {
       // gridHelper: new GridHelper(10, 10)
     }
@@ -32,8 +32,8 @@ export default class World {
   render() {
     this.resources.on("ready", () => {
       this.loaded = true;
-      this.raycaster = this.experience.raycaster.instance;
-      this.outlinePass = this.experience.composer;
+      this.raycaster = this.__experience.raycaster.instance;
+      this.outlinePass = this.__experience.composer;
       this.environment = new Environment();
       this.transformControl = new TransformControl();
     })
@@ -68,6 +68,7 @@ export default class World {
 
   // loading a model into the scene
   loadModal(name, url) {
+    this.__experience.history.push();
     if (!this.objects[name]) {
       this.gltfLoader.load(url, (gltf) => {
         // load 3D model
