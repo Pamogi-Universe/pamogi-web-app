@@ -52,12 +52,19 @@ export default class Experience {
 
         let counter = 0;
 
+        var direction = new THREE.Vector3();
+        direction.subVectors(this.camera.instance.position, center).normalize();
+        var distance = center.distanceTo(this.camera.instance.position);
+        distance -= 5;
+        var newPos = direction
+          .multiplyScalar(-distance)
+          .add(this.camera.instance.position);
         if (!counter) {
-          gsap.to(this.camera.controls.target, {
+          gsap.to(this.camera.instance.position, {
             duration: 1,
-            x: center.x,
-            y: center.y,
-            z: center.z, // maybe adding even more offset depending on your model
+            x: newPos.x,
+            y: newPos.y,
+            z: newPos.z, // maybe adding even more offset depending on your model
             onUpdate: () => {
               // this.camera.instance.position.set(center.x, center.y + 5, center.z)
               // this.camera.instance.lookAt(center);
