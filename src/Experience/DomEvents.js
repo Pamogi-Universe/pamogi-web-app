@@ -15,6 +15,7 @@ export default class DomEvents {
     document.getElementById("text-editor").addEventListener("change", (e) => this.toggleDetail(e, true))
     document.getElementById("info-modal").addEventListener("change", (e) => this.openEditModal(e))
     document.getElementById("info-submit").addEventListener("click", () => this.saveDetails())
+    document.querySelectorAll(".state__item").forEach((val, id) => val.addEventListener("click", () => this.toggleModelState(id + 1)))
   }
 
   toggleView(e, triggered) {
@@ -90,8 +91,6 @@ export default class DomEvents {
   }
 
   toggleDetail(e, triggered) {
-    if (!e.target.checked) this.__experience.points.current = null;
-
     this.__experience.points.toggleDetail();
 
     if (triggered) {
@@ -104,8 +103,8 @@ export default class DomEvents {
   openEditModal(e) {
     if (e.target.checked) {
       const point = this.__experience.points.current;
-      document.querySelector(".info__input.title").value = point.title;
-      document.querySelector(".info__input.description").value = point.description;
+      document.querySelector(".info__input.title").value = point?.title;
+      document.querySelector(".info__input.description").value = point?.description;
     }
   }
 
@@ -126,5 +125,11 @@ export default class DomEvents {
       }
       return val;
     })
+  }
+
+  toggleModelState(id) {
+    const point = this.__experience.points.current;
+    this.__experience.world.disposeCurrentModel()
+    this.__experience.world.loadModal(`Tree${id}`,`/models/Tree${id}.glb`, point.position, point)
   }
 }

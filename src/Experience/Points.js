@@ -5,9 +5,10 @@ export default class Points {
 
   push(val) {
     document.querySelector(".points").innerHTML += `
-      <div class="point point-${val.id}" title="Click to see description"></div>`
+      <div class="point point-${val.id}" title="Click to see description" data-title="${val.title ?? ""}"></div>`
     // <span class="label">o</span>
     // <p class="text">${val.title}</p>
+
     this.instance.push({ ...val, element: `.point-${val.id}` });
 
     this.click();
@@ -15,10 +16,15 @@ export default class Points {
 
   delete(object) {
     this.instance = this.instance.filter(val => {
-      if (val.id !== object.dataKey) return val;
+      if (val.id !== object.userData.key) return val;
       document.querySelector(val.element).remove();
       return "";
     })
+    this.current = null
+  }
+
+  triggerClick(element) {
+    document.querySelector(element).click();
   }
 
   click() {
@@ -31,9 +37,14 @@ export default class Points {
         this.current = point;
         this.toggleDetail();
 
+        // console.log("set point")
+
         document.querySelector(".info__toggle").checked = true
         document.querySelector(".info__title span").textContent = point.title || "Enter your title";
         document.querySelector(".info__description").textContent = point.description || "Enter your description";
+
+        const display = point.states ? "flex" : "none";
+        document.querySelector(".state").style.display = display;
       })
     }
   }

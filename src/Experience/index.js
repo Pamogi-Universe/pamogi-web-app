@@ -60,32 +60,41 @@ export default class Experience {
           .multiplyScalar(-distance)
           .add(this.camera.instance.position);
         if (!counter) {
-          gsap.to(this.camera.instance.position, {
+          // this.camera.instance.lookAt(newPos);
+          // this.camera.controls.target.set(...newPos);
+          // this.camera.instance.translateZ(-distance)
+
+          // gsap.to(this.camera.instance.position, {
+          //   duration: 1,
+          //   x: newPos.x,
+          //   y: newPos.y,
+          //   z: newPos.z, // maybe adding even more offset depending on your model
+          //   onUpdate: () => {
+          //     // this.camera.instance.position.set(center.x, center.y + 5, center.z)
+          //     counter++;
+          //   }
+          // });
+
+          gsap.to(this.camera.controls.target, {
             duration: 1,
             x: newPos.x,
             y: newPos.y,
             z: newPos.z, // maybe adding even more offset depending on your model
             onUpdate: () => {
-              // this.camera.instance.position.set(center.x, center.y + 5, center.z)
+              gsap.to(this.camera.instance.position, {
+                duration: 1,
+                x: newPos.x - 5,
+                y: newPos.y - 5,
+                z: newPos.z - 5, // maybe adding even more offset depending on your model
+                onUpdate: () => {
+                }
+              });
               // this.camera.instance.lookAt(center);
               // this.camera.controls.target.set(...center);
               counter++;
             }
           });
-
-          // gsap.to(this.camera.instance.position, {
-          //   duration: 1,
-          //   x: center.x,
-          //   y: center.y + 5,
-          //   z: center.z, // maybe adding even more offset depending on your model
-          //   onUpdate: () => {
-          //     // this.camera.instance.lookAt(center);
-          //     // this.camera.controls.target.set(...center);
-          //     counter++;
-          //   }
-          // });
         }
-
       }
     })
   }

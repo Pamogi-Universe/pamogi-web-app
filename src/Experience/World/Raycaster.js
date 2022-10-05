@@ -49,6 +49,7 @@ export default class Raycaster {
             }
             this.__experience.world.setCurrentElement(current);
             this.__experience.composer.setCurrentElement(current);
+            this.__experience.points.triggerClick(".point-" + current.userData.key)
           }
         })
       }

@@ -2,7 +2,7 @@
   font-size: rem(14);
   @extend %fw-200;
   color: $white;
-  background: $black;
+  background: rgba($black, 0.4);
 }
 
 .point {
@@ -22,27 +22,32 @@
     transition: all 0.3s;
   }
 
-  &.away .label,
-  &.away::before {
-    scale: 0;
-  }
+  // &.away .label,
+  // &.away::before {
+  //   scale: 0;
+  // }
 
   .text,
   &::after {
-    @include position(false, rem(30) auto auto rem(-120), null, rem(200));
-    padding: rem(20);
+    @include position(false, rem(-10) auto auto rem(-10), null, rem(200));
+    padding: rem(10);
     @extend %typography;
+    font-weight: 500;
     line-height: 1.5;
     border-radius: rem(4);
-    opacity: 0;
+    opacity: 1;
     transition: all 0.3s;
-    pointer-events: none;
+    // pointer-events: none;
   }
 
-  &[data-title] {
+  &[data-title]:not([data-title=""]) {
     & .text,
     &::after {
       content: attr(data-title);
+    }
+
+    &::before {
+      opacity: 0;
     }
   }
 

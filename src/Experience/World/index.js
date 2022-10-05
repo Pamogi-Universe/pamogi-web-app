@@ -4,7 +4,6 @@ import TransformControl from "../controls/transformControls"
 import Environment from "./Environment";
 import Floor from "./Floor";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import random from "../utils/randomKey";
 // import GridHelper from '../helpers/GridHelper';
 
@@ -12,16 +11,12 @@ export default class World {
   constructor() {
     // Setup
     this.__experience = new Experience();
-    this.scene = this.__experience.scene;
-    this.camera = this.__experience.camera.instance;
-    this.resources = this.__experience.resources;
-    this.points = this.__experience.points;
     this.helpers = {
       // gridHelper: new GridHelper(10, 10)
     }
     this.floor = new Floor();
+    this.globe = new THREE.Group();
     this.gltfLoader = new GLTFLoader();
-    this.fbxLoader = new FBXLoader();
     this.objects = { meshes: [], arr: [] };
     this.loaded = false;
     this.render();
@@ -30,7 +25,7 @@ export default class World {
   // Events
   // renders the world
   render() {
-    this.resources.on("ready", () => {
+    this.__experience.resources.on("ready", () => {
       this.loaded = true;
       this.raycaster = this.__experience.raycaster.instance;
       this.outlinePass = this.__experience.composer;
@@ -42,24 +37,26 @@ export default class World {
   // pushes all the 3d objects to array
   pushToObject(key, value) {
     this.objects[key] = value;
-    value.dataKey = key;
+    value.userData.key = key
     this.objects.meshes.push(value);
   }
 
   // deleting a model from the scene
-  removeFromObject() {
-    this.points.delete(this.objects.current);
+  disposeCurrentModel(obj) {
+    let object = obj ?? this.objects.current;
+
+    this.__experience.points.delete(object);
 
     this.transformControl.detach();
-    this.scene.remove(this.objects.current)
+    this.__experience.scene.remove(object)
 
     let index = null;
     this.objects.meshes.forEach((val, id) => {
-      if (val.uuid === this.objects.current.uuid) {
+      if (val.uuid === object.uuid) {
         index = id;
       }
     });
-    delete this.objects[this.objects.meshes[index].dataKey];
+    delete this.objects[this.objects.meshes[index].userData.key];
     this.objects.meshes.splice(index, 1);
     this.objects.current = null;
   }
@@ -67,7 +64,7 @@ export default class World {
   update() { }
 
   // loading a model into the scene
-  loadModal(name, url) {
+  loadModal(name, url, position, userData) {
     this.__experience.history.push();
     if (!this.objects[name]) {
       this.gltfLoader.load(url, (gltf) => {
@@ -78,36 +75,44 @@ export default class World {
         const ySize = boundingBox.max.y - boundingBox.min.y
         object.position.y = ySize / 2;
 
-        this.scene.add(object);
+        position ? object.position.x = position.x : "";
+        position ? object.position.y = position.y : "";
+
+        this.__experience.scene.add(object);
 
         // create point on the model
-        this.addFocusToElement(name, object)
+        this.addFocusToElement(name, object, userData)
       })
     } else {
       // clone a 3D model
       const clone = this.objects[name].clone();
       clone.position.set(0, 0, 0);
-      this.scene.add(clone)
+      this.__experience.scene.add(clone)
 
       // create point on the model
       this.addFocusToElement(name, clone)
     }
   }
 
-  addFocusToElement(name, obj) {
+  addFocusToElement(name, obj, userData) {
     const randomID = `${name}-${random()}`;
 
-    this.points.push({
+    console.log(userData)
+
+    this.__experience.points.push({
       id: randomID,
       position: obj.position,
-      title: "",
-      description: ""
+      title: userData?.title ?? "",
+      description: userData?.description ??  "",
+      states: name.includes("Tree"),
+      currentState: 0
     })
 
-    this.transformControl.addElements(obj);
+    if (!this.__experience.viewOnly)this.transformControl.addElements(obj);
     this.outlinePass.setCurrentElement(obj);
     this.pushToObject(randomID, obj);
     this.setCurrentElement(obj)
+    this.__experience.points.triggerClick(".point-" + obj.userData.key)
   }
 
   setCurrentElement(val) {

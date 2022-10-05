@@ -41,7 +41,7 @@ button {
 #webgl {
   outline: none; }
 
-.visualizer, .text__editor, .visualizer::before, .text__editor::before, #visualizer:checked + .visualizer::after, #visualizer:checked + .text__editor::after, .object__opener::before, .info__opener::before, .object__opener::after, .info__opener::after, .info__opener, .point, .point .label, .point::before, .point .text, .point::after {
+.visualizer, .text__editor, .visualizer::before, .text__editor::before, #visualizer:checked + .visualizer::after, #visualizer:checked + .text__editor::after, .object__opener::before, .info__opener::before, .object__opener::after, .info__opener::after, .info__opener, .point, .point .label, .point::before, .point .text, .point::after, .state__item::after {
   position: absolute; }
 
 .object--abs, .shortcut__opener, .shortcut__modal, .info__modal, .shortcut__modal-overlay, .info__modal-overlay, .info__wrapper {
@@ -53,14 +53,14 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
 #webgl, .visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .info__closer, .object__img, .shortcut__key, .info__btn, .info__submit, body.view-only .info__opener, .info__input {
   display: block; }
 
-.visualizer, .text__editor, .object__opener::before, .info__opener::before, .shortcut__opener, .point .label, .point::before {
+.visualizer, .text__editor, .object__opener::before, .info__opener::before, .shortcut__opener, .point .label, .point::before, .state__item {
   border-radius: 50%; }
 
-.visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .info__closer, .shortcut__opener {
+.visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .info__closer, .shortcut__opener, .state__item {
   width: var(--square);
   aspect-ratio: 1 / 1; }
 
-.visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .info__closer, .shortcut__opener, .info__btn, .info__submit, .point .label, .point::before {
+.visualizer, .text__editor, .object__opener, .info__opener, .object__closer, .shortcut__closer, .info__closer, .shortcut__opener, .info__btn, .info__submit, .point .label, .point::before, .state__item {
   cursor: pointer; }
 
 .shortcut__key, .info__btn, .info__submit {
@@ -254,6 +254,11 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
   .shortcut__key:not(:last-child), .info__btn:not(:last-child), .info__submit:not(:last-child) {
     margin-inline-end: 0.5rem; }
 
+.info__title, .info__description, .state {
+  margin-block-end: 1.5rem;
+  padding-block-end: 1.5rem;
+  border-block-end: 0.1rem solid #616161; }
+
 .info__wrapper {
   --clr: rgb(202, 201, 201);
   inset: auto 1rem 1rem auto;
@@ -266,7 +271,8 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
   opacity: 0;
   visibility: hidden;
   transform: translateX(calc(100% + 1rem));
-  transition: all 0.5s; }
+  transition: all 0.5s;
+  isolation: isolate; }
 
 .info__toggle:checked ~ .info__wrapper {
   opacity: 1;
@@ -279,11 +285,6 @@ body.view-only .stat, body.view-only .lil-gui, #visualizer, .object__toggle, bod
   inset: auto 1rem 1rem auto; }
   .info__opener:hover::before, .info__opener:hover::after {
     transform: rotate(360deg); }
-
-.info--border {
-  margin-block-end: 1.5rem;
-  padding-block-end: 1.5rem;
-  border-block-end: 0.1rem solid #616161; }
 
 .info__description {
   font-size: 1.4rem;
@@ -324,7 +325,7 @@ body.view-only .info__modal {
 .point .label, .point::before, .point .text, .point::after {
   font-size: 1.4rem;
   color: #ffffff;
-  background: #000000; }
+  background: rgba(0, 0, 0, 0.4); }
 
 .point {
   inset: 50% auto auto 50%; }
@@ -337,19 +338,19 @@ body.view-only .info__modal {
     line-height: 2rem;
     border: 0.2rem solid #ffffff;
     transition: all 0.3s; }
-  .point.away .label, .point.away::before {
-    scale: 0; }
   .point .text, .point::after {
-    inset: 3rem auto auto -12rem;
+    inset: -1rem auto auto -1rem;
     width: 20rem;
-    padding: 2rem;
+    padding: 1rem;
+    font-weight: 500;
     line-height: 1.5;
     border-radius: 0.4rem;
-    opacity: 0;
-    transition: all 0.3s;
-    pointer-events: none; }
-  .point[data-title] .text, .point[data-title]::after {
+    opacity: 1;
+    transition: all 0.3s; }
+  .point[data-title]:not([data-title=""]) .text, .point[data-title]:not([data-title=""])::after {
     content: attr(data-title); }
+  .point[data-title]:not([data-title=""])::before {
+    opacity: 0; }
   .point:hover .text, .point:hover::after {
     opacity: 1; }
 
@@ -368,3 +369,29 @@ body.view-only .info__modal {
     line-height: var(--square);
     color: #ffffff;
     background: unset; }
+
+.state {
+  display: flex;
+  gap: 1rem;
+  overflow: auto; }
+  .state__item {
+    position: relative;
+    --square: 5.5rem;
+    min-width: 5.5rem;
+    border: 0.1rem solid #616161;
+    background-size: 3.5rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    transition: all 0.2s; }
+    .state__item::after {
+      content: "";
+      inset: 0;
+      z-index: -1;
+      background-color: #000000;
+      opacity: 0;
+      transition: all 0.2s; }
+    .state__item:hover {
+      background-size: 2.5rem; }
+      .state__item:hover::after {
+        opacity: 1; }

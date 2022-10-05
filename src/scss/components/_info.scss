@@ -1,3 +1,9 @@
+%info-border {
+  margin-block-end: rem(15);
+  padding-block-end: rem(15);
+  border-block-end: rem(1) solid $clr-border;
+}
+
 #info-toggler {
   @extend %d-none;
 }
@@ -16,6 +22,7 @@
     visibility: hidden;
     transform: translateX(calc(100% + #{rem(10)}));
     transition: all 0.5s;
+    isolation: isolate;
   }
 
   &__toggle {
@@ -45,20 +52,16 @@
     }
   }
 
-  &--border {
-    margin-block-end: rem(15);
-    padding-block-end: rem(15);
-    border-block-end: rem(1) solid $clr-border;
-  }
-
   &__title {
     @extend %fw-600;
+    @extend %info-border;
   }
 
   &__description {
     font-size: rem(14);
     @extend %fw-200;
     line-height: 1.6;
+    @extend %info-border;
   }
 
   &__btn {

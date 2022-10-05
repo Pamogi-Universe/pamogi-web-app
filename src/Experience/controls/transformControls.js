@@ -55,7 +55,7 @@ export default class TransformControl {
               break;
 
             case 'KeyD': // D
-              this.__experience.world.objects.current && this.__experience.world.removeFromObject();
+              this.__experience.world.objects.current && this.__experience.world.disposeCurrentModel();
               this.__experience.composer.removeCurrentElement();
               this.detach();
               break;
