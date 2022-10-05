@@ -36,6 +36,8 @@ export default class DomEvents {
 
     objects.forEach((val, id) => {
       document.querySelector(".object__list").innerHTML += `
+        ${val.title ? `<h3>${val.title}</h3>` : ""}
+        ${val.description ? `<p>${val.description}</p>` : ""}
         <div class="object__item">
           <img class="object__img" src="${val.url}" alt="${val.name}">
         </div>

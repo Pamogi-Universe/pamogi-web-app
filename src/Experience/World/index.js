@@ -121,4 +121,3 @@ export default class World {
     this.objects.current = null
   }
 }
-
