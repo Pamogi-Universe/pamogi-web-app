@@ -39,22 +39,38 @@ const objects = [
     model: "/models/River6.glb"
   },
   {
-    name: "Tree1",
-    url: "/img/Tree1.png",
-    model: "/models/Tree1.glb",
+    name: "TreeSproutSingle",
+    url: "/img/TreeSproutSingle.png",
+    model: "/models/TreeSproutSingle.glb",
     title: "Vegetation",
-    description: "Tasks"
+    description: "Tasks",
+    states: ["TreeSproutSingle", "TreeSingle", "TreeFruitedSingle"]
   },
   {
-    name: "Tree2",
-    url: "/img/Tree2.png",
-    model: "/models/Tree2.glb"
+    name: "TreeSproutGroup",
+    url: "/img/TreeSproutGroup.png",
+    model: "/models/TreeSproutGroup.glb",
+    title: "",
+    description: "",
+    states: ["TreeSproutGroup", "TreeGroup", "TreeFruitedGroup"]
   },
-  {
-    name: "Tree3",
-    url: "/img/Tree3.png",
-    model: "/models/Tree3.glb"
-  },
+  // {
+  //   name: "Tree1",
+  //   url: "/img/Tree1.png",
+  //   model: "/models/Tree1.glb",
+  //   title: "",
+  //   description: ""
+  // },
+  // {
+  //   name: "Tree2",
+  //   url: "/img/Tree2.png",
+  //   model: "/models/Tree2.glb"
+  // },
+  // {
+  //   name: "Tree3",
+  //   url: "/img/Tree3.png",
+  //   model: "/models/Tree3.glb"
+  // }
   {
     name: "Bush1",
     url: "/img/Bush1.png",
@@ -73,7 +89,9 @@ const objects = [
   {
     name: "Cloud",
     url: "/img/Cloud.png",
-    model: "/models/Cloud.glb"
+    model: "/models/Cloud.glb",
+    title: "Cloud",
+    description: "Source"
   },
   {
     name: "Lighting",
@@ -83,11 +101,11 @@ const objects = [
     description: "People"
   },
   {
-    name: "apple",
-    url: "/img/Apple.png",
-    model: "/models/Apple.glb",
-    title: "Fruit",
-    description: "Result"
+    name: "SunRay",
+    url: "/img/SunRay.png",
+    model: "/models/SunRay.glb",
+    title: "Sunray",
+    description: "People"
   },
 ];
 

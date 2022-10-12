@@ -64,24 +64,42 @@ export default class World {
   update() { }
 
   // loading a model into the scene
-  loadModal(name, url, position, userData) {
+  loadModal(name, url, position, userData, states, id) {
     this.__experience.history.push();
     if (!this.objects[name]) {
       this.gltfLoader.load(url, (gltf) => {
         // load 3D model
+
+        // const group = new THREE.Group();
         const object = gltf.scene.children[0];
+        console.log(object)
+        if (object) object.userData.id = id;
 
         const boundingBox = new THREE.Box3().setFromObject(object)
-        const ySize = boundingBox.max.y - boundingBox.min.y
-        object.position.y = ySize / 2;
+        const size = boundingBox.getSize(new THREE.Vector3())
+        // const center = boundingBox.getCenter(new THREE.Vector3())
+        // center.x = size.x / 2
+        object.position.y = size.y / 2
+        // center.z = size.z / 2
 
-        position ? object.position.x = position.x : "";
-        position ? object.position.y = position.y : "";
+        // const mesh = new THREE.Mesh(
+        //   new THREE.BoxGeometry(xSize, ySize, zSize),
+        //   new THREE.MeshStandardMaterial({ color: "red", transparent: true, opacity: 0.5 })
+        // )
 
+        position && object.position.set(...position);
+
+        // group.add(object)
+        // const boundingGroup = new THREE.Box3().setFromObject(group)
+        // const sizeGroup = boundingGroup.getSize(new THREE.Vector3())
+
+        // group.position.y = sizeGroup.y / 2
         this.__experience.scene.add(object);
 
+        // console.log({ size, center })
+
         // create point on the model
-        this.addFocusToElement(name, object, userData)
+        this.addFocusToElement(name, object, { ...userData, states })
       })
     } else {
       // clone a 3D model
@@ -90,25 +108,23 @@ export default class World {
       this.__experience.scene.add(clone)
 
       // create point on the model
-      this.addFocusToElement(name, clone)
+      this.addFocusToElement(name, clone, { states })
     }
   }
 
   addFocusToElement(name, obj, userData) {
     const randomID = `${name}-${random()}`;
 
-    console.log(userData)
-
     this.__experience.points.push({
       id: randomID,
       position: obj.position,
       title: userData?.title ?? "",
-      description: userData?.description ??  "",
-      states: name.includes("Tree"),
+      description: userData?.description ?? "",
+      states: userData.states,
       currentState: 0
     })
 
-    if (!this.__experience.viewOnly)this.transformControl.addElements(obj);
+    if (!this.__experience.viewOnly) this.transformControl.addElements(obj);
     this.outlinePass.setCurrentElement(obj);
     this.pushToObject(randomID, obj);
     this.setCurrentElement(obj)

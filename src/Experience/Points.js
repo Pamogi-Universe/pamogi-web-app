@@ -1,5 +1,8 @@
+import Experience from ".";
+
 export default class Points {
   constructor() {
+    this.__experience = new Experience();
     this.instance = [];
   }
 
@@ -37,14 +40,19 @@ export default class Points {
         this.current = point;
         this.toggleDetail();
 
-        // console.log("set point")
-
         document.querySelector(".info__toggle").checked = true
         document.querySelector(".info__title span").textContent = point.title || "Enter your title";
         document.querySelector(".info__description").textContent = point.description || "Enter your description";
+        document.querySelector(".state").innerHTML = "";
 
-        const display = point.states ? "flex" : "none";
-        document.querySelector(".state").style.display = display;
+        if (!!point.states?.length) {
+          point.states.forEach(val => {
+            document.querySelector(".state").innerHTML += `<div class="state__item" style="background-image: url(img/${val}.png);"></div>`
+          })
+          this.__experience.domEvents.addEventListenerToStates();
+        } else {
+          document.querySelector(".state").innerHTML = "";
+        }
       })
     }
   }

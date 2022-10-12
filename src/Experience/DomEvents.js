@@ -15,7 +15,6 @@ export default class DomEvents {
     document.getElementById("text-editor").addEventListener("change", (e) => this.toggleDetail(e, true))
     document.getElementById("info-modal").addEventListener("change", (e) => this.openEditModal(e))
     document.getElementById("info-submit").addEventListener("click", () => this.saveDetails())
-    document.querySelectorAll(".state__item").forEach((val, id) => val.addEventListener("click", () => this.toggleModelState(id + 1)))
   }
 
   toggleView(e, triggered) {
@@ -56,7 +55,7 @@ export default class DomEvents {
 
           if (elementMouseIsOver === this.__experience.canvas) {
             if (!counter)
-              this.__experience.world.loadModal(objects[id].name, objects[id].model, objects[id].type)
+              this.__experience.world.loadModal(objects[id].name, objects[id].model, null, null, objects[id].states, id)
             counter++
           }
         }
@@ -127,9 +126,15 @@ export default class DomEvents {
     })
   }
 
+  addEventListenerToStates() {
+    document.querySelectorAll(".state__item").forEach((val, id) => val.addEventListener("click", () => this.toggleModelState(id)))
+  }
+
   toggleModelState(id) {
     const point = this.__experience.points.current;
+    const objID = this.__experience.world.objects.current.userData.id;
+    console.log(point.states[id]);
     this.__experience.world.disposeCurrentModel()
-    this.__experience.world.loadModal(`Tree${id}`,`/models/Tree${id}.glb`, point.position, point)
+    this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objID)
   }
 }

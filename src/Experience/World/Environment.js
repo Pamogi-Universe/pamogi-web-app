@@ -15,7 +15,7 @@ export default class Environment {
   // Events
   // main light
   setLight() {
-    this.light = new THREE.DirectionalLight(0xffffff, 2);
+    this.light = new THREE.DirectionalLight(0xffffff, 7);
     this.light.position.set(5, 5, 5);
     this.light.castShadow = true;
     this.helper = new THREE.DirectionalLightHelper(this.light, 5)
