@@ -47,54 +47,19 @@ export default class Experience {
 
     this.canvas.addEventListener('dblclick', () => {
       if (this.raycaster.currentIntersect?.object.name === "Continent") {
-
         const center = this.raycaster.currentIntersect.point;
-
         let counter = 0;
 
-        var direction = new THREE.Vector3();
-        direction.subVectors(this.camera.instance.position, center).normalize();
-        var distance = center.distanceTo(this.camera.instance.position);
-        distance -= 5;
-        var newPos = direction
-          .multiplyScalar(-distance)
-          .add(this.camera.instance.position);
         if (!counter) {
-          // this.camera.instance.lookAt(newPos);
-          // this.camera.controls.target.set(...newPos);
-          // this.camera.instance.translateZ(-distance)
-
-          // gsap.to(this.camera.instance.position, {
-          //   duration: 1,
-          //   x: newPos.x,
-          //   y: newPos.y,
-          //   z: newPos.z, // maybe adding even more offset depending on your model
-          //   onUpdate: () => {
-          //     // this.camera.instance.position.set(center.x, center.y + 5, center.z)
-          //     counter++;
-          //   }
-          // });
-
           gsap.to(this.camera.controls.target, {
             duration: 1,
-            x: newPos.x,
-            y: newPos.y,
-            z: newPos.z, // maybe adding even more offset depending on your model
-            onUpdate: () => {
-              gsap.to(this.camera.instance.position, {
-                duration: 1,
-                x: newPos.x - 5,
-                y: newPos.y - 5,
-                z: newPos.z - 5, // maybe adding even more offset depending on your model
-                onUpdate: () => {
-                }
-              });
-              // this.camera.instance.lookAt(center);
-              // this.camera.controls.target.set(...center);
-              counter++;
-            }
+            x: center.x,
+            y: center.y,
+            z: center.z, // maybe adding even more offset depending on your model
+            onUpdate: () => { counter++; }
           });
         }
+
       }
     })
   }

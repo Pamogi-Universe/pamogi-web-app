@@ -77,14 +77,8 @@ export default class DomEvents {
           x: 0,
           y: 0,
           z: 0, // maybe adding even more offset depending on your model
-          onUpdate: () => {
-            // this.camera.instance.position.set(center.x, center.y + 5, center.z)
-            // this.camera.instance.lookAt(center);
-            // this.camera.controls.target.set(...center);
-          }
+          onUpdate: () => {}
         });
-        // this.__experience.camera.controls.target.set(0, 0, 0)
-        // this.__experience.camera.instance.position.set(- 3, 6, 6);
       }
     })
   }

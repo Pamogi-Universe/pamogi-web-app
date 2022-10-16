@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import gsap from "gsap";
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls';
 import Experience from '..';
 
@@ -69,7 +70,16 @@ export default class TransformControl {
               break;
 
             case 'KeyF': // F
-              this.__experience.world.objects.current?.position && this.__experience.camera.controls.target.set(...this.__experience.world.objects.current.position)
+              if (this.__experience.world.objects.current?.position) {
+                const { x, y, z } = this.__experience.world.objects.current.position;
+                gsap.to(this.__experience.camera.controls.target, {
+                  duration: 1,
+                  x,
+                  y,
+                  z,
+                  onUpdate: () => {}
+                });
+              }
               break;
 
             case 'KeyS': // S
