@@ -28,7 +28,16 @@ export default class TransformControl {
   // set control on an element
   addElements(element) {
     this.controls.attach(element);
-    console.log(element);
+
+    switch (element.userData.name) {
+      case "cloud":
+      case "lighting":
+      case "sunray":
+        this.controls.showY = true;
+        break;
+      default:
+        this.controls.showY = false;
+    }
   }
 
   detach() {
@@ -78,14 +87,14 @@ export default class TransformControl {
                   x,
                   y,
                   z,
-                  onUpdate: () => {}
+                  onUpdate: () => { }
                 });
               }
               break;
 
-            case 'KeyS': // S
-              this.controls.setMode('scale');
-              break;
+            // case 'KeyS': // S
+            //   this.controls.setMode('scale');
+            //   break;
 
             case 'Equal':
             case 'NumpadAdd': // +, =, num+

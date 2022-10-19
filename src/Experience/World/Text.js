@@ -20,7 +20,9 @@ export default class Text {
     this.ctx.font = family;
     this.ctx.fillStyle = "white";
     this.ctx.fillText(text, 10, 30);
-    return new THREE.CanvasTexture(this.canvas);
+    const texture = new THREE.CanvasTexture(this.canvas)
+    texture.minFilter = THREE.NearestFilter;
+    return texture;
   }
 
   initiate() {
