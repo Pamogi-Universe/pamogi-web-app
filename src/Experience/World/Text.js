@@ -15,10 +15,9 @@ export default class Text {
     canvas.width = ctx.measureText(text).width + 20;
     canvas.height = 40;
 
-    ctx.fillStyle = 'green';
+    ctx.fillStyle = '#ff000000';
     ctx.fillRect(-1, -1, canvas.width + 2, canvas.height + 2);
 
-    ctx.fillText(text, 0, canvas.height - 1);
     canvas.style.width = canvas.width + 'px';
     ctx.font = family;
     ctx.fillStyle = "white";
@@ -61,11 +60,18 @@ export default class Text {
     const clone = this.mesh.clone();
     clone.material = new THREE.MeshBasicMaterial({
       map: map.texture,
-      side: THREE.DoubleSide
+      side: THREE.DoubleSide,
+      transparent: true
     });
     clone.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 10, 10)
     clone.position.set(1, -0.8, 2);
     object.add(clone);
     object.text = clone;
+  }
+
+  update(target, text) {
+    const map = this.__experience.world.text.texture(text);
+    target.text.material.map = map.texture;
+    target.text.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 10, 10)
   }
 }

@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import gsap from "gsap";
 import Experience from ".";
 import objects from "./objects";
@@ -112,12 +111,8 @@ export default class DomEvents {
     document.querySelector(".info__title span").textContent = point.title || "Enter your title";
     document.querySelector(".info__description").textContent = point.description || "Enter your description";
 
-    if (point.title) {
-      const map = this.__experience.world.text.texture(point.title);
-      this.__experience.world.objects.current.text.material.map = map.texture;
-      this.__experience.world.objects.current.text.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 10, 10)
-
-      console.log(this.__experience.world.objects.current)
+    if (point.title && this.__experience.world.objects.current.userData.name === "waterfall") {
+      this.__experience.world.text.update(this.__experience.world.objects.current, point.title)
     }
 
     this.__experience.points.instance.map(val => {
