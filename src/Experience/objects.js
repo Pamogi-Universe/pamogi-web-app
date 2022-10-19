@@ -1,5 +1,12 @@
 const objects = [
   {
+    name: "TreeSingle",
+    url: "/img/TreeSingle.png",
+    model: "/models/TreeSingle.glb",
+    title: "",
+    description: "",
+  },
+  {
     name: "Waterfall",
     url: "/img/Waterfall.png",
     model: "/models/Waterfall.glb",
@@ -19,14 +26,14 @@ const objects = [
     model: "/models/River2.glb"
   },
   {
-    name: "River4",
-    url: "/img/River4.png",
-    model: "/models/River4.glb"
-  },
-  {
     name: "River3",
     url: "/img/River3.png",
     model: "/models/River3.glb"
+  },
+  {
+    name: "River4",
+    url: "/img/River4.png",
+    model: "/models/River4.glb"
   },
   {
     name: "River5",

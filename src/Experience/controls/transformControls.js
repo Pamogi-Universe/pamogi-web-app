@@ -27,7 +27,8 @@ export default class TransformControl {
 
   // set control on an element
   addElements(element) {
-    this.controls.attach(element)
+    this.controls.attach(element);
+    console.log(element);
   }
 
   detach() {
@@ -128,7 +129,8 @@ export default class TransformControl {
       switch (this.controls.enabled) {
         case true:
           switch (event.code) {
-            case 'ShiftLeft': // Shift
+            case 'ControlRight': // ControlRight
+            case 'ControlLeft': // ControlLeft
               this.controls.setTranslationSnap(null);
               this.controls.setRotationSnap(null);
               this.controls.setScaleSnap(null);

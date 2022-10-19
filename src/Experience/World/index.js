@@ -5,6 +5,7 @@ import Environment from "./Environment";
 import Floor from "./Floor";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import random from "../utils/randomKey";
+import Text from './Text';
 // import GridHelper from '../helpers/GridHelper';
 
 export default class World {
@@ -31,13 +32,15 @@ export default class World {
       this.outlinePass = this.__experience.composer;
       this.environment = new Environment();
       this.transformControl = new TransformControl();
+      this.text = new Text();
+      this.text.initiate();
     })
   }
 
   // pushes all the 3d objects to array
   pushToObject(key, value) {
     this.objects[key] = value;
-    value.userData.key = key
+    value.userData.key = key;
     this.objects.meshes.push(value);
   }
 
@@ -69,34 +72,24 @@ export default class World {
     if (!this.objects[name]) {
       this.gltfLoader.load(url, (gltf) => {
         // load 3D model
-
-        // const group = new THREE.Group();
         const object = gltf.scene.children[0];
-        console.log(object)
+        object.userData.name = object.userData.name.toLowerCase();
         if (object) object.userData.id = id;
 
-        const boundingBox = new THREE.Box3().setFromObject(object)
-        const size = boundingBox.getSize(new THREE.Vector3())
-        // const center = boundingBox.getCenter(new THREE.Vector3())
-        // center.x = size.x / 2
-        object.position.y = size.y / 2
-        // center.z = size.z / 2
+        if (this.__experience.raycaster.currentIntersect?.object.name === "Continent") {
+          const center = this.__experience.raycaster.currentIntersect.point;
+          object.position.set(center.x, object.position.y, center.z)
+        }
 
-        // const mesh = new THREE.Mesh(
-        //   new THREE.BoxGeometry(xSize, ySize, zSize),
-        //   new THREE.MeshStandardMaterial({ color: "red", transparent: true, opacity: 0.5 })
-        // )
+        if (object.userData.name === "waterfall") {
+          this.text.clone("Write something", object);
+        }
 
-        position && object.position.set(...position);
+        if (position) {
+          object.position.set(position.x, object.position.y, position.z)
+        }
 
-        // group.add(object)
-        // const boundingGroup = new THREE.Box3().setFromObject(group)
-        // const sizeGroup = boundingGroup.getSize(new THREE.Vector3())
-
-        // group.position.y = sizeGroup.y / 2
         this.__experience.scene.add(object);
-
-        // console.log({ size, center })
 
         // create point on the model
         this.addFocusToElement(name, object, { ...userData, states })
@@ -113,7 +106,7 @@ export default class World {
   }
 
   addFocusToElement(name, obj, userData) {
-    const randomID = `${name}-${random()}`;
+    const randomID = `${name.toLowerCase()}-${random()}`;
 
     this.__experience.points.push({
       id: randomID,

@@ -26,12 +26,14 @@ export default class Camera {
     this.controls = new OrbitControls(this.instance, this.__experience.canvas);
     this.controls.enableDamping = true;
     this.controls.enabled = true;
-    this.controls.minPolarAngle = 0;
-    this.controls.maxPolarAngle = Math.PI / 2 - 0.001;
-    // this.controls.minDistance = 5;
-    // this.controls.maxDistance = 50;
+    // this.controls.minPolarAngle = 1;
+    this.controls.maxPolarAngle = Math.PI / 2 - 0.1;
+    this.controls.minDistance = 5;
+    this.controls.maxDistance = 20;
     // this.controls.enablePan = false;
     this.controls.screenSpacePanning = true;
+
+    this.controls.addEventListener( 'change', () => { this.controls.target.y = 0; })
   }
 
   resize() {

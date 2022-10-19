@@ -127,7 +127,7 @@ export default class DomEvents {
   toggleModelState(id) {
     const point = this.__experience.points.current;
     const objID = this.__experience.world.objects.current.userData.id;
-    console.log(point.states[id]);
+    console.log(this.__experience.world.objects.current);
     this.__experience.world.disposeCurrentModel()
     this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objID)
   }
