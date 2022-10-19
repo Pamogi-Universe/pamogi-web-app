@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import gsap from "gsap";
 import Experience from ".";
 import objects from "./objects";
@@ -77,7 +78,7 @@ export default class DomEvents {
           x: 0,
           y: 0,
           z: 0, // maybe adding even more offset depending on your model
-          onUpdate: () => {}
+          onUpdate: () => { }
         });
       }
     })
@@ -110,6 +111,14 @@ export default class DomEvents {
 
     document.querySelector(".info__title span").textContent = point.title || "Enter your title";
     document.querySelector(".info__description").textContent = point.description || "Enter your description";
+
+    if (point.title) {
+      const map = this.__experience.world.text.texture(point.title);
+      this.__experience.world.objects.current.text.material.map = map.texture;
+      this.__experience.world.objects.current.text.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 10, 10)
+
+      console.log(this.__experience.world.objects.current)
+    }
 
     this.__experience.points.instance.map(val => {
       if (val.id === point.id) {

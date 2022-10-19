@@ -4,48 +4,66 @@ import Experience from '..';
 export default class Text {
   constructor() {
     this.__experience = new Experience();
+    this.arr = []
+  }
+
+  canvas(text) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const family = "400 30px Comic Sans MS";
+    ctx.font = family;
+    canvas.width = ctx.measureText(text).width + 20;
+    canvas.height = 40;
+
+    ctx.fillStyle = 'green';
+    ctx.fillRect(-1, -1, canvas.width + 2, canvas.height + 2);
+
+    ctx.fillText(text, 0, canvas.height - 1);
+    canvas.style.width = canvas.width + 'px';
+    ctx.font = family;
+    ctx.fillStyle = "white";
+    ctx.fillText(text, 10, 30);
+
+    return { canvas, ctx }
   }
 
   texture(text) {
-    const family = "400 30px Comic Sans MS";
-    this.ctx.font = family;
-    this.canvas.width = this.ctx.measureText(text).width + 20;
-    this.canvas.height = 40;
+    const instance = this.canvas(text)
 
-    this.ctx.fillStyle = 'green';
-    this.ctx.fillRect(-1, -1, this.canvas.width + 2, this.canvas.height + 2);
+    const texture = new THREE.CanvasTexture(instance.canvas)
+    instance.ctx.text = text
+    texture.canvas = instance.canvas;
+    texture.ctx = instance.ctx;
 
-    this.ctx.fillText(text, 0, this.canvas.height - 1);
-    this.canvas.style.width = this.canvas.width + 'px';
-    this.ctx.font = family;
-    this.ctx.fillStyle = "white";
-    this.ctx.fillText(text, 10, 30);
-    const texture = new THREE.CanvasTexture(this.canvas)
-    texture.minFilter = THREE.NearestFilter;
-    return texture;
+    this.arr.push(texture)
+    return { texture, canvas: instance.canvas };
   }
 
   initiate() {
-    this.canvas = document.createElement('canvas');
-    this.ctx = this.canvas.getContext('2d');
-    this.geometry = new THREE.PlaneGeometry(this.canvas.width / 150, 0.4, 10, 10);
+    const map = this.texture("Write something")
+    this.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 10, 10);
+
 
     this.mesh = new THREE.Mesh(
       this.geometry,
       new THREE.MeshBasicMaterial({
-        map: this.texture("Write something"),
+        map: map.texture,
         side: THREE.DoubleSide
       })
     );
     this.mesh.rotation.order = "YXZ"
     this.mesh.rotation.y = - Math.PI * 1.8;
     this.mesh.rotation.x = - Math.PI / 2;
-    // this.__experience.scene.add(this.mesh);
   }
 
   clone(name, object) {
+    const map = this.texture(name);
     const clone = this.mesh.clone();
-    clone.material.map = this.texture(name);
+    clone.material = new THREE.MeshBasicMaterial({
+      map: map.texture,
+      side: THREE.DoubleSide
+    });
+    clone.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 10, 10)
     clone.position.set(1, -0.8, 2);
     object.add(clone);
     object.text = clone;
