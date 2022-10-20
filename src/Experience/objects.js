@@ -13,38 +13,38 @@ const objects = [
     title: "Waterfall",
     description: "Topic and start point of the river"
   },
-  {
-    name: "River1",
-    url: "/img/River1.png",
-    model: "/models/River1.glb",
-    title: "River",
-    description: "Steps, subtopics"
-  },
+  // {
+  //   name: "River1",
+  //   url: "/img/River1.png",
+  //   model: "/models/River1.glb",
+  //   title: "River",
+  //   description: "Steps, subtopics"
+  // },
   {
     name: "River2",
     url: "/img/River2.png",
     model: "/models/River2.glb"
   },
-  {
-    name: "River3",
-    url: "/img/River3.png",
-    model: "/models/River3.glb"
-  },
-  {
-    name: "River4",
-    url: "/img/River4.png",
-    model: "/models/River4.glb"
-  },
-  {
-    name: "River5",
-    url: "/img/River5.png",
-    model: "/models/River5.glb"
-  },
-  {
-    name: "River6",
-    url: "/img/River6.png",
-    model: "/models/River6.glb"
-  },
+  // {
+  //   name: "River3",
+  //   url: "/img/River3.png",
+  //   model: "/models/River3.glb"
+  // },
+  // {
+  //   name: "River4",
+  //   url: "/img/River4.png",
+  //   model: "/models/River4.glb"
+  // },
+  // {
+  //   name: "River5",
+  //   url: "/img/River5.png",
+  //   model: "/models/River5.glb"
+  // },
+  // {
+  //   name: "River6",
+  //   url: "/img/River6.png",
+  //   model: "/models/River6.glb"
+  // },
   {
     name: "TreeSproutSingle",
     url: "/img/TreeSproutSingle.png",

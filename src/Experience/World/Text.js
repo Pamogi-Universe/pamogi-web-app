@@ -64,9 +64,10 @@ export default class Text {
       transparent: true
     });
     clone.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 10, 10)
-    clone.position.set(1, -0.8, 2);
     object.add(clone);
     object.text = clone;
+
+    return clone;
   }
 
   update(target, text) {

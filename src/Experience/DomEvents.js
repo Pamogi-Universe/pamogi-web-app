@@ -111,8 +111,14 @@ export default class DomEvents {
     document.querySelector(".info__title span").textContent = point.title || "Enter your title";
     document.querySelector(".info__description").textContent = point.description || "Enter your description";
 
-    if (point.title && this.__experience.world.objects.current.userData.name === "waterfall") {
-      this.__experience.world.text.update(this.__experience.world.objects.current, point.title)
+    if (point.title) {
+      switch (this.__experience.world.objects.current.userData.name) {
+        case "waterfall":
+        case "river2":
+          this.__experience.world.text.update(this.__experience.world.objects.current, point.title)
+          break;
+        default:
+      }
     }
 
     this.__experience.points.instance.map(val => {

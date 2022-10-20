@@ -82,7 +82,12 @@ export default class World {
         }
 
         if (object.userData.name === "waterfall") {
-          this.text.clone("Write something", object);
+          const clone = this.text.clone("Write something", object);
+          clone.position.set(1, -0.8, 2);
+        } else if (object.userData.name === "river2") {
+          const clone = this.text.clone("Write something", object);
+          clone.position.set(0, 0.05, 0);
+          clone.rotation.set(clone.rotation.x, Math.PI / 2, 0)
         }
 
         if (position) {
