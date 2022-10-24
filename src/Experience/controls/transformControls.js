@@ -26,7 +26,6 @@ export default class TransformControl {
   }
 
   toggleYAxis() {
-    console.log(this.__experience.world.objects.current)
     if (this.__experience.world.objects.current.userData.isFloating) {
       this.controls.showY = true;
     } else {

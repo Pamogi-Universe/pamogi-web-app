@@ -36,10 +36,10 @@ export default class Experience {
     this.resources = new Resources(sources);
     this.camera = new Camera();
     this.renderer = new Renderer();
+    this.debug = new Debug();
     this.world = new World();
     this.composer = new Composer();
     this.raycaster = new Raycaster();
-    this.debug = new Debug();
     this.sizes.on("resize", () => this.resize());
     this.time.on("tick", () => this.update());
     this.domEvents = new DomEvents();

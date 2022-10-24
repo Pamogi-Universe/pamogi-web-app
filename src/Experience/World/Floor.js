@@ -15,7 +15,7 @@ export default class Floor {
     const gltfLoader = new GLTFLoader();
     gltfLoader.load("/models/Continent.glb", (gltf) => {
       this.instance = gltf.scene.children[0];
-      this.instance.receiveShadow
+      this.instance.receiveShadow;
 
       scene.add(this.instance)
     })

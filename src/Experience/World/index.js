@@ -6,14 +6,14 @@ import Floor from "./Floor";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import random from "../utils/randomKey";
 import Text from './Text';
-// import GridHelper from '../helpers/GridHelper';
+import GridHelper from '../helpers/GridHelper';
 
 export default class World {
   constructor() {
     // Setup
     this.__experience = new Experience();
     this.helpers = {
-      // gridHelper: new GridHelper(10, 10)
+      gridHelper: new GridHelper(200, 200 * 4)
     }
     this.floor = new Floor();
     this.globe = new THREE.Group();
