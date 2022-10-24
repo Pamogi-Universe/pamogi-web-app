@@ -1,12 +1,5 @@
 const objects = [
   {
-    name: "TreeSingle",
-    url: "/img/TreeSingle.png",
-    model: "/models/TreeSingle.glb",
-    title: "",
-    description: "",
-  },
-  {
     name: "Waterfall",
     url: "/img/Waterfall.png",
     model: "/models/Waterfall.glb",
@@ -23,7 +16,9 @@ const objects = [
   {
     name: "River2",
     url: "/img/River2.png",
-    model: "/models/River2.glb"
+    model: "/models/River2.glb",
+    title: "River",
+    description: "Steps, subtopics"
   },
   // {
   //   name: "River3",
@@ -81,7 +76,9 @@ const objects = [
   {
     name: "Bush1",
     url: "/img/Bush1.png",
-    model: "/models/Bush1.glb"
+    model: "/models/Bush1.glb",
+    title: "Decoration",
+    description: "Beautify your world",
   },
   {
     name: "Bush2",
