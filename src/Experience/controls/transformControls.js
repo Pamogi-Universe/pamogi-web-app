@@ -25,19 +25,21 @@ export default class TransformControl {
     this.__experience.scene.add(this.controls);
   }
 
+  toggleYAxis() {
+    console.log(this.__experience.world.objects.current)
+    if (this.__experience.world.objects.current.userData.isFloating) {
+      this.controls.showY = true;
+    } else {
+      if (this.controls.mode === "translate") this.controls.showY = false;
+      else this.controls.showY = true;
+    }
+  }
+
   // set control on an element
   addElements(element) {
     this.controls.attach(element);
 
-    switch (element.userData.name) {
-      case "cloud":
-      case "lighting":
-      case "sunray":
-        this.controls.showY = true;
-        break;
-      default:
-        this.controls.showY = false;
-    }
+    this.toggleYAxis();
   }
 
   detach() {
@@ -73,10 +75,12 @@ export default class TransformControl {
 
             case 'KeyT': // T
               this.controls.setMode('translate');
+              this.toggleYAxis();
               break;
 
             case 'KeyR': // R
               this.controls.setMode('rotate');
+              this.toggleYAxis();
               break;
 
             case 'KeyF': // F
@@ -92,9 +96,10 @@ export default class TransformControl {
               }
               break;
 
-            // case 'KeyS': // S
-            //   this.controls.setMode('scale');
-            //   break;
+            case 'KeyS': // S
+              this.controls.setMode('scale');
+              this.toggleYAxis();
+              break;
 
             case 'Equal':
             case 'NumpadAdd': // +, =, num+

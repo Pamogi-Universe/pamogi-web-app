@@ -41,6 +41,17 @@ export default class World {
   pushToObject(key, value) {
     this.objects[key] = value;
     value.userData.key = key;
+
+    switch (value.userData.name) {
+      case "cloud":
+      case "lighting":
+      case "sunray":
+        value.userData.isFloating = true;
+        break;
+      default:
+        value.userData.isFloating = false;
+    }
+
     this.objects.meshes.push(value);
   }
 
@@ -86,7 +97,7 @@ export default class World {
           clone.position.set(1, -0.8, 2);
         } else if (object.userData.name === "river2") {
           const clone = this.text.clone("Write something", object);
-          clone.position.set(0, 0.05, 0);
+          clone.position.set(0, 0.02, 0);
           clone.rotation.set(clone.rotation.x, Math.PI / 2, 0)
         }
 
@@ -122,10 +133,10 @@ export default class World {
       currentState: 0
     })
 
+    this.pushToObject(randomID, obj);
+    this.setCurrentElement(obj);
     if (!this.__experience.viewOnly) this.transformControl.addElements(obj);
     this.outlinePass.setCurrentElement(obj);
-    this.pushToObject(randomID, obj);
-    this.setCurrentElement(obj)
     this.__experience.points.triggerClick(".point-" + obj.userData.key)
   }
 
