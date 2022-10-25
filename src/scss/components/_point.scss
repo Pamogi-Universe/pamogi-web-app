@@ -41,6 +41,7 @@
   }
 
   &[data-title]:not([data-title=""]) {
+
     & .text,
     &::after {
       content: attr(data-title);
@@ -54,5 +55,9 @@
   &:hover .text,
   &:hover::after {
     opacity: 1;
+  }
+
+  &:is([class*=waterfall], [class*=river]) {
+    display: none;
   }
 }

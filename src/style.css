@@ -353,6 +353,8 @@ body.view-only .info__modal {
     opacity: 0; }
   .point:hover .text, .point:hover::after {
     opacity: 1; }
+  .point:is([class*=waterfall], [class*=river]) {
+    display: none; }
 
 #text-editor:checked + .text__editor::after {
   position: absolute;
