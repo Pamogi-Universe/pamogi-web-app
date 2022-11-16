@@ -55,7 +55,11 @@ export default class DomEvents {
 
           if (elementMouseIsOver === this.__experience.canvas) {
             if (!counter)
-              this.__experience.world.loadModal(objects[id].name, objects[id].model, null, null, objects[id].states, id)
+            {
+              console.log(objects[id].title)
+              this.__experience.world.loadModal(objects[id].name, objects[id].model, null, null, objects[id].states, objects[id].tag, id)
+            }
+              
             counter++
           }
         }
@@ -121,6 +125,17 @@ export default class DomEvents {
       }
     }
 
+    if (this.__experience.world.objects.current.userData.tag){
+      switch(this.__experience.world.objects.current.userData.tag){
+        case "Vegetation":
+          var score = 0
+          if(point.title.trim().length > 0){++score}
+          if(point.description.trim().length > 0 ){++score}
+          this.toggleModelState(score)
+          break;
+      }
+    }
+
     this.__experience.points.instance.map(val => {
       if (val.id === point.id) {
         val.title = point.title;
@@ -137,8 +152,9 @@ export default class DomEvents {
   toggleModelState(id) {
     const point = this.__experience.points.current;
     const objID = this.__experience.world.objects.current.userData.id;
+    const objTag = this.__experience.world.objects.current.userData.tag;
     console.log(this.__experience.world.objects.current);
     this.__experience.world.disposeCurrentModel()
-    this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objID)
+    this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objTag, objID)
   }
 }

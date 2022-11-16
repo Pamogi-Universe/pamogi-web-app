@@ -46,7 +46,8 @@ const objects = [
     model: "/models/TreeSproutSingle.glb",
     title: "Vegetation",
     description: "Tasks",
-    states: ["TreeSproutSingle", "TreeSingle", "TreeFruitedSingle"]
+    states: ["TreeSproutSingle", "TreeSingle", "TreeFruitedSingle"],
+    tag: "Vegetation"
   },
   {
     name: "TreeSproutGroup",
@@ -54,7 +55,8 @@ const objects = [
     model: "/models/TreeSproutGroup.glb",
     title: "",
     description: "",
-    states: ["TreeSproutGroup", "TreeGroup", "TreeFruitedGroup"]
+    states: ["TreeSproutGroup", "TreeGroup", "TreeFruitedGroup"],
+    tag: "Vegetation"
   },
   // {
   //   name: "Tree1",

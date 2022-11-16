@@ -78,13 +78,14 @@ export default class World {
   update() { }
 
   // loading a model into the scene
-  loadModal(name, url, position, userData, states, id) {
+  loadModal(name, url, position, userData, states, tag, id) {
     this.__experience.history.push();
     if (!this.objects[name]) {
       this.gltfLoader.load(url, (gltf) => {
         // load 3D model
         const object = gltf.scene.children[0];
         object.userData.name = object.userData.name.toLowerCase();
+        object.userData.tag = tag;
         if (object) object.userData.id = id;
 
         if (this.__experience.raycaster.currentIntersect?.object.name === "Continent") {
