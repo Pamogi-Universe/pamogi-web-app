@@ -46,7 +46,7 @@ const objects = [
     model: "/models/TreeSproutGroup.glb",
     title: "Vegetation",
     description: "Tasks",
-    states: ["TreeSproutGroup", "TreeSproutEnergy", "TreeFruitedGroup"],
+    states: ["TreeSproutGroup", "TreeSproutEnergy", "MiddleSizeTrees" , "TreeGroup", "TreeFruitedGroup"],
     tag: "Vegetation"
   },
   // {
