@@ -6,7 +6,10 @@ import Floor from "./Floor";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import random from "../utils/randomKey";
 import Text from './Text';
+import AnimationComponent from "./AnimationComponent";
 import GridHelper from '../helpers/GridHelper';
+import { Clock } from 'three';
+import Time from '../utils/Time';
 
 export default class World {
   constructor() {
@@ -19,6 +22,7 @@ export default class World {
     this.globe = new THREE.Group();
     this.gltfLoader = new GLTFLoader();
     this.objects = { meshes: [], arr: [] };
+    this.animationComponents = new Map();
     this.loaded = false;
     this.render();
   }
@@ -28,6 +32,7 @@ export default class World {
   render() {
     this.__experience.resources.on("ready", () => {
       this.loaded = true;
+      this.ObjectNr = 0;
       this.raycaster = this.__experience.raycaster.instance;
       this.outlinePass = this.__experience.composer;
       this.environment = new Environment();
@@ -75,7 +80,12 @@ export default class World {
     this.objects.current = null;
   }
 
-  update() { }
+  update()
+  {
+    this.animationComponents.forEach(element => {
+      element.update();
+    });
+  }
 
   // loading a model into the scene
   loadModal(name, url, position, userData, states, tag, id) {
@@ -86,6 +96,7 @@ export default class World {
         const object = gltf.scene.children[0];
         object.userData.name = object.userData.name.toLowerCase();
         object.userData.tag = tag;
+        if(gltf.animations.length > 0) this.animationComponents.set(this.ObjectNr,new AnimationComponent(gltf));
         if (object) object.userData.id = id;
 
         if (this.__experience.raycaster.currentIntersect?.object.name === "Continent") {
@@ -94,7 +105,7 @@ export default class World {
         }
 
         if (object.userData.name === "waterfall") {
-          const clone = this.text.clone("Write something", object);
+          const clone = this.text.clone("Changed default text as a test", object);
           clone.position.set(1, -0.8, 2);
         } else if (object.userData.name === "river2") {
           const clone = this.text.clone("Write something", object);
@@ -104,15 +115,17 @@ export default class World {
 
         if (position) {
           object.position.set(position.x, object.position.y, position.z)
-        }
+        }    
 
         this.__experience.scene.add(object);
+        ++this.ObjectNr;
 
         // create point on the model
         this.addFocusToElement(name, object, { ...userData, states })
       })
     } else {
       // clone a 3D model
+      console.log("Cloning model");
       const clone = this.objects[name].clone();
       clone.position.set(0, 0, 0);
       this.__experience.scene.add(clone)
@@ -143,7 +156,7 @@ export default class World {
 
   setCurrentElement(val) {
     this.objects.meshes.forEach(val => val.isCurrent = false);
-    val.isCurrent = true;
+    if(val != null) val.isCurrent = true;
     this.objects.meshes.filter(val => val.isCurrent)
     this.objects.current = this.objects.meshes.filter(val => val.isCurrent)[0];
   }

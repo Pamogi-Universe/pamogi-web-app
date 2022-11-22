@@ -32,6 +32,7 @@ export default class Experience {
     this.points = new Points();
     this.sizes = new Sizes();
     this.time = new Time();
+    this.clock = new THREE.Clock();
     this.scene = new THREE.Scene();
     this.resources = new Resources(sources);
     this.camera = new Camera();
@@ -79,5 +80,6 @@ export default class Experience {
     this.raycaster.update();
     this.points.update(this.camera.instance, this.sizes);
     this.composer.update();
+    this.world.update();
   }
 }

@@ -47,9 +47,12 @@ export default class Raycaster {
             if (!this.viewOnly) {
               this.__experience.world.transformControl?.addElements(current);
             }
-            this.__experience.world.setCurrentElement(current);
-            this.__experience.composer.setCurrentElement(current);
-            this.__experience.points.triggerClick(".point-" + current.userData.key)
+            if(current)
+            {
+              this.__experience.world.setCurrentElement(current);
+              this.__experience.composer.setCurrentElement(current);
+              this.__experience.points.triggerClick(".point-" + current.userData.key)
+            }
           }
         })
       }

@@ -41,21 +41,12 @@ const objects = [
   //   model: "/models/River6.glb"
   // },
   {
-    name: "TreeSproutSingle",
-    url: "/img/TreeSproutSingle.png",
-    model: "/models/TreeSproutSingle.glb",
-    title: "Vegetation",
-    description: "Tasks",
-    states: ["TreeSproutSingle", "TreeSingle", "TreeFruitedSingle"],
-    tag: "Vegetation"
-  },
-  {
     name: "TreeSproutGroup",
     url: "/img/TreeSproutGroup.png",
     model: "/models/TreeSproutGroup.glb",
-    title: "",
-    description: "",
-    states: ["TreeSproutGroup", "TreeGroup", "TreeFruitedGroup"],
+    title: "Vegetation",
+    description: "Tasks",
+    states: ["TreeSproutGroup", "TreeSproutEnergy", "TreeFruitedGroup"],
     tag: "Vegetation"
   },
   // {
