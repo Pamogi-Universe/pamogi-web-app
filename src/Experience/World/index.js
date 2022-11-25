@@ -5,7 +5,7 @@ import Environment from "./Environment";
 import Floor from "./Floor";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import random from "../utils/randomKey";
-import Text from './Text';
+import Text, { BillboardText } from './Text';
 import AnimationComponent from "./AnimationComponent";
 import GridHelper from '../helpers/GridHelper';
 import { Clock } from 'three';
@@ -38,7 +38,7 @@ export default class World {
       this.environment = new Environment();
       this.transformControl = new TransformControl();
       this.text = new Text();
-      this.moneyText = new Text("orange");
+      this.moneyText = new BillboardText("orange");
       this.text.initiate();
       this.moneyText.initiate();
     })

@@ -56,7 +56,6 @@ export default class DomEvents {
           if (elementMouseIsOver === this.__experience.canvas) {
             if (!counter)
             {
-              console.log(objects[id].title)
               this.__experience.world.loadModal(objects[id].name, objects[id].model, null, null, objects[id].states, objects[id].tag, id)
             }
               
@@ -153,7 +152,6 @@ export default class DomEvents {
     const point = this.__experience.points.current;
     const objID = this.__experience.world.objects.current.userData.id;
     const objTag = this.__experience.world.objects.current.userData.tag;
-    console.log(this.__experience.world.objects.current);
     this.__experience.world.disposeCurrentModel()
     this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objTag, objID)
   }

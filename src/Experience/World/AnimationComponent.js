@@ -32,7 +32,6 @@ export default class AnimationComponent
         const clip = THREE.AnimationClip.findByName(this.animationClips,clipName);
         if(clip)
         {
-            console.log("Play Animation");
             const action = this.mixer.clipAction(clip);
             action.play();
         }
@@ -40,7 +39,6 @@ export default class AnimationComponent
 
     PlayDefaultAnim()
     {
-        console.log("Play Animation");
         const action = this.mixer.clipAction(this.animationClips[0]);
         action.timeScale = 0.1;
         action.play();
