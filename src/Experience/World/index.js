@@ -38,7 +38,9 @@ export default class World {
       this.environment = new Environment();
       this.transformControl = new TransformControl();
       this.text = new Text();
+      this.moneyText = new Text("orange");
       this.text.initiate();
+      this.moneyText.initiate();
     })
   }
 
@@ -99,6 +101,10 @@ export default class World {
         if(gltf.animations.length > 0) this.animationComponents.set(this.ObjectNr,new AnimationComponent(gltf));
         if (object) object.userData.id = id;
 
+        let box3 = new THREE.Box3().setFromObject( object );
+        let meshDimensions = new THREE.Vector3();
+        box3.getSize(meshDimensions);
+
         if (this.__experience.raycaster.currentIntersect?.object.name === "Continent") {
           const center = this.__experience.raycaster.currentIntersect.point;
           object.position.set(center.x, object.position.y, center.z)
@@ -111,6 +117,11 @@ export default class World {
           const clone = this.text.clone("Write something", object);
           clone.position.set(0, 0.02, 0);
           clone.rotation.set(clone.rotation.x, Math.PI / 2, 0)
+        }
+        else if (object.userData.tag === "Vegetation") {
+          const clone = this.moneyText.clone("$", object);
+          clone.position.set(0, meshDimensions.y, 0)
+          clone.rotation.set(-Math.PI*2,0,0);
         }
 
         if (position) {

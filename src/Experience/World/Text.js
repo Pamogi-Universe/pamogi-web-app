@@ -2,9 +2,11 @@ import * as THREE from 'three';
 import Experience from '..';
 
 export default class Text {
-  constructor() {
+  constructor(textColour) {
     this.__experience = new Experience();
-    this.arr = []
+    this.arr = [];
+    if(textColour) this.colour = textColour;
+    else this.colour = "white";
   }
 
   canvas(text) {
@@ -20,7 +22,7 @@ export default class Text {
 
     canvas.style.width = canvas.width + 'px';
     ctx.font = family;
-    ctx.fillStyle = "white";
+    ctx.fillStyle = this.colour;
     ctx.fillText(text, 10, 30);
 
     return { canvas, ctx }
