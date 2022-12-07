@@ -26,11 +26,14 @@ export default class TransformControl {
   }
 
   toggleYAxis() {
-    if (this.__experience.world.objects.current.userData.isFloating) {
-      this.controls.showY = true;
-    } else {
-      if (this.controls.mode === "translate") this.controls.showY = false;
-      else this.controls.showY = true;
+    if(this.__experience.world.objects.current) 
+    {
+      if (this.__experience.world.objects.current.userData.isFloating) {
+        this.controls.showY = true;
+      } else {
+        if (this.controls.mode === "translate") this.controls.showY = false;
+        else this.controls.showY = true;
+      }
     }
   }
 

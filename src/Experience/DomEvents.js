@@ -18,6 +18,7 @@ export default class DomEvents {
   }
 
   toggleView(e, triggered) {
+    console.log("toggling view")
     this.viewOnly = e.target.checked;
     document.body.classList.toggle("view-only");
     this.__experience.world.transformControl.controls.detach()
@@ -28,6 +29,21 @@ export default class DomEvents {
       textEditor.target.checked = !e.target.checked
       this.toggleDetail(textEditor)
     }
+  }
+
+  OpenObjectEdit()
+  {
+    this.viewOnly = false;
+    document.body.classList.toggle("view-only");
+    this.__experience.world.transformControl.controls.detach()
+    this.__experience.world.transformControl.toggle(this.viewOnly)
+    const textEditor = {target: document.querySelector("#text-editor")}
+    textEditor.target.checked = false
+    this.toggleDetail(textEditor)
+    const visualizer = { target: document.querySelector("#visualizer") }
+    visualizer.target.checked = true;
+    const modelInfo = {target: document.querySelector("#info-modal")}
+    modelInfo.target.checked = true;
   }
 
   renderObjects() {
@@ -46,27 +62,28 @@ export default class DomEvents {
   }
 
   dragEvent() {
-    let counter = 0;
+    let isLoading = false;
     document.querySelectorAll(".object__img").forEach((element, id) => {
       element.addEventListener("dragend", (e) => {
-        const mouseMove = (e) => {
+        const mouseMove = async (e) => {
           const x = e.clientX, y = e.clientY,
             elementMouseIsOver = document.elementFromPoint(x, y);
 
           if (elementMouseIsOver === this.__experience.canvas) {
-            if (!counter)
+            if (!isLoading)
             {
-              this.__experience.world.loadModal(objects[id].name, objects[id].model, null, null, objects[id].states, objects[id].tag, id)
+               isLoading = true;
+               await this.__experience.world.loadModal(objects[id].name, objects[id].model, null, null, objects[id].states, objects[id].tag, id);
+               this.OpenObjectEdit();
+               document.getElementById("info-modal").dispatchEvent(new Event("change"));
             }
-              
-            counter++
           }
         }
 
         window.addEventListener("mousemove", mouseMove);
         setTimeout(() => {
           window.removeEventListener("mousemove", mouseMove);
-          counter = 0;
+          isLoading = false;
         }, 50);
       })
     });
@@ -88,25 +105,24 @@ export default class DomEvents {
 
   toggleDetail(e, triggered) {
     this.__experience.points.toggleDetail();
-
+    const point = this.__experience.points.current;
+    document.querySelector(".info__input.title").value = point?.title;
+    document.querySelector(".info__input.description").value = point?.description;
     if (triggered) {
       const visualizer = { target: document.querySelector("#visualizer") }
-      visualizer.target.checked = !e.target.checked
+      visualizer.target.checked = triggered
       this.toggleView(visualizer)
     }
   }
 
   openEditModal(e) {
-    if (e.target.checked) {
       const point = this.__experience.points.current;
       document.querySelector(".info__input.title").value = point?.title;
       document.querySelector(".info__input.description").value = point?.description;
-    }
   }
 
   saveDetails() {
     const point = this.__experience.points.current;
-
     point.title = document.querySelector(".info__input.title").value;
     point.description = document.querySelector(".info__input.description").value
     document.querySelector(point.element).setAttribute("data-title", point.title);
@@ -117,7 +133,6 @@ export default class DomEvents {
     if (point.title) {
       switch (this.__experience.world.objects.current.userData.name) {
         case "waterfall":
-        case "river2":
           this.__experience.world.text.update(this.__experience.world.objects.current, point.title)
           break;
         default:
@@ -132,6 +147,9 @@ export default class DomEvents {
           if(point.description.trim().length > 0 ){++score}
           this.toggleModelState(score)
           break;
+
+        case "River":
+          this.__experience.world.text.update(this.__experience.world.objects.current, point.title)
       }
     }
 
@@ -153,6 +171,6 @@ export default class DomEvents {
     const objID = this.__experience.world.objects.current.userData.id;
     const objTag = this.__experience.world.objects.current.userData.tag;
     this.__experience.world.disposeCurrentModel()
-    this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objTag, objID)
+    this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objTag, objID,point.title)
   }
 }

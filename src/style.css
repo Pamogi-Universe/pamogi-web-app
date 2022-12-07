@@ -328,7 +328,8 @@ body.view-only .info__modal {
   background: rgba(0, 0, 0, 0.4); }
 
 .point {
-  inset: 50% auto auto 50%; }
+  inset: 50% auto auto 50%; 
+  display: none}
   .point .label, .point::before {
     content: "";
     inset: -0.8rem auto auto -0.8rem;
