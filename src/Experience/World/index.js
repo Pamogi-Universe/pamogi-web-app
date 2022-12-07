@@ -5,7 +5,7 @@ import Environment from "./Environment";
 import Floor from "./Floor";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import random from "../utils/randomKey";
-import Text from './Text';
+import Text, { BillboardText } from './Text';
 import AnimationComponent from "./AnimationComponent";
 import GridHelper from '../helpers/GridHelper';
 import { Clock } from 'three';
@@ -38,7 +38,7 @@ export default class World {
       this.environment = new Environment();
       this.transformControl = new TransformControl();
       this.text = new Text();
-      this.moneyText = new Text("orange");
+      this.moneyText = new BillboardText("white");
       this.text.initiate();
       this.moneyText.initiate();
     })
@@ -90,12 +90,22 @@ export default class World {
   }
 
   // loading a model into the scene
-  loadModal(name, url, position, userData, states, tag, id) {
+   async loadModal(name, url, position, userData, states, tag, id, currentText) {
     this.__experience.history.push();
     if (!this.objects[name]) {
-      this.gltfLoader.load(url, (gltf) => {
+    var gltf =  await this.gltfLoader.loadAsync(url)
         // load 3D model
         const object = gltf.scene.children[0];
+
+        gltf.scene.traverse(function(child)
+        {
+          if(child.isMesh)
+          {
+            child.castShadow = true;
+            child.receiveShadow = true;
+          }
+        })
+
         object.userData.name = object.userData.name.toLowerCase();
         object.userData.tag = tag;
         if(gltf.animations.length > 0) this.animationComponents.set(this.ObjectNr,new AnimationComponent(gltf));
@@ -110,11 +120,18 @@ export default class World {
           object.position.set(center.x, object.position.y, center.z)
         }
 
+        var defaultString = "Write something"
+
+        if(currentText)
+        {
+          defaultString = currentText;
+        }
+
         if (object.userData.name === "waterfall") {
-          const clone = this.text.clone("Changed default text as a test", object);
-          clone.position.set(1, -0.8, 2);
-        } else if (object.userData.name === "river2") {
-          const clone = this.text.clone("Write something", object);
+          const clone = this.text.clone(defaultString, object,meshDimensions.x);
+          clone.position.set(1.5, -0.8, 2);
+        } else if (object.userData.tag === "River") {
+          const clone = this.text.clone(defaultString, object,meshDimensions.z);
           clone.position.set(0, 0.02, 0);
           clone.rotation.set(clone.rotation.x, Math.PI / 2, 0)
         }
@@ -122,6 +139,36 @@ export default class World {
           const clone = this.moneyText.clone("$", object);
           clone.position.set(0, meshDimensions.y, 0)
           clone.rotation.set(-Math.PI*2,0,0);
+
+          const textClone = this.text.clone(defaultString,object,meshDimensions.z);
+          textClone.position.set(meshDimensions.x / 3,0.2,0)
+          textClone.rotation.set(-Math.PI / 2, Math.PI / 2, 0)
+        }
+
+        else if (object.userData.name === "cloud"){
+
+            let arr = this.__experience.world.objects.meshes;
+            let closestObj = arr[0]
+            console.log(closestObj);
+            arr.forEach(element => 
+              {
+                var distanceToElement = object.position.distanceToSquared(element.position);
+                var distanceToCurrentClosest = object.position.distanceToSquared(closestObj.position);
+                console.log(object.position);
+                console.log(distanceToElement);
+                console.log(distanceToCurrentClosest);
+                if(distanceToCurrentClosest > distanceToElement)
+                closestObj = element
+              })
+            const clone = this.text.clone(defaultString,object,meshDimensions.x);
+            clone.position.set(0, meshDimensions.y, 0)
+            clone.rotation.set(-Math.PI*2,0,0)
+  
+            let box3_closest = new THREE.Box3().setFromObject( closestObj );
+            let meshDimensions_closest = new THREE.Vector3();
+            box3_closest.getSize(meshDimensions_closest);
+  
+            object.position.set(closestObj.position.x,closestObj.position.y + meshDimensions.y + 1,closestObj.position.z)
         }
 
         if (position) {
@@ -133,7 +180,7 @@ export default class World {
 
         // create point on the model
         this.addFocusToElement(name, object, { ...userData, states })
-      })
+      
     } else {
       // clone a 3D model
       console.log("Cloning model");
@@ -169,7 +216,8 @@ export default class World {
     this.objects.meshes.forEach(val => val.isCurrent = false);
     if(val != null) val.isCurrent = true;
     this.objects.meshes.filter(val => val.isCurrent)
-    this.objects.current = this.objects.meshes.filter(val => val.isCurrent)[0];
+    //this.objects.current = this.objects.meshes.filter(val => val.isCurrent)[0];
+    this.objects.current = val;
   }
 
   removeCurrentElement() {

@@ -42,14 +42,13 @@ export default class Text {
 
   initiate() {
     const map = this.texture("Write something")
-    this.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 10, 10);
-
-
+    this.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 1, 1);
     this.mesh = new THREE.Mesh(
       this.geometry,
       new THREE.MeshBasicMaterial({
         map: map.texture,
-        side: THREE.DoubleSide
+        side: THREE.DoubleSide,
+        transparent: true,
       })
     );
     this.mesh.rotation.order = "YXZ"
@@ -57,7 +56,7 @@ export default class Text {
     this.mesh.rotation.x = - Math.PI / 2;
   }
 
-  clone(name, object) {
+  clone(name, object,meshWidth) {
     const map = this.texture(name);
     const clone = this.mesh.clone();
     clone.material = new THREE.MeshBasicMaterial({
@@ -65,7 +64,7 @@ export default class Text {
       side: THREE.DoubleSide,
       transparent: true
     });
-    clone.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 10, 10)
+    clone.geometry = new THREE.PlaneGeometry(meshWidth, 0.4, 1, 1)
     object.add(clone);
     object.text = clone;
 
@@ -75,6 +74,39 @@ export default class Text {
   update(target, text) {
     const map = this.__experience.world.text.texture(text);
     target.text.material.map = map.texture;
-    target.text.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 10, 10)
+    const currentWidth = target.text.geometry.parameters.width;
+    target.text.geometry = new THREE.PlaneGeometry(currentWidth, 0.4, 1, 1)
   }
 }
+
+export  class BillboardText extends Text {
+  initiate() {
+    const map = this.texture("Write something")
+    this.geometry = new THREE.PlaneGeometry(map.canvas.width / 150, 0.4, 1, 1);
+
+
+    this.mesh = new THREE.Sprite(
+      new THREE.SpriteMaterial({
+        map: map.texture,
+        transparent: true
+      })
+    );
+    this.mesh.rotation.order = "YXZ"
+    this.mesh.rotation.y = - Math.PI * 1.8;
+    this.mesh.rotation.x = - Math.PI / 2;
+  }
+
+  clone(name, object,meshWidth) {
+    const map = this.texture(name);
+    const clone = this.mesh.clone();
+    clone.material = new THREE.SpriteMaterial({
+      map: map.texture,
+      transparent: true
+    });
+    clone.geometry = new THREE.PlaneGeometry(meshWidth, 0.4, 1, 1)
+    object.add(clone);
+    object.text = clone;
+
+    return clone;
+  }
+} 

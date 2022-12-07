@@ -20,6 +20,22 @@ export default class Raycaster {
       this.mouse.x = event.clientX / this.__experience.sizes.width * 2 - 1
       this.mouse.y = - (event.clientY / this.__experience.sizes.height) * 2 + 1
     })
+
+    this.__experience.canvas.addEventListener('click', () => {
+      this.selectObject().then(value => 
+        {
+          if (!this.viewOnly) {
+            this.__experience.world.transformControl?.addElements(value);
+          }
+          if(value)
+          {
+            console.log("Selecting element");
+            this.__experience.world.setCurrentElement(value);
+            this.__experience.composer.setCurrentElement(value);
+            this.__experience.points.triggerClick(".point-" + value.userData.key)
+          }
+        });
+    })
   }
 
   // update on every frame
@@ -36,28 +52,28 @@ export default class Raycaster {
 
       if (intersects.length) {
         this.currentIntersect = intersects[0];
-
-        this.__experience.canvas.addEventListener('click', () => {
-          if (this.currentIntersect && this.currentIntersect.object.name !== "Continent") {
-            const current = this.__experience.world.objects.meshes.filter((val, id) => {
-              const intersectID = this.currentIntersect.object.parent.type === "Scene" ? this.currentIntersect.object.uuid : this.currentIntersect.object.parent.uuid
-              return intersectID === val.uuid
-            })[0];
-
-            if (!this.viewOnly) {
-              this.__experience.world.transformControl?.addElements(current);
-            }
-            if(current)
-            {
-              this.__experience.world.setCurrentElement(current);
-              this.__experience.composer.setCurrentElement(current);
-              this.__experience.points.triggerClick(".point-" + current.userData.key)
-            }
-          }
-        })
       }
       else {
         this.currentIntersect = null
+      }
+    }
+  }
+
+  async selectObject()
+  {
+    if (this.currentIntersect && this.currentIntersect.object.name !== "Continent") {
+      var hasFoundSceneParent = false;
+      var currentParent = this.currentIntersect.object.parent;
+      while(hasFoundSceneParent === false)
+      {
+        if(currentParent.parent.type === "Scene")
+        {
+          return currentParent;
+        }
+        else
+        {
+          currentParent = currentParent.parent;
+        }
       }
     }
   }
