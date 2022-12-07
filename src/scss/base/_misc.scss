@@ -1,0 +1,11 @@
+/* stats */
+.stat {
+  inset-inline: auto 27.5rem !important;
+
+  @include view-only;
+}
+
+// gui
+.lil-gui {
+  @include view-only;
+}

@@ -1,0 +1,134 @@
+%info-border {
+  margin-block-end: rem(15);
+  padding-block-end: rem(15);
+  border-block-end: rem(1) solid $clr-border;
+}
+
+#info-toggler {
+  @extend %d-none;
+}
+
+.info {
+  &__wrapper {
+    --clr: rgb(202, 201, 201);
+    @include position(false, auto rem(10) rem(10) auto, $position: fixed);
+    width: rem(300);
+    padding: rem(20);
+    color: $white;
+    background-color: $clr-base;
+    border: rem(1) solid $clr-border;
+    border-radius: rem(10);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(calc(100% + #{rem(10)}));
+    transition: all 0.5s;
+    isolation: isolate;
+  }
+
+  &__toggle {
+    &:checked~.info__wrapper {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+  }
+
+  &__opener {
+    --img: url(../static/svg/info.svg);
+    --mask-size: #{rem(20)};
+    @extend .object__opener;
+    @include position(false, auto rem(10) rem(10) auto);
+
+    @include view-only {
+      @extend %d-block;
+    }
+
+    &:hover {
+
+      &::before,
+      &::after {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
+  &__title {
+    @extend %fw-600;
+    @extend %info-border;
+  }
+
+  &__description {
+    font-size: rem(14);
+    @extend %fw-200;
+    line-height: 1.6;
+    @extend %info-border;
+  }
+
+  &__btn {
+    @extend .shortcut__key;
+    padding: rem(8) rem(20);
+    font-size: rem(14);
+    @extend %pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      color: $clr-base;
+      background-color: var(--clr);
+    }
+  }
+
+  &__footer {
+    @include flex($justify-content: flex-end, $gap: rem(10))
+  }
+
+  &__toggle {
+    @extend .shortcut__toggle;
+  }
+
+  &__modal {
+    @extend .shortcut__modal;
+
+    @include view-only {
+      display: flex;
+    }
+
+    &-overlay {
+      @extend .shortcut__modal-overlay;
+    }
+
+    &-wrapper {
+      @extend .shortcut__modal-wrapper;
+    }
+  }
+
+  &__heading {
+    @extend .shortcut__heading;
+  }
+
+  &__closer {
+    @extend .shortcut__closer;
+  }
+
+  &__input {
+    @extend %d-block;
+    width: 100%;
+    padding: rem(8) rem(10);
+    color: $dark-text;
+    background: transparent;
+    border: rem(1) solid $clr-border;
+    border-radius: rem(3);
+    resize: none;
+
+    &:first-child {
+      margin-bottom: rem(20);
+    }
+  }
+
+  &__submit {
+    @extend .info__btn;
+    @extend %d-block;
+    width: fit-content;
+    margin-block-start: rem(20);
+    margin-inline-start: auto;
+  }
+}

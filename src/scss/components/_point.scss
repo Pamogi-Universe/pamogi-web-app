@@ -1,0 +1,63 @@
+%typography {
+  font-size: rem(14);
+  @extend %fw-200;
+  color: $white;
+  background: rgba($black, 0.4);
+}
+
+.point {
+  @include position(false, 50% auto auto 50%);
+
+  .label,
+  &::before {
+    content: "";
+    @include position(false, rem(-8) auto auto rem(-8), null, rem(8), rem(8));
+    scale: 1;
+    @extend %typography;
+    line-height: rem(20);
+    @extend %text-center;
+    border: rem(2) solid $white;
+    @extend %round;
+    @extend %pointer;
+    transition: all 0.3s;
+  }
+
+  // &.away .label,
+  // &.away::before {
+  //   scale: 0;
+  // }
+
+  .text,
+  &::after {
+    @include position(false, rem(-10) auto auto rem(-10), null, rem(200));
+    padding: rem(10);
+    @extend %typography;
+    font-weight: 500;
+    line-height: 1.5;
+    border-radius: rem(4);
+    opacity: 1;
+    transition: all 0.3s;
+    // pointer-events: none;
+  }
+
+  &[data-title]:not([data-title=""]) {
+
+    & .text,
+    &::after {
+      content: attr(data-title);
+    }
+
+    &::before {
+      opacity: 0;
+    }
+  }
+
+  &:hover .text,
+  &:hover::after {
+    opacity: 1;
+  }
+
+  &:is([class*=waterfall], [class*=river]) {
+    display: none;
+  }
+}

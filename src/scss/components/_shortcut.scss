@@ -1,0 +1,107 @@
+.shortcut {
+  &__toggle {
+    @extend %d-none;
+  }
+
+  &__opener {
+    @include position(false, auto auto rem(10) rem(70), $position: fixed);
+    @include centralize;
+    @include square(50);
+    font-size: rem(20);
+    @extend %fw-200;
+    color: $white;
+    background-color: $black;
+    border: rem(1) solid $white;
+    @extend %round;
+    transition: all 0.2s;
+    @extend %pointer;
+
+    @include view-only;
+
+    &:hover {
+      font-size: rem(25);
+    }
+  }
+
+  &__modal {
+    --clr: #{$dark-text};
+    @include position(false, 0, 99999, $position: fixed);
+    @include flex;
+    color: var(--clr);
+    background-color: rgba($black, 0.452);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s;
+
+    &-overlay {
+      @include position(false, 0, $position: fixed);
+    }
+
+    &-wrapper {
+      width: Min(#{rem(500)}, 90%);
+      margin: auto;
+      padding: rem(20);
+      background-color: #3d3d3d;
+      border: rem(1) solid rgb(153, 153, 153);
+      border-radius: rem(10);
+      z-index: 1;
+      transform: translateY(-#{rem(20)});
+      transition: all 0.5s;
+    }
+
+    @include view-only;
+  }
+
+  &__toggle {
+    &:checked+.shortcut__modal {
+      opacity: 1;
+      visibility: visible;
+
+      .shortcut__modal-wrapper {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  &__heading {
+    @include flex(center);
+    margin-block-end: rem(20);
+    padding-block-end: rem(20);
+    border-block-end: rem(1) solid rgb(97, 97, 97);
+  }
+
+  &__closer {
+    @extend .object__closer;
+    background-image: url(../static/svg/close-white.svg);
+  }
+
+  &__item {
+    @include flex(center);
+  }
+
+  &__item {
+    &:not(:last-child) {
+      margin-block-end: rem(20);
+    }
+  }
+
+  &__key {
+    display: inline-block;
+    @extend %d-block;
+    min-width: rem(15);
+    padding: rem(5) rem(6);
+    line-height: 1;
+    @extend %text-uppercase;
+    @extend %text-center;
+    border: rem(1) solid var(--clr);
+    border-radius: rem(5);
+
+    &:first-child {
+      margin-left: auto;
+    }
+
+    &:not(:last-child) {
+      margin-inline-end: rem(5);
+    }
+  }
+}

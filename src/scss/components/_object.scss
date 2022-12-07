@@ -1,0 +1,121 @@
+.object {
+  &__toggle {
+    @extend %d-none;
+
+    &:checked~.object__wrapper {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+  }
+
+  &--abs {
+    --inset: #{rem(10)};
+    @include position(false, auto auto var(--inset) var(--inset), $position: fixed);
+  }
+
+  &__opener {
+    --img: url(../static/img/object.png);
+    --mask-size: contain;
+    @extend %d-block;
+    @include square(50);
+    @extend %pointer;
+
+    @include view-only;
+
+    &::before,
+    &::after {
+      @include position(true, 0);
+      transition: all 0.5s;
+      backface-visibility: visible;
+    }
+
+    &::before {
+      background-color: $black;
+      @extend %round;
+    }
+
+    &::after {
+      -webkit-mask-size: var(--mask-size);
+      mask-size: var(--mask-size);
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      mask-image: var(--img);
+      -webkit-mask-image: var(--img);
+      background-color: $white;
+    }
+
+    &:hover::after,
+    &:hover::before {
+      transform: rotateY(180deg);
+    }
+  }
+
+  &__wrapper {
+    --space: #{rem(10)};
+    --heading-height: #{rem(30)};
+    z-index: 1;
+    height: 87%;
+    width: rem(300);
+    transform: translateX(calc((-1 * (100% + var(--inset)))));
+    background-color: rgb(202, 202, 202);
+    border: rem(1) solid $black;
+    border-radius: var(--space);
+    padding: var(--space);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s;
+
+    @include view-only;
+  }
+
+  &__heading {
+    @include flex(flex-start);
+    margin-block-end: var(--space);
+    font-size: rem(25);
+    line-height: var(--heading-height);
+
+    &::after {
+      content: attr(data-limit);
+      font-size: rem(13);
+      @extend %fw-400;
+      line-height: 1;
+      margin: auto auto rem(7) rem(4);
+    }
+  }
+
+  &__closer {
+    order: 1;
+    @extend %d-block;
+    @include square(20);
+    background-image: url(../static/svg/close.svg);
+    background-size: cover;
+    margin-inline-start: auto;
+    @extend %pointer;
+  }
+
+  &__list {
+    height: calc(100% - (var(--space) + var(--heading-height) + 4px));
+    border-radius: var(--space);
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+
+  &__img {
+    @extend %d-block;
+    width: 100%;
+    border-radius: var(--space);
+    background-color: $clr-black-1;
+  }
+
+  &__item {
+    &:not(:last-child) {
+      margin-block-end: var(--space);
+    }
+  }
+}

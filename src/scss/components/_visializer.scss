@@ -1,0 +1,26 @@
+.visualizer {
+  @include position(null, rem(10) auto auto rem(10));
+  @extend %d-block;
+  @include square(30);
+  background-color: rgba($black, 0.55);
+  @extend %round;
+  @extend %pointer;
+
+  &::before {
+    @include position(true, 0);
+    background-image: url(../static/svg/eye.svg);
+    background-size: rem(15);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+#visualizer {
+  @extend %d-none;
+
+  &:checked+.visualizer::after {
+    @include position(true, 49% auto auto 21%, $width: 59%);
+    transform: rotate(-45deg);
+    border-top: rem(1) solid $white;
+  }
+}

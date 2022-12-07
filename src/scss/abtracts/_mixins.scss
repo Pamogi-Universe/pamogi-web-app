@@ -1,0 +1,65 @@
+@mixin breakpoint($breakpoint, $type: max) {
+  @if ($type ==min) {
+    @media only screen and (min-width: #{$breakpoint + px}) {
+      @content;
+    }
+  }
+
+  @else {
+    @media only screen and (max-width: #{$breakpoint + px}) {
+      @content;
+    }
+  }
+}
+
+@mixin picture($select: true) {
+  :is(img, svg) {
+    @content;
+
+    @if $select {
+      @extend %select-none;
+    }
+  }
+}
+
+@mixin square($size: 10) {
+  --square: #{rem($size)};
+  @extend %square;
+}
+
+@mixin position($pseudo: false, $inset: null, $index: null, $width: null, $height: null, $position: absolute) {
+  @if $pseudo {
+    content: "";
+  }
+  @if $position == absolute {
+    @extend %absolute;
+  }
+  @else if $position == fixed {
+    @extend %fixed;
+  }
+  inset: $inset;
+  z-index: $index;
+  width: $width;
+  height: $height;
+}
+
+@mixin flex( $align-item: null, $justify-content: null, $gap: null, $flex: true) {
+  @if $flex {
+    display: flex,
+  }
+  align-items: $align-item;
+  justify-content: $justify-content;
+  gap: $gap;
+}
+
+@mixin centralize {
+  display: grid;
+  place-content: center;
+}
+
+@mixin view-only {
+  body.view-only & {
+    @extend %d-none;
+    @content;
+  }
+}

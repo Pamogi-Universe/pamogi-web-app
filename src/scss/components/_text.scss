@@ -1,0 +1,43 @@
+#text-editor {
+  @extend %d-none;
+
+
+  &:checked {
+    &+.text__editor::after {
+      position: absolute;
+      content: "";
+      inset: 49% auto auto 21%;
+      width: 59%;
+      transform: rotate(-45deg);
+      border-top: 0.1rem solid #ffffff;
+    }
+
+    &~ {
+      .points {
+        @extend %d-none;
+      }
+      .info__opener {
+        @extend %d-none;
+      }
+      .info__wrapper {
+        @extend %d-none;
+      }
+    }
+  }
+}
+
+.text {
+  &__editor {
+    @extend .visualizer;
+
+    inset-inline-start: rem(50);
+
+    &:before {
+      content: "t";
+      line-height: var(--square);
+      @extend %text-center;
+      color: $white;
+      background: unset;
+    }
+  }
+}
