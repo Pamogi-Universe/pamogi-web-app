@@ -17,20 +17,20 @@ export default class TransformControl {
   setInstance() {
     this.controls = new TransformControls(this.__experience.camera.instance, this.__experience.canvas);
     this.controls.addEventListener('dragging-changed', (event) => {
-      // if (this.__experience.world.objects.current.position.y <= this.__experience.world.objects.current.scale.y / 2) {
-      //   this.__experience.world.objects.current.position.y = this.__experience.world.objects.current.scale.y / 2
-      // }
       this.__experience.camera.controls.enabled = !event.value
     });
     this.__experience.scene.add(this.controls);
   }
 
   toggleYAxis() {
-    if (this.__experience.world.objects.current.userData.isFloating) {
-      this.controls.showY = true;
-    } else {
-      if (this.controls.mode === "translate") this.controls.showY = false;
-      else this.controls.showY = true;
+    if(this.__experience.world.objects.current) 
+    {
+      if (this.__experience.world.objects.current.userData.isFloating) {
+        this.controls.showY = true;
+      } else {
+        if (this.controls.mode === "translate") this.controls.showY = false;
+        else this.controls.showY = true;
+      }
     }
   }
 

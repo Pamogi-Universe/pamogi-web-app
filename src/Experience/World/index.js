@@ -38,9 +38,9 @@ export default class World {
       this.environment = new Environment();
       this.transformControl = new TransformControl();
       this.text = new Text();
-      this.moneyText = new BillboardText("white");
+      this.billboardText = new BillboardText("white");
       this.text.initiate();
-      this.moneyText.initiate();
+      this.billboardText.initiate();
     })
   }
 
@@ -70,16 +70,29 @@ export default class World {
 
     this.transformControl.detach();
     this.__experience.scene.remove(object)
-
-    let index = null;
-    this.objects.meshes.forEach((val, id) => {
-      if (val.uuid === object.uuid) {
-        index = id;
-      }
-    });
-    delete this.objects[this.objects.meshes[index].userData.key];
-    this.objects.meshes.splice(index, 1);
-    this.objects.current = null;
+    if(object.name === "Cloud")
+    {
+      object.parent.remove(object);
+    }
+      let index = null;
+      this.objects.meshes.forEach((val, id) => {
+        if (val.uuid === object.uuid) {
+          index = id;
+          val.children.forEach((child,childId) => {
+            if(child.name === "Cloud")
+            {
+              let foundIndex = this.objects.meshes.findIndex(objToFind => {
+                return objToFind.uuid === child.uuid} )
+              delete this.objects[this.objects.meshes[foundIndex].userData.key]
+              this.objects.meshes.splice(foundIndex, 1);
+            }
+          })
+        }
+      });
+  
+      delete this.objects[this.objects.meshes[index].userData.key];
+      this.objects.meshes.splice(index, 1);
+      this.objects.current = null;
   }
 
   update()
@@ -90,7 +103,7 @@ export default class World {
   }
 
   // loading a model into the scene
-   async loadModal(name, url, position, userData, states, tag, id, currentText) {
+   async loadModal(name, url, position, userData, states, tag, id, currentText,commentClouds) {
     this.__experience.history.push();
     if (!this.objects[name]) {
     var gltf =  await this.gltfLoader.loadAsync(url)
@@ -136,7 +149,7 @@ export default class World {
           clone.rotation.set(clone.rotation.x, Math.PI / 2, 0)
         }
         else if (object.userData.tag === "Vegetation") {
-          const clone = this.moneyText.clone("$", object);
+          const clone = this.billboardText.clone("$", object);
           clone.position.set(0, meshDimensions.y, 0)
           clone.rotation.set(-Math.PI*2,0,0);
 
@@ -147,35 +160,46 @@ export default class World {
 
         else if (object.userData.name === "cloud"){
 
-            let arr = this.__experience.world.objects.meshes;
+            let arr = this.objects.meshes;
             let closestObj = arr[0]
-            console.log(closestObj);
+            console.log(arr);
             arr.forEach(element => 
               {
                 var distanceToElement = object.position.distanceToSquared(element.position);
                 var distanceToCurrentClosest = object.position.distanceToSquared(closestObj.position);
-                console.log(object.position);
-                console.log(distanceToElement);
-                console.log(distanceToCurrentClosest);
-                if(distanceToCurrentClosest > distanceToElement)
+                if(distanceToCurrentClosest > distanceToElement && element.name != "Cloud")
                 closestObj = element
               })
-            const clone = this.text.clone(defaultString,object,meshDimensions.x);
-            clone.position.set(0, meshDimensions.y, 0)
+            const clone = this.billboardText.clone(defaultString,object,meshDimensions.x);
+            clone.position.set(0, meshDimensions.y,0)
             clone.rotation.set(-Math.PI*2,0,0)
   
-            let box3_closest = new THREE.Box3().setFromObject( closestObj );
+            let box3_closest = new THREE.Box3().setFromObject( closestObj.children[0]);
             let meshDimensions_closest = new THREE.Vector3();
             box3_closest.getSize(meshDimensions_closest);
-  
-            object.position.set(closestObj.position.x,closestObj.position.y + meshDimensions.y + 1,closestObj.position.z)
+            
+            //Randomize position
+            closestObj.add(object);
+            let XSign =  (Math.round(Math.random()) ? 1 : -1)
+            let ZSign = (Math.round(Math.random()) ? 1 : -1)
+            object.position.set((Math.random() * meshDimensions_closest.x / 2) * XSign,3.5,(Math.random() * meshDimensions_closest.z / 2) * ZSign)
+        }
+
+        if(commentClouds)
+        {
+          commentClouds.forEach(commentCloud => {
+            object.add(commentCloud);
+          })
         }
 
         if (position) {
           object.position.set(position.x, object.position.y, position.z)
         }    
 
-        this.__experience.scene.add(object);
+        if(object.userData.name != "cloud")
+        {
+          this.__experience.scene.add(object);
+        }
         ++this.ObjectNr;
 
         // create point on the model
@@ -183,7 +207,6 @@ export default class World {
       
     } else {
       // clone a 3D model
-      console.log("Cloning model");
       const clone = this.objects[name].clone();
       clone.position.set(0, 0, 0);
       this.__experience.scene.add(clone)
@@ -206,6 +229,7 @@ export default class World {
     })
 
     this.pushToObject(randomID, obj);
+
     this.setCurrentElement(obj);
     if (!this.__experience.viewOnly) this.transformControl.addElements(obj);
     this.outlinePass.setCurrentElement(obj);

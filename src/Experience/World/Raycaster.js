@@ -29,7 +29,6 @@ export default class Raycaster {
           }
           if(value)
           {
-            console.log("Selecting element");
             this.__experience.world.setCurrentElement(value);
             this.__experience.composer.setCurrentElement(value);
             this.__experience.points.triggerClick(".point-" + value.userData.key)
@@ -62,6 +61,10 @@ export default class Raycaster {
   async selectObject()
   {
     if (this.currentIntersect && this.currentIntersect.object.name !== "Continent") {
+      if(this.currentIntersect.object.name === "Cloud")
+      {
+        return this.currentIntersect.object;
+      }
       var hasFoundSceneParent = false;
       var currentParent = this.currentIntersect.object.parent;
       while(hasFoundSceneParent === false)

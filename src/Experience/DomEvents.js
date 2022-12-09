@@ -18,7 +18,6 @@ export default class DomEvents {
   }
 
   toggleView(e, triggered) {
-    console.log("toggling view")
     this.viewOnly = e.target.checked;
     document.body.classList.toggle("view-only");
     this.__experience.world.transformControl.controls.detach()
@@ -131,15 +130,10 @@ export default class DomEvents {
     document.querySelector(".info__description").textContent = point.description || "Enter your description";
 
     if (point.title) {
-      switch (this.__experience.world.objects.current.userData.name) {
-        case "waterfall":
-          this.__experience.world.text.update(this.__experience.world.objects.current, point.title)
-          break;
-        default:
-      }
+      this.__experience.world.text.update(this.__experience.world.objects.current, point.title)
     }
 
-    if (this.__experience.world.objects.current.userData.tag){
+    /*if (this.__experience.world.objects.current.userData.tag){
       switch(this.__experience.world.objects.current.userData.tag){
         case "Vegetation":
           var score = 0
@@ -147,11 +141,8 @@ export default class DomEvents {
           if(point.description.trim().length > 0 ){++score}
           this.toggleModelState(score)
           break;
-
-        case "River":
-          this.__experience.world.text.update(this.__experience.world.objects.current, point.title)
       }
-    }
+    }*/
 
     this.__experience.points.instance.map(val => {
       if (val.id === point.id) {
@@ -167,10 +158,19 @@ export default class DomEvents {
   }
 
   toggleModelState(id) {
+    //"Detach" comments (clouds) and reattach them to the new object
     const point = this.__experience.points.current;
     const objID = this.__experience.world.objects.current.userData.id;
     const objTag = this.__experience.world.objects.current.userData.tag;
+    const commentClouds = []
+    this.__experience.world.objects.current.traverse(function(child)
+    {
+      if(child.name === "Cloud")
+      {
+        commentClouds.push(child);
+      }
+    })
     this.__experience.world.disposeCurrentModel()
-    this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objTag, objID,point.title)
+    this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objTag, objID,point.title,commentClouds)
   }
 }

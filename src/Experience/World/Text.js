@@ -5,6 +5,7 @@ export default class Text {
   constructor(textColour) {
     this.__experience = new Experience();
     this.arr = [];
+    this.__meshWidth = 0;
     if(textColour) this.colour = textColour;
     else this.colour = "white";
   }
@@ -67,6 +68,7 @@ export default class Text {
     clone.geometry = new THREE.PlaneGeometry(meshWidth, 0.4, 1, 1)
     object.add(clone);
     object.text = clone;
+    this.__meshWidth = meshWidth;
 
     return clone;
   }
@@ -74,7 +76,12 @@ export default class Text {
   update(target, text) {
     const map = this.__experience.world.text.texture(text);
     target.text.material.map = map.texture;
-    const currentWidth = target.text.geometry.parameters.width;
+    var currentWidth = this.__meshWidth;
+    while (currentWidth/text.length > 1)
+    {
+      currentWidth = currentWidth / 2;
+    }
+    console.log(currentWidth / text.length);
     target.text.geometry = new THREE.PlaneGeometry(currentWidth, 0.4, 1, 1)
   }
 }
@@ -106,6 +113,7 @@ export  class BillboardText extends Text {
     clone.geometry = new THREE.PlaneGeometry(meshWidth, 0.4, 1, 1)
     object.add(clone);
     object.text = clone;
+    this.__meshWidth = meshWidth;
 
     return clone;
   }
