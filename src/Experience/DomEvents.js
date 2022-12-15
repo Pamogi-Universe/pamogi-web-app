@@ -162,15 +162,16 @@ export default class DomEvents {
     const point = this.__experience.points.current;
     const objID = this.__experience.world.objects.current.userData.id;
     const objTag = this.__experience.world.objects.current.userData.tag;
-    const commentClouds = []
-    this.__experience.world.objects.current.traverse(function(child)
-    {
-      if(child.name === "Cloud")
+    const transferableChildren = []
+    const children = this.__experience.world.objects.current.children;
+    children.forEach(child => {
+      if(child.name === "Cloud" || child.userData.tag === "Vegetation")
       {
-        commentClouds.push(child);
+        transferableChildren.push(child);
       }
-    })
+    });
+
     this.__experience.world.disposeCurrentModel()
-    this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objTag, objID,point.title,commentClouds)
+    this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objTag, objID,point.title,transferableChildren)
   }
 }

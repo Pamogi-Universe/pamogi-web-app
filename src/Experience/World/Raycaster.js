@@ -35,6 +35,19 @@ export default class Raycaster {
           }
         });
     })
+
+    this.__experience.canvas.addEventListener('dblclick',()=>{
+      if (this.__experience.world.objects.current?.position) {
+        const { x, y, z } = this.__experience.world.objects.current.position;
+        gsap.to(this.__experience.camera.controls.target, {
+          duration: 1,
+          x,
+          y,
+          z,
+          onUpdate: () => { }
+        });
+      }
+    })
   }
 
   // update on every frame
@@ -65,18 +78,17 @@ export default class Raycaster {
       {
         return this.currentIntersect.object;
       }
-      var hasFoundSceneParent = false;
       var currentParent = this.currentIntersect.object.parent;
-      while(hasFoundSceneParent === false)
+      while(true)
       {
-        if(currentParent.parent.type === "Scene")
-        {
-          return currentParent;
-        }
-        else
-        {
-          currentParent = currentParent.parent;
-        }
+          if(currentParent.parent.type === "Scene" || (currentParent.parent.userData.tag === "River" && currentParent.userData.tag === "Vegetation"))
+          {
+            return currentParent;
+          }
+          else
+          {
+            currentParent = currentParent.parent;
+          }
       }
     }
   }
