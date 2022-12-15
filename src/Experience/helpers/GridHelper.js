@@ -14,6 +14,7 @@ export default class GridHelper {
       this.toggle(val);
     })
 
+    
     // methods
     this.setInstance();
   }
