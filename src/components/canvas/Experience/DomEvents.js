@@ -1,4 +1,4 @@
-import {gsap }from "gsap";
+import { gsap } from "gsap";
 import Experience from ".";
 import objects from "./objects";
 
@@ -54,12 +54,11 @@ export default class DomEvents {
             elementMouseIsOver = document.elementFromPoint(x, y);
 
           if (elementMouseIsOver === this.__experience.canvas) {
-            if (!counter)
-            {
+            if (!counter) {
               console.log(objects[id].title)
               this.__experience.world.loadModal(objects[id].name, objects[id].model, null, null, objects[id].states, objects[id].tag, id)
             }
-              
+
             counter++
           }
         }
@@ -125,12 +124,12 @@ export default class DomEvents {
       }
     }
 
-    if (this.__experience.world.objects.current.userData.tag){
-      switch(this.__experience.world.objects.current.userData.tag){
+    if (this.__experience.world.objects.current.userData.tag) {
+      switch (this.__experience.world.objects.current.userData.tag) {
         case "Vegetation":
-          var score = 0
-          if(point.title.trim().length > 0){++score}
-          if(point.description.trim().length > 0 ){++score}
+          let score = 0
+          if (point.title.trim().length > 0) { ++score }
+          if (point.description.trim().length > 0) { ++score }
           this.toggleModelState(score)
           break;
       }
