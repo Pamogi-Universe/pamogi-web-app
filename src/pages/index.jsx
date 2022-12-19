@@ -1,28 +1,183 @@
-import dynamic from 'next/dynamic'
-import Instructions from '@/components/dom/Instructions'
-import Floor from '../components/canvas/Experience/World/Floor'
+import { Body, Head } from 'next/document'
+import { Input } from 'postcss'
+import { useEffect } from 'react'
+import Experience from "../index"
 
-// Dynamic import is used to prevent a payload when the website starts, that includes threejs, r3f etc..
-// WARNING ! errors might get obfuscated by using dynamic import.
-// If something goes wrong go back to a static import to show the error.
-// https://github.com/pmndrs/react-three-next/issues/49
-const Logo = dynamic(() => import('@/components/canvas/Logo'), { ssr: false })
+export default function PamogiPage() {
 
-// Dom components go here
-export default function Page(props) {
-  return (
-    <Instructions>
-      This is a minimal starter for Nextjs + React-three-fiber and Threejs. Click on the{' '}
-      <span className='text-cyan-200'>atoms nucleus</span> to navigate to the{' '}
-      <span className='text-green-200'>/blob</span> page. OrbitControls are enabled by default.
-    </Instructions>
-  )
-}
+  <Body>
+    <main id="root">
+      <input type="checkbox" name="visualizer" id="visualizer">
+        <label class="visualizer" for="visualizer" title="Toggle View/Edit"></label>
+      </input>
+      <input type="checkbox" name="text-editor" id="text-editor" checked>
+        <label class="text__editor" for="text-editor" title="Toggle Text Edit/View Only"></label>
+      </input>
 
-// Canvas components go here
-// It will receive same props as the Page component (from getStaticProps, etc.)
-Page.canvas = (props) => <Floor scale={0.5} route='/blob' position-y={-1} />
+      <input class="object__toggle" type="checkbox" name="object-toggler" id="object-toggler">
+        <label class="object__opener object--abs" for="object-toggler"></label>
+        <aside class="object__wrapper object--abs">
+          <h2 class="object__heading">
+            Objects
+            <label class="object__closer" for="object-toggler"></label>
+          </h2>
 
-export async function getStaticProps() {
-  return { props: { title: 'Index' } }
+          <div class="object__list">
+            <div class="object__inner"></div>
+          </div>
+        </aside>
+      </input>
+
+      <label class="shortcut__opener" for="shortcut-toggler">?</label>
+      <input class="shortcut__toggle" type="checkbox" name="shortcut-toggler" id="shortcut-toggler">
+
+        <div class="shortcut__modal">
+          <label class="shortcut__modal-overlay" for="shortcut-toggler"></label>
+          <div class="shortcut__modal-wrapper">
+            <h2 class="shortcut__heading">
+              Keyboard Shortcuts
+
+              <label class="shortcut__closer" for="shortcut-toggler"></label>
+            </h2>
+
+            <div class="shortcut__body">
+              <div class="shortcut__item">
+                Toggle transform controls
+
+                <span class="shortcut__key">T</span>
+              </div>
+
+              <div class="shortcut__item">
+                Toggle rotate controls
+
+                <span class="shortcut__key">R</span>
+              </div>
+
+              <div class="shortcut__item">
+                Toggle scale controls
+
+                <span class="shortcut__key">S</span>
+              </div>
+
+              <div class="shortcut__item">
+                Snap to grid
+
+                <span class="shortcut__key">Ctrl</span>
+              </div>
+
+              <div class="shortcut__item">
+                Delete object
+
+                <span class="shortcut__key">D</span>
+              </div>
+
+              <div class="shortcut__item">
+                Increase control size
+
+                <span class="shortcut__key">+</span>
+              </div>
+
+              <div class="shortcut__item">
+                Decrease control size
+
+                <span class="shortcut__key">-</span>
+              </div>
+
+              <div class="shortcut__item">
+                Toggle X control
+
+                <span class="shortcut__key">X</span>
+              </div>
+
+              <div class="shortcut__item">
+                Toggle Y control
+
+                <span class="shortcut__key">Y</span>
+              </div>
+
+              <div class="shortcut__item">
+                Toggle Z control
+
+                <span class="shortcut__key">Z</span>
+              </div>
+
+              <div class="shortcut__item">
+                Enable/disable controls
+
+                <span class="shortcut__key">Spacebar</span>
+              </div>
+
+              <div class="shortcut__item">
+                Focus the selected object
+
+                <span class="shortcut__key">F</span>
+              </div>
+
+              <div class="shortcut__item">
+                Centralize the camera
+
+                <span class="shortcut__key">Shift</span>
+                <span class="shortcut__key">C</span>
+              </div>
+
+              <div class="shortcut__item">
+                Reset current transform
+
+                <span class="shortcut__key">Esc</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </input>
+
+      <input class="info__toggle" type="checkbox" name="info-toggler" id="info-toggler">
+        <label class="info__opener" for="info-toggler"></label>
+
+        <div class="info__wrapper">
+          <h3 class="info__title">
+            <span>Object title</span>
+          </h3>
+          <p class="info__description">
+            Object description. Select an object to display its title and description here.
+          </p>
+
+          <div class="state"></div>
+
+          <div class="info__footer">
+            <label class="info__btn" for="info-modal">Edit</label>
+            <label class="info__btn" for="info-toggler">Close</label>
+          </div>
+        </div>
+
+        <input class="info__toggle" type="checkbox" name="info-modal" id="info-modal">
+
+          <div class="info__modal">
+            <label class="info__modal-overlay" for="info-modal"></label>
+            <div class="info__modal-wrapper">
+              <h2 class="info__heading">
+                Object Description
+
+                <label class="info__closer" for="info-modal"></label>
+              </h2>
+
+              <div class="info__body">
+                <input type="text" class="info__input title" placeholder="Enter title here">
+
+                  <textarea cols="30" rows="10" class="info__input description" placeholder="Enter description here..."></textarea>
+
+                  <label class="info__submit" id="info-submit" for="info-modal">Save</label>
+                </input>
+              </div>
+            </div>
+          </div>
+        </input>
+        <div class="points"></div>
+      </input>
+    </main>
+  </Body>
+
+  useEffect(() => {
+    let experience = new Experience("#webgl")
+    return;
+  })
 }
