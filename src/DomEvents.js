@@ -11,10 +11,10 @@ export default class DomEvents {
     this.dragEvent();
     this.centralizeCamera();
 
-    /*document.getElementById("visualizer").addEventListener("change", (e) => this.toggleView(e, true))
+    document.getElementById("visualizer").addEventListener("change", (e) => this.toggleView(e, true))
     document.getElementById("text-editor").addEventListener("change", (e) => this.toggleDetail(e, true))
     document.getElementById("info-modal").addEventListener("change", (e) => this.openEditModal(e))
-    document.getElementById("info-submit").addEventListener("click", () => this.saveDetails())*/
+    document.getElementById("info-submit").addEventListener("click", () => this.saveDetails())
   }
 
   toggleView(e, triggered) {
@@ -31,7 +31,7 @@ export default class DomEvents {
   }
 
   renderObjects() {
-    /*document.querySelector(".object__list").innerHTML = '';
+    document.querySelector(".object__list").innerHTML = '';
     document.querySelector(".object__heading").setAttribute("data-limit", `(${objects.length})`)
 
     objects.forEach((val, id) => {
@@ -42,7 +42,7 @@ export default class DomEvents {
           <img class="object__img" src="${val.url}" alt="${val.name}">
         </div>
     `
-    })*/
+    })
   }
 
   dragEvent() {
