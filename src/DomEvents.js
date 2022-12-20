@@ -40,8 +40,6 @@ export default class DomEvents {
   }
 
   renderObjects() {
-    if (this.DOMAvailable === false)
-      return;
     document.querySelector(".object__list").innerHTML = '';
     document.querySelector(".object__heading").setAttribute("data-limit", `(${objects.length})`)
 
