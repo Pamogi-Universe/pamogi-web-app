@@ -6,18 +6,27 @@ export default class DomEvents {
   constructor() {
     this.__experience = new Experience();
     this.viewOnly = false;
+    this.DOMAvailable = false;
 
     this.renderObjects();
     this.dragEvent();
     this.centralizeCamera();
 
-    document.getElementById("visualizer").addEventListener("change", (e) => this.toggleView(e, true))
-    document.getElementById("text-editor").addEventListener("change", (e) => this.toggleDetail(e, true))
-    document.getElementById("info-modal").addEventListener("change", (e) => this.openEditModal(e))
-    document.getElementById("info-submit").addEventListener("click", () => this.saveDetails())
+    try {
+      document.getElementById("visualizer").addEventListener("change", (e) => this.toggleView(e, true))
+      document.getElementById("text-editor").addEventListener("change", (e) => this.toggleDetail(e, true))
+      document.getElementById("info-modal").addEventListener("change", (e) => this.openEditModal(e))
+      document.getElementById("info-submit").addEventListener("click", () => this.saveDetails())
+      this.DOMAvailable = true;
+    } catch (error) {
+      console.log("DOM elements were not found");
+    }
+
   }
 
   toggleView(e, triggered) {
+    if (this.DOMAvailable === false)
+      return;
     this.viewOnly = e.target.checked;
     document.body.classList.toggle("view-only");
     this.__experience.world.transformControl.controls.detach()
@@ -31,6 +40,8 @@ export default class DomEvents {
   }
 
   renderObjects() {
+    if (this.DOMAvailable === false)
+      return;
     document.querySelector(".object__list").innerHTML = '';
     document.querySelector(".object__heading").setAttribute("data-limit", `(${objects.length})`)
 
