@@ -108,7 +108,7 @@ export default class World {
   async loadModal(name, url, position, userData, states, tag, id, currentText, transferableChildren) {
     this.__experience.history.push();
     if (!this.objects[name]) {
-      var gltf = await this.gltfLoader.loadAsync(url)
+      let gltf = await this.gltfLoader.loadAsync(url)
       // load 3D model
 
       let object = gltf.scene.children[0];
@@ -135,7 +135,7 @@ export default class World {
         object.position.set(center.x, object.position.y, center.z)
       }
 
-      var defaultString = "Write something"
+      let defaultString = "Write something"
 
       if (currentText) {
         defaultString = currentText;
@@ -154,8 +154,8 @@ export default class World {
         let arr = this.objects.meshes;
         let closestObj = arr[0];
         arr.forEach(element => {
-          var distanceToElement = object.position.distanceToSquared(element.position);
-          var distanceToCurrentClosest = object.position.distanceToSquared(closestObj.position);
+          let distanceToElement = object.position.distanceToSquared(element.position);
+          let distanceToCurrentClosest = object.position.distanceToSquared(closestObj.position);
           if (distanceToCurrentClosest > distanceToElement && element.userData.tag === "River")
             closestObj = element
         })
@@ -183,8 +183,8 @@ export default class World {
         let arr = this.objects.meshes;
         let closestObj = arr[0]
         arr.forEach(element => {
-          var distanceToElement = object.position.distanceToSquared(element.position);
-          var distanceToCurrentClosest = object.position.distanceToSquared(closestObj.position);
+          let distanceToElement = object.position.distanceToSquared(element.position);
+          let distanceToCurrentClosest = object.position.distanceToSquared(closestObj.position);
           if (distanceToCurrentClosest > distanceToElement && element.name != "cloud")
             closestObj = element
         })

@@ -75,7 +75,7 @@ export default class Raycaster {
         return this.currentIntersect.object;
       }
       if (this.currentIntersect.object.parent) {
-        var currentParent = this.currentIntersect.object.parent;
+        let currentParent = this.currentIntersect.object.parent;
         while (true) {
           if (!currentParent.parent)
             break;

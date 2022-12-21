@@ -76,7 +76,7 @@ export default class Text {
   update(target, text) {
     const map = this.__experience.world.text.texture(text);
     target.text.material.map = map.texture;
-    var currentWidth = this.__meshWidth;
+    let currentWidth = this.__meshWidth;
     while (currentWidth / text.length > 1) {
       currentWidth = currentWidth / 2;
     }
