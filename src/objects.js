@@ -1,7 +1,7 @@
 const objects = [
   {
     name: "Waterfall",
-    url: "/img/Waterfall.png",
+    url: "/img/waterfall.png",
     model: "/models/waterfall.glb",
     title: "Waterfall",
     description: "Topic and start point of the river"
@@ -87,7 +87,7 @@ const objects = [
   },
   {
     name: "Cloud",
-    url: "/img/Cloud.png",
+    url: "/img/cloud.png",
     model: "/models/Cloud.glb",
     title: "Cloud",
     description: "Source"
