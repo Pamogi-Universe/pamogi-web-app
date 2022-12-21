@@ -23,13 +23,15 @@ export default class Raycaster {
 
     this.__experience.canvas.addEventListener('click', () => {
       this.selectObject().then(value => {
+        console.log(value)
         if (!this.viewOnly) {
           this.__experience.world.transformControl?.addElements(value);
         }
         if (value) {
           this.__experience.world.setCurrentElement(value);
           this.__experience.composer.setCurrentElement(value);
-          this.__experience.points.triggerClick(".point-" + value.userData.key)
+          if (value.userData.tag != "Decoration")
+            this.__experience.points.triggerClick(".point-" + value.userData.key)
         }
       });
     })
@@ -76,6 +78,9 @@ export default class Raycaster {
       }
       if (this.currentIntersect.object.parent) {
         let currentParent = this.currentIntersect.object.parent;
+        console.log(currentParent);
+        if (currentParent.type === "Scene")
+          return this.currentIntersect.object
         while (true) {
           if (!currentParent.parent)
             break;

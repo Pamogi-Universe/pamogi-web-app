@@ -71,8 +71,10 @@ export default class DomEvents {
             if (!isLoading) {
               isLoading = true;
               await this.__experience.world.loadModal(objects[id].name, objects[id].model, null, null, objects[id].states, objects[id].tag, id);
-              this.OpenObjectEdit();
-              document.getElementById("info-modal").dispatchEvent(new Event("change"));
+              if (objects[id].tag != "Decoration" && this.__experience.world.objects.current) {
+                this.OpenObjectEdit();
+                document.getElementById("info-modal").dispatchEvent(new Event("change"));
+              }
             }
           }
         }

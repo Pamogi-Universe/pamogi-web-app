@@ -152,6 +152,10 @@ export default class World {
       //When we add vegetation it needs to be positioned adjacent to the closest river
       else if (object.userData.tag === "Vegetation") {
         let arr = this.objects.meshes;
+
+        if (arr.length <= 0)
+          return
+
         let closestObj = arr[0];
         arr.forEach(element => {
           let distanceToElement = object.position.distanceToSquared(element.position);
@@ -185,7 +189,7 @@ export default class World {
         arr.forEach(element => {
           let distanceToElement = object.position.distanceToSquared(element.position);
           let distanceToCurrentClosest = object.position.distanceToSquared(closestObj.position);
-          if (distanceToCurrentClosest > distanceToElement && element.name != "cloud")
+          if (distanceToCurrentClosest > distanceToElement && element.name != "Cloud")
             closestObj = element
         })
         const clone = this.billboardText.clone(defaultString, object, meshDimensions.x);
@@ -214,13 +218,21 @@ export default class World {
         object.position.set(position.x, object.position.y, position.z)
       }
 
-      if (object.userData.name === "waterfall" || object.userData.tag === "River") {
+      if (object.userData.name === "waterfall" || object.userData.tag === "River" || object.userData.tag === "Decoration") {
         this.__experience.scene.add(object);
       }
       ++this.ObjectNr;
 
       // create point on the model
-      this.addFocusToElement(name, object, { ...userData })
+      if (object.userData.tag != "Decoration")
+        this.addFocusToElement(name, object, { ...userData })
+      else {
+        const randomID = `${name.toLowerCase()}-${random()}`;
+        this.pushToObject(randomID, object);
+        this.setCurrentElement(object);
+        if (!this.__experience.viewOnly) this.transformControl.addElements(object);
+        this.outlinePass.setCurrentElement(object);
+      }
 
     } else {
       // clone a 3D model

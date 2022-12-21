@@ -74,16 +74,19 @@ const objects = [
     model: "/models/Bush1.glb",
     title: "Decoration",
     description: "Beautify your world",
+    tag: "Decoration"
   },
   {
     name: "Bush2",
     url: "/img/Bush2.png",
-    model: "/models/Bush2.glb"
+    model: "/models/Bush2.glb",
+    tag: "Decoration"
   },
   {
     name: "Vegetation",
     url: "/img/Vegetation.png",
-    model: "/models/Vegetation.glb"
+    model: "/models/Vegetation.glb",
+    tag: "Decoration"
   },
   {
     name: "Cloud",
@@ -92,7 +95,7 @@ const objects = [
     title: "Cloud",
     description: "Source"
   },
-  {
+  /*{
     name: "Lighting",
     url: "/img/Lighting.png",
     model: "/models/Lighting.glb",
@@ -105,7 +108,7 @@ const objects = [
     model: "/models/SunRay.glb",
     title: "Sunray",
     description: "People"
-  },
+  },*/
 ];
 
 export default objects
