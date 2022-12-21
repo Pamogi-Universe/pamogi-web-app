@@ -164,16 +164,13 @@ export default class World {
             closestObj = element
         })
 
-        if (closestObj.userData.tag != "River")
-          return
-
         let box3_closest = new THREE.Box3().setFromObject(closestObj);
         let meshDimensions_closest = new THREE.Vector3();
         box3_closest.getSize(meshDimensions_closest);
 
         closestObj.add(object)
 
-        object.position.set(meshDimensions.x * 0.75, 0.05, 0)
+        object.position.set(meshDimensions.x * 0.75, 0, 0)
 
         const clone = this.billboardText.clone("$", object);
         clone.position.set(0, meshDimensions.y, 0)

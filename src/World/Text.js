@@ -77,7 +77,7 @@ export default class Text {
     const map = this.__experience.world.text.texture(text);
     target.text.material.map = map.texture;
     let currentWidth = this.__meshWidth;
-    while (currentWidth / text.length > 0.4) {
+    while (currentWidth / text.length > 1) {
       currentWidth = currentWidth / 2;
     }
     target.text.geometry = new THREE.PlaneGeometry(currentWidth, 0.4, 1, 1)
