@@ -93,7 +93,7 @@ const objects = [
     url: "/img/cloud.png",
     model: "/models/Cloud.glb",
     title: "Cloud",
-    description: "Source"
+    description: "Comments"
   },
   /*{
     name: "Lighting",
