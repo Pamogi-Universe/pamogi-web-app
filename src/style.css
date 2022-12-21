@@ -207,7 +207,7 @@ body.view-only .info__opener,
 .text__editor::before {
     content: "";
     inset: 0;
-    background-image: url(../public/svg/eye.svg);
+    background-image: url(/svg/eye.svg);
     background-size: 1.5rem;
     background-repeat: no-repeat;
     background-position: center;
@@ -235,7 +235,7 @@ body.view-only .info__opener,
 
 .object__opener,
 .info__opener {
-    --img: url(../public/img/object.png);
+    --img: url(/img/object.png);
     --mask-size: contain;
     --square: 5rem;
 }
@@ -311,7 +311,7 @@ body.view-only .info__opener,
 .info__closer {
     order: 1;
     --square: 2rem;
-    background-image: url(../public/svg/close.svg);
+    background-image: url(/svg/close.svg);
     background-size: cover;
     margin-inline-start: auto;
 }
@@ -413,7 +413,7 @@ body.view-only .info__opener,
 
 .shortcut__closer,
 .info__closer {
-    background-image: url(../public/svg/close-white.svg);
+    background-image: url(/svg/close-white.svg);
 }
 
 .shortcut__item {
@@ -479,7 +479,7 @@ body.view-only .info__opener,
 }
 
 .info__opener {
-    --img: url(../public/svg/info.svg);
+    --img: url(/svg/info.svg);
     --mask-size: 2rem;
     inset: auto 1rem 1rem auto;
 }
