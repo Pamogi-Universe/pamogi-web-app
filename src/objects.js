@@ -2,7 +2,7 @@ const objects = [
   {
     name: "Waterfall",
     url: "/img/Waterfall.png",
-    model: "/models/Waterfall.glb",
+    model: "/models/waterfall.glb",
     title: "Waterfall",
     description: "Topic and start point of the river"
   },
