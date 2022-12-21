@@ -18,7 +18,9 @@ const objects = [
     url: "/img/River2.png",
     model: "/models/River2.glb",
     title: "River",
-    description: "Steps, subtopics"
+    description: "Steps, subtopics",
+    states: ["River2", "RiverBlocked"],
+    tag: "River"
   },
   // {
   //   name: "River3",
@@ -46,7 +48,7 @@ const objects = [
     model: "/models/TreeSproutGroup.glb",
     title: "Vegetation",
     description: "Tasks",
-    states: ["TreeSproutGroup", "TreeSproutEnergy", "MiddleSizeTrees" , "TreeGroup", "TreeFruitedGroup"],
+    states: ["TreeSproutGroup", "TreeSproutEnergy", "MiddleSizeTrees", "TreeGroup", "TreeFruitedGroup"],
     tag: "Vegetation"
   },
   // {

@@ -548,6 +548,7 @@ body.view-only .info__modal {
 
 .point {
     inset: 50% auto auto 50%;
+    display: none;
 }
 
 .point .label,
