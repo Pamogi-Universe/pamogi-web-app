@@ -31,10 +31,8 @@ export default class DomEvents {
   }
 
   OpenObjectEdit() {
-    this.viewOnly = false;
+    this.viewOnly = true;
     document.body.classList.toggle("view-only");
-    this.__experience.world.transformControl.controls.detach()
-    this.__experience.world.transformControl.toggle(this.viewOnly)
     const textEditor = { target: document.querySelector("#text-editor") }
     textEditor.target.checked = false
     this.toggleDetail(textEditor)
@@ -42,6 +40,8 @@ export default class DomEvents {
     visualizer.target.checked = true;
     const modelInfo = { target: document.querySelector("#info-modal") }
     modelInfo.target.checked = true;
+    this.__experience.world.transformControl.controls.detach()
+    this.__experience.world.transformControl.toggle(this.viewOnly)
   }
 
   renderObjects() {
@@ -122,6 +122,8 @@ export default class DomEvents {
 
   saveDetails() {
     const point = this.__experience.points.current;
+    if (!point)
+      return;
     point.title = document.querySelector(".info__input.title").value;
     point.description = document.querySelector(".info__input.description").value
     document.querySelector(point.element).setAttribute("data-title", point.title);

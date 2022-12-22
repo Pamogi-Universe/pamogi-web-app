@@ -170,7 +170,7 @@ export default class World {
 
         closestObj.add(object)
 
-        object.position.set(meshDimensions.x * 0.75, 0, 0)
+        object.position.set(meshDimensions.x * 0.75, 0.1, 0)
 
         const clone = this.billboardText.clone("$", object);
         clone.position.set(0, meshDimensions.y, 0)
