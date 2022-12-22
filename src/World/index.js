@@ -105,7 +105,7 @@ export default class World {
   }
 
   // loading a model into the scene
-  async loadModal(name, url, position, userData, states, tag, id, currentText, transferableChildren) {
+  async loadModal(name, url, position, userData, states, tag, id, currentText, transferableChildren, currParent) {
     this.__experience.history.push();
     if (!this.objects[name]) {
       let gltf = await this.gltfLoader.loadAsync(url)
@@ -151,24 +151,37 @@ export default class World {
       }
       //When we add vegetation it needs to be positioned adjacent to the closest river
       else if (object.userData.tag === "Vegetation") {
-        let arr = this.objects.meshes;
+        if (currParent) {
+          currParent.add(object)
+        }
+        else {
+          let arr = this.objects.meshes;
 
-        if (arr.length <= 0)
-          return
+          if (arr.length <= 0)
+            return
 
-        let closestObj = arr[0];
-        arr.forEach(element => {
-          let distanceToElement = object.position.distanceToSquared(element.position);
-          let distanceToCurrentClosest = object.position.distanceToSquared(closestObj.position);
-          if (distanceToCurrentClosest > distanceToElement && element.userData.tag === "River")
-            closestObj = element
-        })
+          let closestObj = arr[0];
+          arr.forEach(element => {
+            if (closestObj.userData != "River" && element.userData.tag === "River") {
+              closestObj = element
+            }
+            else {
+              let distanceToElement = object.position.distanceToSquared(element.position);
+              let distanceToCurrentClosest = object.position.distanceToSquared(closestObj.position);
+              if (distanceToCurrentClosest > distanceToElement && element.userData.tag === "River")
+                closestObj = element
+            }
+          })
 
-        let box3_closest = new THREE.Box3().setFromObject(closestObj);
-        let meshDimensions_closest = new THREE.Vector3();
-        box3_closest.getSize(meshDimensions_closest);
+          if (closestObj.userData.tag != "River")
+            return;
 
-        closestObj.add(object)
+          let box3_closest = new THREE.Box3().setFromObject(closestObj);
+          let meshDimensions_closest = new THREE.Vector3();
+          box3_closest.getSize(meshDimensions_closest);
+
+          closestObj.add(object)
+        }
 
         object.position.set(meshDimensions.x * 0.75, 0.1, 0)
 
@@ -183,15 +196,20 @@ export default class World {
 
       //If we want to add a cloud, find the closest object and add it as a child
       else if (object.userData.name === "cloud") {
-
         let arr = this.objects.meshes;
         let closestObj = arr[0]
-        arr.forEach(element => {
-          let distanceToElement = object.position.distanceToSquared(element.position);
-          let distanceToCurrentClosest = object.position.distanceToSquared(closestObj.position);
-          if (distanceToCurrentClosest > distanceToElement && element.name != "Cloud")
-            closestObj = element
-        })
+        if (currParent) {
+          closestObj = currParent
+        }
+        else {
+          arr.forEach(element => {
+            let distanceToElement = object.position.distanceToSquared(element.position);
+            let distanceToCurrentClosest = object.position.distanceToSquared(closestObj.position);
+            if (distanceToCurrentClosest > distanceToElement && element.name != "Cloud")
+              closestObj = element
+          })
+        }
+
         const clone = this.billboardText.clone(defaultString, object, meshDimensions.x);
         clone.position.set(0, 0, 0)
         clone.rotation.set(-Math.PI * 2, 0, 0)

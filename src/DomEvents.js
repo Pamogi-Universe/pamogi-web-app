@@ -166,6 +166,7 @@ export default class DomEvents {
     const objTag = this.__experience.world.objects.current.userData.tag;
     const transferableChildren = []
     const children = this.__experience.world.objects.current.children;
+    const objParent = this.__experience.world.objects.current.parent;
     children.forEach(child => {
       if (child.name === "Cloud" || child.userData.tag === "Vegetation") {
         transferableChildren.push(child);
@@ -173,6 +174,6 @@ export default class DomEvents {
     });
 
     this.__experience.world.disposeCurrentModel()
-    this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objTag, objID, point.title, transferableChildren)
+    this.__experience.world.loadModal(point.states[id], `/models/${point.states[id]}.glb`, point.position, point, objects[objID].states, objTag, objID, point.title, transferableChildren, objParent)
   }
 }
