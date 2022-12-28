@@ -7,7 +7,7 @@
     box-sizing: border-box;
   }
   
-  html,
+  /* html,
   body,
   #__next {
     width: 100%;
@@ -15,5 +15,16 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+  } */
+
+  #connect {
+    position: absolute;
+    left: calc(50% - 50px);
+    top: 0;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0.6);
+    color: white;
   }
 }
